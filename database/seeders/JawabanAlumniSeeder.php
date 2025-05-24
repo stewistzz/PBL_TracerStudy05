@@ -12,7 +12,7 @@ class JawabanAlumniSeeder extends Seeder
     {
         DB::table('jawaban_alumni')->insert([
             'alumni_id' => 1, // ganti dengan ID alumni yang sesuai
-            'pertanyaan_id' => 9,
+            'pertanyaan_id' => 5,
             'jawaban' => '4', // contoh skala 4 (Puas)
             'tanggal' => now()->toDateString(),
             'created_at' => now(),

@@ -10,9 +10,9 @@ class JawabanPenggunaSeeder extends Seeder
     public function run(): void
     {
         DB::table('jawaban_pengguna')->insert([
-            'pengguna_id'   => 1, // Ganti dengan ID pengguna lulusan yang valid
-            'pertanyaan_id' => 14, // ID pertanyaan tentang kepuasan pengguna terhadap alumni
-            'jawaban'       => '3', // Skala 1-3, misal: "3" = "Puas"
+            'pengguna_id'   => 1, // Pastikan ID ini valid di tabel pengguna_lulusan
+            'pertanyaan_id' => 7, // Ganti dengan ID pertanyaan yang valid dan sesuai
+            'jawaban'       => 'ya', // Misal skala 1-3
             'tanggal'       => now()->toDateString(),
             'created_at'    => now(),
             'updated_at'    => now(),
