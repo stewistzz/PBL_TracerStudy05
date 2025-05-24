@@ -8,6 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
     <link href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
+
+
 
     <!-- ================= Skydash CSS ================= -->
     <link rel="stylesheet" href="{{ asset('skydash/template/vendors/feather/feather.css') }}">
@@ -39,9 +43,13 @@
 </head>
 
 <body>
-    <div class="container-fluid page-body-wrapper">
-        @include('layouts.sidebar') {{-- ini sidebar --}}
 
+    <div class="container-fluid page-body-wrapper">
+        @if (Auth::user()->role == 'admin')
+            @include('layouts.sidebar')
+        @elseif(Auth::user()->role == 'alumni')
+            @include('layouts.sidebarAlumni')
+        @endif
         <div class="main-panel">
             <div class="content-wrapper">
                 @yield('content') {{-- konten utama tampil di sini --}}

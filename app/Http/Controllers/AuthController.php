@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            
+
             // Redirect berdasarkan role
             if (Auth::user()->hasRole('admin')) {
                 return redirect()->intended('/admin/dashboard');
@@ -36,12 +36,23 @@ class AuthController extends Controller
         ]);
     }
 
+    // Go To Dashboard
+    public function adminDashboard()
+    {
+        return view('admin.dashboard');
+    }
+
+    public function alumniDashboard()
+    {
+        return view('alumni.dashboard');
+    }
+
     // Logout
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+        return redirect('/');
     }
 }

@@ -2,7 +2,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="dashboard">
                 <i class="mdi mdi-view-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
@@ -44,6 +44,20 @@
                 <span class="menu-title">Laporan</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="mdi mdi-logout menu-icon"></i>
+                <span class="menu-title">Logout</span>
+            </a>
+        </li>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+
+
     </ul>
 </nav>
 <!-- partial -->

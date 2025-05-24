@@ -10,7 +10,7 @@ class OpsiPilihanSeeder extends Seeder
     public function run(): void
     {
         $opsiByPertanyaan = [
-            5 => [ // ID 5 = ya_tidak
+            1 => [ // ID 1 = ya_tidak
                 'Ya',
                 'Tidak',
             ],
