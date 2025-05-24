@@ -11,41 +11,25 @@ class PertanyaanSeeder extends Seeder
     {
         DB::table('pertanyaan')->insert([
             [
-                'role_target' => 'alumni',
-                'isi_pertanyaan' => 'Apakah Anda telah bekerja setelah lulus?',
+                'role_target' => 'pengguna',
+                'isi_pertanyaan' => 'Alumni rajin??',
                 'jenis_pertanyaan' => 'ya_tidak',
                 'created_by' => 1,
                 'kode_kategori' => 'K02',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'role_target' => 'alumni',
-                'isi_pertanyaan' => 'Berapa lama waktu yang dibutuhkan untuk mendapatkan pekerjaan pertama?',
-                'jenis_pertanyaan' => 'isian',
-                'created_by' => 1,
-                'kode_kategori' => 'K01',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'role_target' => 'alumni',
-                'isi_pertanyaan' => 'Seberapa puas Anda dengan pekerjaan Anda saat ini?',
-                'jenis_pertanyaan' => 'skala',
-                'created_by' => 1,
-                'kode_kategori' => 'K03',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'role_target' => 'pengguna',
-                'isi_pertanyaan' => 'Seberapa puas Anda dengan alumni yang Anda temui?',
-                'jenis_pertanyaan' => 'skala',
-                'created_by' => 1,
-                'kode_kategori' => 'K03',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+           /*
+[
+    'role_target' => 'alumni',
+    'isi_pertanyaan' => 'Berapa lama waktu yang dibutuhkan untuk mendapatkan pekerjaan pertama?',
+    'jenis_pertanyaan' => 'isian',
+    'created_by' => 1,
+    'kode_kategori' => 'K01',
+    'created_at' => now(),
+    'updated_at' => now(),
+],
+*/
         ]);
     }
 }
