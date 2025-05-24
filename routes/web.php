@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 //     return view('welcome');
 // });
 
+// route untuk login
 // Auth Routes
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/', [AuthController::class, 'postLogin']);
