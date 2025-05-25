@@ -17,7 +17,7 @@ class InstansiModel extends Model
         'skala', 
         'lokasi',
         'alamat',
-        'no_telpon'
+        'no_hp'
     ];
     
     // Relasi: Satu instansi punya banyak tracer study

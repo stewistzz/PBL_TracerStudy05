@@ -18,8 +18,7 @@ class InstansiController extends Controller
     public function list()
     {
         $data = InstansiModel::select([
-            'instansi_id', 'nama_instansi', 'jenis_instansi', 'skala',
-            'lokasi', 'alamat', 'no_telpon'
+            'instansi_id', 'nama_instansi', 'jenis_instansi', 'skala', 'lokasi', 'no_hp'
         ]);
         
         return DataTables::of($data)
@@ -47,8 +46,8 @@ class InstansiController extends Controller
             'jenis_instansi' => 'required|in:Pendidikan Tinggi,Pemerintah,Swasta',
             'skala' => 'required|in:nasional,internasional,wirausaha',
             'lokasi' => 'required|string|max:100',
-            'alamat' => 'nullable|string|max:30',
-            'no_telpon' => 'nullable|string|max:15',
+            // 'alamat' => 'nullable|string|max:30',
+            'no_hp' => 'nullable|string|max:15',
         ]);
 
         if ($validator->fails()) {
@@ -64,8 +63,8 @@ class InstansiController extends Controller
             'jenis_instansi', 
             'skala',
             'lokasi',
-            'alamat', 
-            'no_telpon'
+            // 'alamat', 
+            'no_hp'
         ]));
 
         return response()->json([
@@ -87,8 +86,8 @@ class InstansiController extends Controller
             'jenis_instansi' => 'required|in:Pendidikan Tinggi,Pemerintah,Swasta',
             'skala' => 'required|in:nasional,internasional,wirausaha',
             'lokasi' => 'required|string|max:100',
-            'alamat' => 'nullable|string|max:30',
-            'no_telpon' => 'nullable|string|max:15',
+            // 'alamat' => 'nullable|string|max:30',
+            'no_hp' => 'nullable|string|max:15',
         ]);
 
         if ($validator->fails()) {
@@ -99,13 +98,14 @@ class InstansiController extends Controller
         }
 
         $instansi = InstansiModel::findOrFail($id);
+        // dd($request->all());
         $instansi->update($request->only([
             'nama_instansi',
             'jenis_instansi',
             'skala',
             'lokasi',
-            'alamat',
-            'no_telpon'
+            // 'alamat',
+            'no_hp'
         ]));
 
         return response()->json([
