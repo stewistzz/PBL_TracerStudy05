@@ -18,7 +18,7 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="pages/ui-features/buttons.html">Jenis Profesi</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/dropdowns.html">Profesi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/profesi') }}">Profesi</a></li>
                     <li class="nav-item"><a class="nav-link" href="pages/ui-features/typography.html">Kesesuaian</a>
                     </li>
                 </ul>

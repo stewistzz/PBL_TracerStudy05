@@ -9,7 +9,7 @@ class ProfesiModel extends Model
 {
     protected $table = 'profesi';
     protected $primaryKey = 'profesi_id';
-    protected $fillable = ['kategori_id', 'nama_profesi'];
+    protected $fillable = ['nama_profesi', 'kategori_id'];
 
     // Relasi: Satu profesi terkait satu kategori
     public function kategoriProfesi()
