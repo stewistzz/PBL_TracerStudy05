@@ -12,6 +12,8 @@ use App\Http\Controllers\AlumniController;
 // Auth Routes
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/', [AuthController::class, 'postLogin']);
+Route::get('/register', [AuthController::class, 'register'])->name('register.form');
+Route::post('/register', [AuthController::class, 'store'])->name('register.store');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Protected Routes
@@ -58,7 +60,8 @@ Route::prefix('alumni')->name('alumni.')->group(function () {
     });
     
     // Alumni Routes
-    Route::middleware(['check.role:alumni'])->group(function () {
-        Route::get('/alumni_i/dashboard', [AuthController::class, 'alumniDashboard'])->name('alumni_i.dashboard');
-    });
+  // Alumni Routes
+Route::middleware(['check.role:alumni'])->group(function () {
+    Route::get('/alumni_i/dashboard', [AuthController::class, 'alumniDashboard'])->name('alumni_i.dashboard');
+});
 });
