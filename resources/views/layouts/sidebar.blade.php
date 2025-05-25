@@ -8,28 +8,8 @@
             </a>
         </li>
 
-     <li class="nav-item">
-    <a class="nav-link" data-toggle="collapse" href="#sebaran-submenu" aria-expanded="false" aria-controls="sebaran-submenu">
-        <i class="mdi mdi-arrow-expand-all menu-icon"></i>
-        <span class="menu-title">Sebaran</span>
-        <i class="menu-arrow"></i>
-    </a>
-    <div class="collapse" id="sebaran-submenu">
-        <ul class="nav flex-column sub-menu">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('kategori_profesi.index') }}">Kategori Profesi</a>
-            </li>
-            {{-- Tambahkan submenu lainnya jika perlu --}}
-        </ul>
-    </div>
-</li>
 
-<li class="nav-item">
-    <a class="nav-link" href="{{ route('instansi.index') }}">
-        <i class="mdi mdi-domain menu-icon"></i>
-        <span class="menu-title">Instansi</span>
-    </a>
-</li>
+        
 
 
         {{-- sidebar Sebaran untuk admin --}}
@@ -41,9 +21,11 @@
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/buttons.html">Jenis Profesi</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('kategori_profesi.index') }}">Jenis
+                            Profesi</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/profesi') }}">Profesi</a></li>
+
                     <li class="nav-item"><a class="nav-link" href="pages/ui-features/typography.html">Kesesuaian</a>
                     </li>
                 </ul>
@@ -51,7 +33,15 @@
         </li>
         {{-- end sebaran --}}
 
+        {{-- sidebar instansi --}}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('instansi.index') }}">
+                <i class="mdi mdi-domain menu-icon"></i>
+                <span class="menu-title">Instansi</span>
+            </a>
+        </li>
 
+        {{-- sidebar masa tunggu --}}
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
                 aria-controls="form-elements">
@@ -76,15 +66,6 @@
                 </ul>
             </div>
         </li>
-
-    <li class="nav-item">
-    <a class="nav-link" href="{{ route('alumni.index') }}">
-        <i class="mdi mdi-account-group menu-icon"></i>
-        <span class="menu-title">Alumni</span>
-    </a>
-</li>
-
-
         {{-- end penilaian --}}
 
         {{-- alumni sidebar admin --}}
@@ -96,7 +77,7 @@
             </a>
             <div class="collapse" id="tables">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="#">Data Alumni</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('alumni.index') }}">Data Alumni</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="#">Data Tracer</a>
                     </li>

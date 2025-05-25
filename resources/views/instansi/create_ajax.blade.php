@@ -37,15 +37,15 @@
             <input type="text" name="lokasi" id="lokasi" class="form-control" required>
             <div class="invalid-feedback" id="error_lokasi"></div>
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label for="alamat">Alamat</label>
             <input type="text" name="alamat" id="alamat" class="form-control">
             <div class="invalid-feedback" id="error_alamat"></div>
-        </div>
+        </div> --}}
         <div class="form-group">
-            <label for="no_telpon">No Telepon</label>
-            <input type="text" name="no_telpon" id="no_telpon" class="form-control">
-            <div class="invalid-feedback" id="error_no_telpon"></div>
+            <label for="no_hp">No Telepon</label>
+            <input type="text" name="no_hp" id="no_hp" class="form-control">
+            <div class="invalid-feedback" id="error_no_hp"></div>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-success" id="btn-submit">Simpan</button>

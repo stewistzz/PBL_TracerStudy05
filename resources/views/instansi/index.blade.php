@@ -25,8 +25,8 @@
                         <th>Jenis</th>
                         <th>Skala</th>
                         <th>Lokasi</th>
-                        <th>Alamat</th>
-                        <th>No Telepon</th>
+                        {{-- <th>Alamat</th> --}}
+                        <th>No HP</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -62,8 +62,8 @@ $(document).ready(function () {
             { data: 'jenis_instansi', name: 'jenis_instansi' },
             { data: 'skala', name: 'skala' },
             { data: 'lokasi', name: 'lokasi' },
-            { data: 'alamat', name: 'alamat' },
-            { data: 'no_telpon', name: 'no_telpon' },
+            // { data: 'alamat', name: 'alamat' },
+            { data: 'no_hp', name: 'no_hp' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
     });
