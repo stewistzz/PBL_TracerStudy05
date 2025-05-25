@@ -2,11 +2,36 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="dashboard">
+            <a class="nav-link" href="{{ route('admin.dashboard') }}">
                 <i class="mdi mdi-view-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
+
+     <li class="nav-item">
+    <a class="nav-link" data-toggle="collapse" href="#sebaran-submenu" aria-expanded="false" aria-controls="sebaran-submenu">
+        <i class="mdi mdi-arrow-expand-all menu-icon"></i>
+        <span class="menu-title">Sebaran</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" id="sebaran-submenu">
+        <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('kategori_profesi.index') }}">Kategori Profesi</a>
+            </li>
+            {{-- Tambahkan submenu lainnya jika perlu --}}
+        </ul>
+    </div>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('instansi.index') }}">
+        <i class="mdi mdi-domain menu-icon"></i>
+        <span class="menu-title">Instansi</span>
+    </a>
+</li>
+
+
         {{-- sidebar Sebaran untuk admin --}}
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -25,6 +50,7 @@
             </div>
         </li>
         {{-- end sebaran --}}
+
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
@@ -50,6 +76,15 @@
                 </ul>
             </div>
         </li>
+
+    <li class="nav-item">
+    <a class="nav-link" href="{{ route('alumni.index') }}">
+        <i class="mdi mdi-account-group menu-icon"></i>
+        <span class="menu-title">Alumni</span>
+    </a>
+</li>
+
+
         {{-- end penilaian --}}
 
         {{-- alumni sidebar admin --}}
@@ -72,6 +107,7 @@
 
 
         {{-- sidebar Kuisioner admin --}}
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
                 <i class="mdi mdi-comment-question-outline menu-icon"></i>

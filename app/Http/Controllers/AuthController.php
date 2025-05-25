@@ -28,7 +28,7 @@ class AuthController extends Controller
             if (Auth::user()->hasRole('admin')) {
                 return redirect()->intended('/admin/dashboard');
             }
-            return redirect()->intended('/alumni/dashboard');
+          return redirect()->intended('/alumni_i/dashboard');
         }
 
         return back()->withErrors([
@@ -44,7 +44,7 @@ class AuthController extends Controller
 
     public function alumniDashboard()
     {
-        return view('alumni.dashboard');
+        return view('alumni_i.dashboard');
     }
 
     // Logout
