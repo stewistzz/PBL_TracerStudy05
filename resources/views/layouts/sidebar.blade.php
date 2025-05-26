@@ -86,9 +86,15 @@
         </li>
         {{-- end sidebar alumni --}}
 
+        {{-- Data Ueer --}}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('user.index') }}">
+                <i class="mdi mdi-account-group menu-icon"></i>
+                <span class="menu-title">Data user</span>
+            </a>
+        </li>
 
         {{-- sidebar Kuisioner admin --}}
-
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
                 <i class="mdi mdi-comment-question-outline menu-icon"></i>
