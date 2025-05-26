@@ -7,7 +7,7 @@ use App\Http\Controllers\ProfesiController;
 use App\Http\Controllers\KategoriProfesiController;
 use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\AlumniController;
-
+use App\Http\Controllers\KesesuaianPekerjaanController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -81,6 +81,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [AlumniController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
         });
+
+        // route untuk data kesesuaian
+        Route::get('/admin/kesesuaian', [KesesuaianPekerjaanController::class, 'index'])->name('admin.kesesuaian');
+
     });
 
     // Alumni Routes

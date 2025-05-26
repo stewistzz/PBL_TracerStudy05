@@ -26,7 +26,7 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/profesi') }}">Profesi</a></li>
 
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/typography.html">Kesesuaian</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.kesesuaian') }}">Kesesuaian</a>
                     </li>
                 </ul>
             </div>
