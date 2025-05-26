@@ -19,6 +19,7 @@
                 <option value="Pendidikan Tinggi">Pendidikan Tinggi</option>
                 <option value="Pemerintah">Pemerintah</option>
                 <option value="Swasta">Swasta</option>
+                <option value="BUMN">BUMN</option>
             </select>
             <div class="invalid-feedback" id="error_jenis_instansi"></div>
         </div>

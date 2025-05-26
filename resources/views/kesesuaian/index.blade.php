@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <!-- Card Pie Chart -->
-        <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+        <div class="col-lg-4 grid-margin grid-margin-lg-0 stretch-card">
             <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Pie chart</h4>
@@ -15,9 +15,9 @@
         </div>
 
         <!-- Deskripsi / Detail -->
-        <div class="col-md-6 d-flex align-items-center">
+        <div class="col-lg-8 d-flex align-items-center">
             <div>
-                <h3>Detail sebaran kesesuaian alumni Politeknik Negeri Malang</h3>
+                <h3>Detail sebaran <b>kesesuaian</b> alumni Politeknik Negeri Malang</h3>
                 <div class="mt-3 mb-3">
 
                     <h1>{{ $data->sum('total_alumni') }}</h1>
@@ -96,6 +96,46 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../../../public/skydash/template/pages/charts/chartjs.html"></script>
+{{-- <script>
+    var doughnutPieData = {
+        labels: ['Sesuai Infokom', 'Tidak Sesuai Infokom'],
+        datasets: [{
+            data: [
+                {{ $data->sum('infokom') }},
+                {{ $data->sum('non_infokom') }}
+            ],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 99, 132, 0.5)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    var doughnutPieOptions = {
+        responsive: true,
+        animation: {
+            animateScale: true,
+            animateRotate: true
+        }
+    };
+
+    $(document).ready(function () {
+        if ($("#pieChart").length) {
+            var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+            new Chart(pieChartCanvas, {
+                type: 'pie',
+                data: doughnutPieData,
+                options: doughnutPieOptions
+            });
+        }
+    });
+</script> --}}
+
 <script>
     var doughnutPieData = {
         labels: ['Sesuai Infokom', 'Tidak Sesuai Infokom'],
@@ -117,10 +157,15 @@
     };
 
     var doughnutPieOptions = {
-        responsive: false,
+        responsive: true,
         animation: {
             animateScale: true,
             animateRotate: true
+        },
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
         }
     };
 
@@ -135,4 +180,5 @@
         }
     });
 </script>
+
 @endpush
