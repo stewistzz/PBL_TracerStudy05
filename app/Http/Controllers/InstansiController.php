@@ -1,32 +1,53 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\InstansiModel;
-
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
+
 
 class InstansiController extends Controller
 {
     public function index()
     {
-        return view('instansi.index', [
-            'instansis' => InstansiModel::all()
-        ]);
+        // return view('instansi.index', [
+        //     'instansis' => InstansiModel::all()
+        // ]);
+
+        // Ambil semua data instansi
+        $instansis = InstansiModel::all();
+
+        // Ambil data jumlah alumni berdasarkan jenis instansi
+        $instansiData = DB::table('instansi')
+            ->leftJoin('tracer_study', 'instansi.instansi_id', '=', 'tracer_study.instansi_id')
+            ->select('instansi.jenis_instansi', DB::raw('COUNT(tracer_study.tracer_id) as total'))
+            ->groupBy('instansi.jenis_instansi')
+            ->get();
+
+        // Kirim kedua data ke view
+        return view('instansi.index', compact('instansis', 'instansiData'));
     }
 
     public function list()
     {
         $data = InstansiModel::select([
-            'instansi_id', 'nama_instansi', 'jenis_instansi', 'skala', 'lokasi', 'no_hp'
+            'instansi_id',
+            'nama_instansi',
+            'jenis_instansi',
+            'skala',
+            'lokasi',
+            'no_hp'
         ]);
-        
+
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 return '
-                    <button class="btn btn-warning btn-sm btn-edit" data-id="'.$row->instansi_id.'">Edit</button>
-                    <button class="btn btn-danger btn-sm btn-hapus" data-id="'.$row->instansi_id.'">Hapus</button>
+                    <button class="btn btn-warning btn-sm btn-edit" data-id="' . $row->instansi_id . '">Edit</button>
+                    <button class="btn btn-danger btn-sm btn-hapus" data-id="' . $row->instansi_id . '">Hapus</button>
                 ';
             })
             ->rawColumns(['action'])
@@ -43,7 +64,7 @@ class InstansiController extends Controller
         // DIPERBAIKI: Validasi harus sama dengan update
         $validator = Validator::make($request->all(), [
             'nama_instansi' => 'required|string|max:50|unique:instansi,nama_instansi',
-            'jenis_instansi' => 'required|in:Pendidikan Tinggi,Pemerintah,Swasta',
+            'jenis_instansi' => 'required|in:Pendidikan Tinggi,Pemerintah,Swasta,BUMN',
             'skala' => 'required|in:nasional,internasional,wirausaha',
             'lokasi' => 'required|string|max:100',
             // 'alamat' => 'nullable|string|max:30',
@@ -60,7 +81,7 @@ class InstansiController extends Controller
         // DIPERBAIKI: Simpan semua field yang diperlukan
         InstansiModel::create($request->only([
             'nama_instansi',
-            'jenis_instansi', 
+            'jenis_instansi',
             'skala',
             'lokasi',
             // 'alamat', 
@@ -83,7 +104,7 @@ class InstansiController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_instansi' => 'required|string|max:50|unique:instansi,nama_instansi,' . $id . ',instansi_id',
-            'jenis_instansi' => 'required|in:Pendidikan Tinggi,Pemerintah,Swasta',
+            'jenis_instansi' => 'required|in:Pendidikan Tinggi,Pemerintah,Swasta,BUMN',
             'skala' => 'required|in:nasional,internasional,wirausaha',
             'lokasi' => 'required|string|max:100',
             // 'alamat' => 'nullable|string|max:30',

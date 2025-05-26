@@ -7,12 +7,21 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\KategoriProfesiModel; // jika kategori disimpan di tabel lain
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ProfesiController extends Controller
 {
     public function index()
     {
-        return view('profesi.index');
+        $data = DB::table('tracer_study')
+            ->join('profesi', 'tracer_study.profesi_id', '=', 'profesi.profesi_id')
+            ->select('profesi.nama_profesi', DB::raw('COUNT(*) as total'))
+            ->groupBy('profesi.nama_profesi')
+            ->get();
+
+        $jumlah_profesi = DB::table('profesi')->count(); // Total jenis profesi (15)
+
+        return view('profesi.index', compact('data', 'jumlah_profesi'));
     }
 
     public function list(Request $request)
@@ -155,5 +164,17 @@ class ProfesiController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    // chart controller
+    public function chart()
+    {
+        $data = DB::table('tracer_study')
+            ->join('profesi', 'tracer_study.profesi_id', '=', 'profesi.profesi_id')
+            ->select('profesi.nama_profesi', DB::raw('COUNT(*) as total'))
+            ->groupBy('profesi.nama_profesi')
+            ->get();
+
+        return view('your_view', compact('data'));
     }
 }

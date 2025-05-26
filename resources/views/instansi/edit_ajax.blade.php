@@ -19,6 +19,7 @@
                 <option value="Pendidikan Tinggi" {{ $instansi->jenis_instansi == 'Pendidikan Tinggi' ? 'selected' : '' }}>Pendidikan Tinggi</option>
                 <option value="Pemerintah" {{ $instansi->jenis_instansi == 'Pemerintah' ? 'selected' : '' }}>Pemerintah</option>
                 <option value="Swasta" {{ $instansi->jenis_instansi == 'Swasta' ? 'selected' : '' }}>Swasta</option>
+                <option value="BUMN" {{ $instansi->jenis_instansi == 'BUMN' ? 'selected' : '' }}>BUMN</option>
             </select>
             <div class="invalid-feedback" id="error_jenis_instansi"></div>
         </div>
