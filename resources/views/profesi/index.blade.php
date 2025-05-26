@@ -22,7 +22,8 @@
                     <h1>{{ $jumlah_profesi }}</h1>
                     <p>Total Profesi</p>
                 </div>
-                <p>Grafik menunjukkan sebaran data profesi mahasiswa Politeknik Negeri Malang berdasarkan data tracer alumni 4 tahun terakhir.</p>
+                <p>Grafik menunjukkan sebaran data profesi mahasiswa Politeknik Negeri Malang berdasarkan data tracer alumni
+                    4 tahun terakhir.</p>
             </div>
         </div>
     </div>
@@ -34,12 +35,18 @@
             </p>
             {{-- <button class="btn btn-primary mb-3" id="btn-tambah">Tambah Profesi</button> --}}
 
-            <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')" class="btn btn-primary mb-3">Tambah
-                Data</button>
+
+            <div class="d-flex justify-content-end mb-3">
+                <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')"
+                    class="btn btn-sm btn-primary d-flex align-items-center gap-1">
+                    <i class="mdi mdi-plus-circle-outline fs-5"></i>
+                    Tambah Data
+                </button>
+            </div>
 
 
             <div class="table-responsive">
-                <table class="table" id="profesi-table">
+                <table class="table text-center" id="profesi-table">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -139,43 +146,42 @@
     </script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const profesiCtx = document.getElementById('profesiChart').getContext('2d');
+    <script>
+        const profesiCtx = document.getElementById('profesiChart').getContext('2d');
 
-    const profesiChart = new Chart(profesiCtx, {
-        type: 'pie',
-        data: {
-            labels: {!! json_encode($data->pluck('nama_profesi')) !!},
-            datasets: [{
-                label: 'Sebaran Profesi Alumni',
-                data: {!! json_encode($data->pluck('total')) !!},
-                backgroundColor: [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                    '#9966FF', '#FF9F40', '#C9CBCF', '#FF5E5E',
-                    '#5EF0D9', '#A5A5A5', '#8ED081', '#C17CCF',
-                    '#F5A623', '#34C759', '#C4C4C4'
-                ],
-                hoverOffset: 10
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const label = context.label || '';
-                            const value = context.parsed || 0;
-                            return `${label}: ${value} orang`;
+        const profesiChart = new Chart(profesiCtx, {
+            type: 'pie',
+            data: {
+                labels: {!! json_encode($data->pluck('nama_profesi')) !!},
+                datasets: [{
+                    label: 'Sebaran Profesi Alumni',
+                    data: {!! json_encode($data->pluck('total')) !!},
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                        '#9966FF', '#FF9F40', '#C9CBCF', '#FF5E5E',
+                        '#5EF0D9', '#A5A5A5', '#8ED081', '#C17CCF',
+                        '#F5A623', '#34C759', '#C4C4C4'
+                    ],
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                return `${label}: ${value} orang`;
+                            }
                         }
                     }
                 }
             }
-        }
-    });
-</script>
-
+        });
+    </script>
 @endpush
