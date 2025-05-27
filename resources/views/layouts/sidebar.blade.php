@@ -17,7 +17,7 @@
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <i class="mdi mdi-arrow-expand-all menu-icon"></i>
                 <span class="menu-title">Sebaran</span>
-                <i class="menu-arrow"></i>
+                <i class="mdi mdi-menu-down ml-auto"></i>
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
@@ -55,7 +55,7 @@
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
                 <i class="mdi mdi-star-circle menu-icon"></i>
                 <span class="menu-title">Pengguna</span>
-                <i class="menu-arrow"></i>
+                <i class="mdi mdi-menu-down ml-auto"></i>
             </a>
             <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
@@ -73,7 +73,7 @@
             <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
                 <i class="mdi mdi-account-group menu-icon"></i>
                 <span class="menu-title">Alumni</span>
-                <i class="menu-arrow"></i>
+                <i class="mdi mdi-menu-down ml-auto"></i>
             </a>
             <div class="collapse" id="tables">
                 <ul class="nav flex-column sub-menu">
@@ -86,14 +86,20 @@
         </li>
         {{-- end sidebar alumni --}}
 
+        {{-- Data Ueer --}}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('user.index') }}">
+                <i class="mdi mdi-account-group menu-icon"></i>
+                <span class="menu-title">Data user</span>
+            </a>
+        </li>
 
         {{-- sidebar Kuisioner admin --}}
-
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
                 <i class="mdi mdi-comment-question-outline menu-icon"></i>
                 <span class="menu-title">Kuisioner</span>
-                <i class="menu-arrow"></i>
+                <i class="mdi mdi-menu-down ml-auto"></i>
             </a>
             <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
