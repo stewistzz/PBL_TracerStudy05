@@ -11,9 +11,14 @@ use App\Http\Controllers\KesesuaianPekerjaanController;
 use App\Http\Controllers\UserController;
 
 
-// Auth Routes
-Route::get('/', [AuthController::class, 'login'])->name('login');
-Route::post('/', [AuthController::class, 'postLogin']);
+// route landingpage
+Route::get('/', function () {
+    return view('landing_page');
+});
+    
+// Auth Routes 
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'postLogin']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Protected Routes
@@ -105,3 +110,4 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/success', [TracerStudyController::class, 'success'])->name('success');
         });
     });
+});
