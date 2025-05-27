@@ -31,8 +31,8 @@ class PertanyaanModel extends Model
     }
 
     // Relasi: Satu pertanyaan punya banyak jawaban atasan
-    public function jawabanPengguna()
+   /* public function jawabanPengguna()
     {
         return $this->hasMany(JawabanPenggunaModel::class, 'kode_pertanyaan', 'kode_pertanyaan');
-    }
+    }*/
 }

@@ -9,7 +9,7 @@
                     <h3 class="font-weight-bold">Welcome to Tracer Study Alumni!</h3>
                     <br>
                     <h6 class="font-weight-normal mb-0">
-                        You are logged in as {{ Auth::user()->username }}
+                        You are logged in as {{ Auth::user()->alumni->nama }}
                         {{-- <span class="text-primary">Website Tracer Study</span> --}}
                     </h6>
                 </div>

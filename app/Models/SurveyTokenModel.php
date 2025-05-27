@@ -9,7 +9,7 @@ class SurveyTokenModel extends Model
 {
     protected $table = 'survey_tokens';
     protected $primaryKey = 'token_id';
-    protected $fillable = ['pengguna_id', 'token', 'expires_at', 'used'];
+    protected $fillable = ['pengguna_id', 'alumni_id', 'token', 'expires_at', 'used'];
 
     // Relasi: Satu token terkait satu atasan
     public function pengguna()

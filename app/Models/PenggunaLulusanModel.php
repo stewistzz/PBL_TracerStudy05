@@ -10,7 +10,7 @@ class PenggunaLulusanModel extends Model
 {
     protected $table = 'pengguna_lulusan';
     protected $primaryKey = 'pengguna_id';
-    protected $fillable = ['nama', 'instansi', 'jabatan', 'email'];
+    protected $fillable = ['nama', 'instansi', 'jabatan', 'email', 'no_hp'];
 
     // Relasi: Atasan terkait banyak alumni (many-to-many)
     public function alumni()
