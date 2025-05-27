@@ -105,4 +105,3 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/success', [TracerStudyController::class, 'success'])->name('success');
         });
     });
-});
