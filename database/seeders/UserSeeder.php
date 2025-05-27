@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
                 */
-
+                /*
                  [
                 'username' => 'adminuser1',
                 'password' => Hash::make('admin123'),
@@ -38,9 +38,25 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ], 
+
+            */
             [
-                'username' => '2341766112',
-                'password' => Hash::make('2341766112'),
+                'username' => '2341766008',
+                'password' => Hash::make('2341766008'),
+                'role' => 'alumni',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'username' => '2341766009',
+                'password' => Hash::make('2341766009'),
+                'role' => 'alumni',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'username' => '2341766010',
+                'password' => Hash::make('2341766010'),
                 'role' => 'alumni',
                 'created_at' => now(),
                 'updated_at' => now(),
