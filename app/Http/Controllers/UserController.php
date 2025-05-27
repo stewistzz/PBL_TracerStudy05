@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UsersModel;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
 class UserController extends Controller
@@ -163,4 +164,66 @@ class UserController extends Controller
                 'message' => 'Gagal menghapus user'
             ], 500);
         }
-}}
+    }
+
+    public function import()
+    {
+        return view('user.import');
+    }
+
+    // Proses upload & import via AJAX
+    public function importAjax(Request $request)
+    {
+        $rules = [
+            'file_user' => ['required', 'mimes:xlsx,xls', 'max:2048'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'   => false,
+                'message'  => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
+            ]);
+        }
+
+        // Load spreadsheet
+        $file        = $request->file('file_user');
+        $spreadsheet = IOFactory::load($file->getRealPath());
+        $sheet       = $spreadsheet->getActiveSheet();
+        $rows        = $sheet->toArray();
+
+        // Ambil header dan sisanya sebagai data
+        $header = array_shift($rows);
+        $insert = [];
+
+        foreach ($rows as $row) {
+            // Pastikan kolom pertama (username) tidak kosong
+            if (!empty($row[0])) {
+                $insert[] = [
+                    'username'   => $row[0],
+                    'password'   => bcrypt($row[1]), // enkripsi password
+                    'role'       => $row[2],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+        }
+
+        if (!empty($insert)) {
+            // Insert & abaikan duplikat (jika ada unique constraint di DB)
+            UsersModel::insertOrIgnore($insert);
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Data user berhasil diimport: ' . count($insert) . ' record',
+            ]);
+        }
+
+        return response()->json([
+            'status'  => false,
+            'message' => 'Tidak ada data user untuk diimport.',
+        ]);
+    }
+}

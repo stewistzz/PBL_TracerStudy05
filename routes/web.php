@@ -87,6 +87,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [UserController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [UserController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [UserController::class, 'destroy_ajax'])->name('destroy');
+            // Import
+            Route::get('/import', [UserController::class, 'import'])->name('import');
+            Route::post('/import_ajax', [UserController::class, 'import_ajax'])->name('import_ajax');
         });
 
 
