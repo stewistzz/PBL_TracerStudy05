@@ -8,6 +8,8 @@ use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\TracerStudyController;
 use App\Http\Controllers\KesesuaianPekerjaanController;
+use App\Http\Controllers\UserController;
+
 
 // Auth Routes
 Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -71,11 +73,23 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
         });
     });
+        // route untuk user
+        Route::prefix('user')->name('user.')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+            Route::get('/list', [UserController::class, 'list'])->name('list');
+            Route::get('/create', [UserController::class, 'create_ajax'])->name('create');
+            Route::post('/store', [UserController::class, 'store_ajax'])->name('store');
+            Route::get('/edit/{id}', [UserController::class, 'edit_ajax'])->name('edit');
+            Route::post('/update/{id}', [UserController::class, 'update_ajax'])->name('update');
+            Route::delete('/destroy/{id}', [UserController::class, 'destroy_ajax'])->name('destroy');
+        });
 
-      // route untuk data kesesuaian
+
+        // route untuk data kesesuaian
         Route::get('/admin/kesesuaian', [KesesuaianPekerjaanController::class, 'index'])->name('admin.kesesuaian');
+    });
 
-    // Alumni Routes (User)
+    // Alumni Routes
     Route::middleware(['check.role:alumni'])->group(function () {
         Route::get('/alumni_i/dashboard', [AuthController::class, 'alumniDashboard'])->name('alumni_i.dashboard');
 

@@ -53,6 +53,7 @@
                                     <th>Wirausaha</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
                                 @forelse ($data as $row)
                                     <tr>

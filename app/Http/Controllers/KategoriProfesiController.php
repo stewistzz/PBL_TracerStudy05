@@ -15,26 +15,30 @@ class KategoriProfesiController extends Controller
         return view('kategori_profesi.index');
     }
 
-public function list(Request $request)
-{
-    if ($request->ajax()) {
-        $data = KategoriProfesiModel::select(['kategori_id', 'nama_kategori']);
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = KategoriProfesiModel::select(['kategori_id', 'nama_kategori']);
 
-        return DataTables::of($data)
-            ->addIndexColumn() // otomatis buat kolom "No"
-            ->addColumn('status', function () {
-                return 'Aktif'; // kalau nanti ingin dinamis tinggal ganti di sini
-            })
-            ->addColumn('action', function ($row) {
-                return '
-                    <button class="btn btn-warning btn-sm btn-edit" data-id="' . $row->kategori_id . '">Edit</button>
-                    <button class="btn btn-danger btn-sm btn-hapus" data-id="' . $row->kategori_id . '">Hapus</button>
-                ';
-            })
-            ->rawColumns(['action']) // biar button tidak di-escape
-            ->make(true);
+            return DataTables::of($data)
+                ->addIndexColumn() // otomatis buat kolom "No"
+                ->addColumn('action', function ($row) {
+                    return '
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-sm py-2 btn-warning btn-edit" data-id="' . $row->kategori_id . '">
+                                <i class="mdi mdi-pencil"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger btn-hapus" data-id="' . $row->kategori_id . '">
+                                <i class="mdi mdi-delete"></i> Hapus
+                            </button>
+                        </div>
+                        ';
+                })
+
+                ->rawColumns(['action']) // biar button tidak di-escape
+                ->make(true);
+        }
     }
-}
 
     public function store_ajax(Request $request)
     {
