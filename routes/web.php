@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [AlumniController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
         });
-    });
+    
         // route untuk user
         Route::prefix('user')->name('user.')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('index');
