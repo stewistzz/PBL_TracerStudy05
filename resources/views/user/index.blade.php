@@ -3,16 +3,27 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Data User</h4>
+            <h3 class="font-weight-bold">Data User</h3>
+            <hr>
             <p class="card-description">
-                Kelola data user dengan mudah
+                Halaman Data User memungkinkan admin untuk mengelola informasi pengguna dalam sistem Tracer Study,
+                seperti menambahkan, memperbarui, atau menghapus akun.
+                Setiap pengguna dapat diberi peran tertentu sesuai kebutuhan,
+                sehingga pengelolaan akses dan data menjadi lebih tertata dan efisien.
             </p>
-            <div class="d-flex justify-content-end mb-3">
-                <button class="btn btn-sm btn-primary d-flex align-items-center gap-1" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5"></i>
-                    Tambah Data User
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <!-- Tombol Import (rata kiri) -->
+                <button onclick="modalAction('{{ url('user/import') }}')"
+                    class="btn btn-success d-flex align-items-center gap-2">
+                    <i class="mdi mdi-upload fs-5 mr-2"></i> Import User
+                </button>
+
+                <!-- Tombol Tambah (rata kanan) -->
+                <button class="btn btn-info d-flex align-items-center gap-2" id="btn-tambah">
+                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
                 </button>
             </div>
+
 
             <div class="table-responsive">
                 <table class="table" id="users-table">
@@ -26,6 +37,7 @@
                     </thead>
                 </table>
             </div>
+
         </div>
     </div>
 
@@ -34,7 +46,7 @@
         <div class="modal-dialog" role="document">
             <form id="form-data">
                 <div class="modal-content">
-                    <!-- Isi modal akan diisi oleh AJAX -->
+                    <!-- Konten modal diisi via AJAX -->
                 </div>
             </form>
         </div>
@@ -43,7 +55,6 @@
 
 @push('js')
     <script>
-        // Fungsi loadTable dibuat global agar bisa diakses oleh create_ajax dan edit_ajax
         window.loadTable = function() {
             $('#users-table').DataTable().ajax.reload();
         };
@@ -78,7 +89,6 @@
 
             $('#btn-tambah').click(function() {
                 $.get('{{ route('user.create') }}', function(res) {
-                    console.log('Create Response:', res); // Debug
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 });
@@ -87,7 +97,6 @@
             $('#users-table').on('click', '.btn-edit', function() {
                 let id = $(this).data('id');
                 $.get('{{ route('user.edit', ':id') }}'.replace(':id', id), function(res) {
-                    console.log('Edit Response:', res); // Debug
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 });
@@ -111,7 +120,7 @@
                                 confirmButtonText: 'OK'
                             });
                         },
-                        error: function(err) {
+                        error: function() {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',

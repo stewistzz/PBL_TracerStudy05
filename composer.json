@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "nesbot/carbon": "^2.73",
+        "phpoffice/phpspreadsheet": "^4.3",
         "spatie/laravel-permission": "^6.18",
         "yajra/laravel-datatables-oracle": "^10.11"
     },
