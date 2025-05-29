@@ -16,4 +16,10 @@ class SurveyTokenModel extends Model
     {
         return $this->belongsTo(PenggunaLulusanModel::class, 'pengguna_id', 'pengguna_id');
     }
+
+    // tambah relasi ke alumni (memudahkan akses data alumni terkait)
+    public function alumni()
+{
+    return $this->belongsTo(AlumniModel::class, 'alumni_id', 'alumni_id');
+}
 }

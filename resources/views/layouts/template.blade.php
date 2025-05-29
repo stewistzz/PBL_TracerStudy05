@@ -58,11 +58,22 @@
 <body>
 
     <div class="container-fluid page-body-wrapper">
-        @if (Auth::user()->role == 'admin')
-            @include('layouts.sidebar')
-        @elseif(Auth::user()->role == 'alumni')
-            @include('layouts.sidebarAlumni')
-        @endif
+        {{-- 
+@if (Auth::user()->role == 'admin')
+    @include('layouts.sidebar')
+@elseif(Auth::user()->role == 'alumni')
+    @include('layouts.sidebarAlumni')
+@endif
+--}}
+
+@if (Auth::check())
+    @if (Auth::user()->role == 'admin')
+        @include('layouts.sidebar')
+    @elseif (Auth::user()->role == 'alumni')
+        @include('layouts.sidebarAlumni')
+    @endif
+@endif
+
         <div class="main-panel">
             <div class="content-wrapper">
                 @yield('content') {{-- konten utama tampil di sini --}}
