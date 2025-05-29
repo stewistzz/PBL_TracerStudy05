@@ -1,43 +1,36 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class PertanyaanModel extends Model
 {
+    use HasFactory;
     protected $table = 'pertanyaan';
     protected $primaryKey = 'pertanyaan_id';
-    protected $keyType = 'string';
-    protected $fillable = ['isi_pertanyaan', 'role_target', 'jenis_pertanyaan', 'created_by','kode_kategori'];
+    protected $keyType = 'int';
+    public $incrementing = true;
+    protected $fillable = ['kode_kategori', 'isi_pertanyaan', 'role_target', 'jenis_pertanyaan', 'created_by'];
 
-    // Relasi: Satu pertanyaan terkait satu kategori
     public function kategoriPertanyaan()
     {
         return $this->belongsTo(KategoriPertanyaanModel::class, 'kode_kategori', 'kode_kategori');
     }
 
-    // Relasi: Satu pertanyaan punya banyak opsi
-    // public function opsiPilihan()
-    // {
-    //     return $this->hasMany(OpsiPilihanModel::class, 'pertanyaan_id', 'kode_kategori');
-    // }
-
-    // Relasi: Satu pertanyaan punya banyak jawaban alumni
-    public function jawabanAlumni()
+    public function opsiPilihan()
     {
-        return $this->hasMany(JawabanAlumniModel::class, 'kode_kategori', 'kode_kategori');
+        return $this->hasMany(OpsiPilihanModel::class, 'pertanyaan_id', 'pertanyaan_id');
     }
 
-    // Relasi: Satu pertanyaan punya banyak jawaban atasan
-   /* public function jawabanPengguna()
+    public function jawabanAlumni()
     {
-        return $this->hasMany(JawabanPenggunaModel::class, 'kode_kategori', 'kode_kategori');
-    }*/
+        return $this->hasMany(JawabanAlumniModel::class, 'pertanyaan_id', 'pertanyaan_id');
+    }
 
-    public function admin()
+    public function jawabanPengguna()
     {
-        return $this->belongsTo(AdminModel::class, 'created_by', 'admin_id');
+        return $this->hasMany(JawabanPenggunaModel::class, 'pertanyaan_id', 'pertanyaan_id');
     }
 }

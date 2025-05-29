@@ -24,6 +24,18 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'postLogin']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Survey Routes (untuk pengguna_lulusan mengisi survei via token)
+Route::prefix('survey')->name('survey.')->group(function () {
+    Route::get('/access/{token}', [App\Http\Controllers\SurveyController::class, 'accessSurvey'])->name('access');
+    Route::post('/access/{token}', [App\Http\Controllers\SurveyController::class, 'submitSurvey'])->name('submit');
+    Route::get('/invalid', function () {
+        return view('survey.survey_invalid')->with('error', session('error'));
+    })->name('invalid');
+    Route::get('/success', function () {
+        return view('survey.survey_success')->with('success', session('success'));
+    })->name('success');
+});
+
 // Protected Routes
 Route::middleware(['auth'])->group(function () {
     // Admin Routes
