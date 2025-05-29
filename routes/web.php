@@ -10,6 +10,7 @@ use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\TracerStudyController;
 use App\Http\Controllers\KesesuaianPekerjaanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DataPenggunaController;
 use App\Http\Controllers\PertanyaanController;
 
 
@@ -78,6 +79,17 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [AlumniController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [AlumniController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
+        });
+
+            // route untuk data pengguna
+        Route::prefix('data_pengguna')->name('data_pengguna.')->group(function () {
+            Route::get('/', [DataPenggunaController::class, 'index'])->name('index');
+            Route::get('/list', [DataPenggunaController::class, 'list'])->name('list');
+            Route::get('/create', [DataPenggunaController::class, 'create_ajax'])->name('create');
+            Route::post('/store', [DataPenggunaController::class, 'store_ajax'])->name('store');
+            Route::get('/edit/{id}', [DataPenggunaController::class, 'edit_ajax'])->name('edit');
+            Route::post('/update/{id}', [DataPenggunaController::class, 'update_ajax'])->name('update');
+            Route::delete('/destroy/{id}', [DataPenggunaController::class, 'destroy_ajax'])->name('destroy');
         });
 
         // route untuk user
