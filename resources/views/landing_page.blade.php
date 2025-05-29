@@ -7,800 +7,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <title>Tracer Study - Combined</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <style>
-        /* Reset & Base */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    <link rel="stylesheet" href="{{ asset('skydash/template/css/style_landing.css') }}">
 
-        body {
-            font-size: 14px;
-            background: rgba(247, 251, 255, 1);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* === LANDING PAGE SECTION === */
-        .landing-section {
-            width: 100%;
-            height: 1166px;
-            background: rgba(255, 255, 255, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-background {
-            width: 100%;
-            height: 844px;
-            background: rgba(247, 251, 255, 1);
-            position: absolute;
-            top: 0px;
-            left: 0px;
-        }
-
-        .hero-image {
-            width: 500px;
-            height: 500px;
-            background: url("/skydash/template/images/hero.png") center/cover;
-            position: absolute;
-            top: 195px;
-            left: 950px;
-        }
-
-        .welcome-text {
-            width: 390px;
-            color: rgba(42, 49, 67, 1);
-            position: absolute;
-            top: 231px;
-            left: 150px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 64px;
-            text-align: left;
-            white-space: nowrap;
-        }
-
-        .institution-text {
-            width: 806px;
-            color: rgba(42, 49, 67, 1);
-            position: absolute;
-            top: 416px;
-            left: 150px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 64px;
-            text-align: left;
-            white-space: nowrap;
-        }
-
-        .tracer-study-text {
-            width: 414px;
-            color: rgba(30, 128, 193, 1);
-            position: absolute;
-            top: 320px;
-            left: 263px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 64px;
-            text-align: left;
-            white-space: nowrap;
-        }
-
-        .blue-divider {
-            width: 97px;
-            height: 4px;
-            background: rgba(85, 123, 165, 1);
-            position: absolute;
-            top: 366px;
-            left: 150px;
-        }
-
-        .header-bar {
-            width: 100%;
-            height: 100px;
-            background: rgba(255, 255, 255, 1);
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .navigation {
-            width: 627px;
-            height: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: absolute;
-            top: 38px;
-            left: 875px;
-        }
-
-        .navigation span {
-            color: rgba(46, 46, 46, 1);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 16px;
-            text-align: left;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .navigation span:hover {
-            color: rgba(30, 128, 193, 1);
-        }
-
-        .logo-container {
-            width: 246px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            position: absolute;
-            top: 20px;
-            left: 150px;
-        }
-
-        .logo-image {
-            width: 140px;
-            height: 100px;
-            background: url("/skydash/template/images/logo.png") center/cover;
-        }
-
-        .logo-text {
-            margin-left: 12px;
-        }
-
-        .logo-title {
-            color: rgba(26, 60, 86, 1);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 20px;
-            text-align: left;
-        }
-
-        .logo-subtitle {
-            color: rgba(26, 60, 86, 1);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 12px;
-            text-align: left;
-        }
-
-        .description-text {
-            width: 597px;
-            color: rgba(116, 117, 126, 1);
-            position: absolute;
-            top: 547px;
-            left: 150px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 18px;
-            text-align: left;
-        }
-
-        .start-button {
-            width: 200px;
-            height: 62px;
-            background: rgba(85, 123, 165, 1);
-            padding: 14px 11px;
-            position: absolute;
-            top: 668px;
-            left: 150px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .start-button:hover {
-            background: rgba(10, 80, 130, 1);
-        }
-
-        .start-button-text {
-            color: rgba(255, 255, 255, 1);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 18px;
-            text-align: left;
-        }
-
-        .view-stats-button {
-            width: 245px;
-            height: 62px;
-            background: #F7FBFF;
-            padding: 14px 10px;
-            position: absolute;
-            top: 668px;
-            left: 368px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: 1px solid rgba(85, 123, 165, 1);
-            transition: background-color 0.3s ease;
-        }
-
-        .view-stats-button:hover {
-            background: rgba(85, 123, 165, 0.05);
-        }
-
-        .view-stats-content {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .view-stats-text {
-            color: rgba(85, 123, 165, 1);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 18px;
-            text-align: left;
-        }
-
-        .arrow-icon {
-            font-size: 18px;
-            line-height: 1;
-            color: rgba(85, 123, 165, 1);
-            transform: translateX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .view-stats-button:hover .arrow-icon {
-            transform: translateX(5px);
-        }
-
-        .info-cards-container {
-            width: calc(100% - 300px);
-            height: 230px;
-            background: rgba(255, 255, 255, 1);
-            position: absolute;
-            top: 795px;
-            left: 150px;
-            border: 1px solid rgba(241, 240, 240, 1);
-            border-radius: 6px;
-        }
-
-        .info-cards-grid {
-            width: calc(100% - 374px);
-            height: 161px;
-            display: flex;
-            justify-content: space-between;
-            position: absolute;
-            top: 830px;
-            left: 187px;
-        }
-
-        .info-card {
-            width: 315px;
-            height: 161px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .info-card h3 {
-            color: rgba(42, 49, 67, 1);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 20px;
-            text-align: left;
-            margin: 0;
-        }
-
-        .info-card p {
-            color: rgba(42, 49, 67, 1);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 14px;
-            text-align: left;
-            margin: 0;
-        }
-
-        .read-more {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            color: rgba(30, 128, 193, 1);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 14px;
-            text-align: left;
-            transition: color 0.3s ease;
-            width: fit-content;
-        }
-
-        .read-more span {
-            margin-right: 5px;
-        }
-
-        .read-more::after {
-            content: '→';
-            font-size: 14px;
-            line-height: 1;
-            margin-left: 5px;
-            transition: margin-left 0.3s ease;
-        }
-
-        .read-more:hover {
-            color: rgba(10, 80, 130, 1);
-        }
-
-        .read-more:hover::after {
-            margin-left: 10px;
-        }
-
-        /* === ABOUT PAGE SECTION === */
-        .about-section {
-            width: 100%;
-            height: 1166px;
-            background: rgba(255, 255, 255, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-label {
-            width: 191px;
-            color: rgba(105, 105, 105, 1);
-            position: absolute;
-            top: 9px;
-            left: 960px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 20px;
-            text-align: left;
-        }
-
-        .about-content-box {
-            width: 570px;
-            height: 207px;
-            /* background: url("https://via.placeholder.com/555x207/F0F0F0/000000?text=Section+Image") center/cover; */
-            margin: 10px;
-            position: absolute;
-            top: 54px;
-            left: 950px;
-        }
-
-        .what-is-title {
-            width: 570px;
-            color: rgba(42, 49, 67, 1);
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 40px;
-            text-align: left;
-        }
-
-        .what-is-description {
-            width: 570px;
-            color: rgba(42, 49, 67, 1);
-            position: absolute;
-            top: 75px;
-            left: 0px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 18px;
-            text-align: justify;
-            line-height: 30px;
-        }
-
-        .about-main-image {
-            width: 459px;
-            height: 459px;
-            background: url("/skydash/template/images/about.png") center/cover;
-            position: absolute;
-            top: 9px;
-            left: 150px;
-        }
-
-        .benefits-label {
-            width: 235px;
-            color: rgba(105, 105, 105, 1);
-            position: absolute;
-            top: 561px;
-            left: 150px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 20px;
-            text-align: left;
-        }
-
-        .benefits-title {
-            width: 497px;
-            color: rgba(42, 49, 67, 1);
-            position: absolute;
-            top: 606px;
-            left: 150px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 40px;
-            text-align: left;
-        }
-
-        .benefits-description {
-            width: 600px;
-            color: rgba(42, 49, 67, 1);
-            position: absolute;
-            top: 675px;
-            left: 150px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 18px;
-            /* text-align: justify; */
-            line-height: 30px;
-        }
-
-        .benefit-card-1 {
-            width: 470px;
-            height: 154px;
-            background: rgba(255, 255, 255, 1);
-            padding: 35px 29px;
-            margin: 10px;
-            position: absolute;
-            top: 475px;
-            left: 900px;
-            border-radius: 20px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .benefit-card-2 {
-            width: 470px;
-            height: 154px;
-            background: rgba(255, 255, 255, 1);
-            padding: 23px 22px;
-            margin: 10px;
-            position: absolute;
-            top: 700px;
-            left: 1000px;
-            border-radius: 20px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .benefit-card-3 {
-            width: 470px;
-            height: 154px;
-            background: rgba(255, 255, 255, 1);
-            padding: 23px 22px;
-            margin: 10px;
-            position: absolute;
-            top: 925px;
-            left: 900px;
-            border-radius: 20px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .benefit-content {
-            width: 399px;
-            height: 83px;
-            position: relative;
-        }
-
-        .benefit-number {
-            width: 70px;
-            height: 70px;
-            background: rgba(85, 123, 165, 1);
-            border-radius: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .benefit-number-text {
-            color: rgba(255, 255, 255, 1);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 24px;
-        }
-
-        .benefit-text-container {
-            width: 299px;
-            height: 83px;
-            position: absolute;
-            top: 0px;
-            left: 100px;
-        }
-
-        .benefit-title {
-            width: 299px;
-            color: rgba(46, 46, 46, 1);
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 20px;
-        }
-
-        .benefit-desc {
-            width: 310px;
-            color: #6A6A6A;
-            position: absolute;
-            top: 35px;
-            left: 0px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 16px;
-        }
-
-        /* === STATISTICS SECTION === */
-        .stats-section {
-            width: 100%;
-            height: 1166px;
-            background: rgba(255, 255, 255, 1);
-            position: relative;
-            top: 0px;
-            left: 0px;
-            overflow: hidden;
-        }
-
-        .stats-background {
-            width: 100%;
-            height: 100%;
-            background: rgba(247, 251, 255, 1);
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            overflow: hidden;
-        }
-
-        .stats-title {
-            position: absolute;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Poppins', sans-serif;
-            font-size: 40px;
-            font-weight: 500;
-            color: rgba(42, 49, 67, 1);
-            text-align: center;
-        }
-
-        /* Styles for Pie Chart Container */
-        .chart-container {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            height: 100%;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #333;
-            text-align: center;
-        }
-
-        #pieChart,
-        #compatibilityPieChart {
-            max-height: 400px;
-        }
-
-        /* Adjusted position for pie chart */
-        .profession-list-chart {
-            width: 488px;
-            height: 558px;
-            position: absolute;
-            top: 120px;
-            /* Adjusted top position */
-            left: 150px;
-            /* Adjusted left position */
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .compatibility-chart {
-            width: 488px;
-            height: 558px;
-            /* background: url("/images/kesesuaian.png") center/cover; */
-            /* Background image removed to show the chart */
-            position: absolute;
-            top: 120px;
-            left: 750px;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .satisfaction-chart {
-            width: 488px;
-            height: 397px;
-            background: url("/skydash/template/images/kepuasan.png") center/cover;
-            position: absolute;
-            top: 700px;
-            left: 150px;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .waiting-period-chart {
-            width: 488px;
-            height: 397px;
-            background: url("/skydash/template/images/masa-tunggu.png") center/cover;
-            position: absolute;
-            top: 700px;
-            left: 750px;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        /* === PURPOSE SECTION === */
-        .purpose-section {
-            width: 100%;
-            height: 1166px;
-            background: rgba(255, 255, 255, 1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .purpose-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .purpose-left {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-right: 2rem;
-        }
-
-        .purpose-left img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .purpose-right {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .purpose-pre-title {
-            font-size: 20px;
-            font-weight: 400;
-            color: #696969;
-        }
-
-        .purpose-main-title {
-            font-size: 40px;
-            font-weight: 500;
-            line-height: 1.25;
-            margin: 0.5rem 0 2.5rem 0;
-            background: linear-gradient(to right, rgba(42, 49, 67, 1));
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
-
-        .purpose-items {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .purpose-item {
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            padding: 1.5rem;
-            border-radius: 12px;
-            background-color: #FFFFFF;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .purpose-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(42, 49, 67, 0.1);
-        }
-
-        .purpose-item .item-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .purpose-item .icon {
-            font-size: 16px;
-            color: #1e80c1;
-            transition: transform 0.4s ease, color 0.3s ease;
-        }
-
-        .purpose-item:hover .icon {
-            transform: rotate(180deg);
-            color: #0a5082;
-        }
-
-        .purpose-item .item-title {
-            font-size: 24px;
-            font-weight: 500;
-            color: #1e80c1;
-            transition: color 0.3s ease;
-        }
-
-        .purpose-item:hover .item-title {
-            color: #0a5082;
-        }
-
-        .purpose-item .item-description {
-            font-size: 18px;
-            font-weight: 400;
-            color: #696969;
-            line-height: 1.6;
-            margin-top: 0;
-            padding-left: 2.5rem;
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, margin-top 0.5s ease-in-out;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-        }
-
-        .purpose-item.collapsed .item-description {
-            max-height: 0;
-            opacity: 0;
-            margin-top: 0;
-        }
-
-        .purpose-item.collapsed:hover .item-description {
-            max-height: 200px;
-            opacity: 1;
-            margin-top: 1rem;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    <div class="landing-section">
+    <!-- Section: Landing / Home -->
+    <div class="landing-section" id="home">
+
+        <!-- Background Elements -->
         <div class="hero-background"></div>
         <div class="hero-image"></div>
+
+        <!-- Divider -->
+        <div class="blue-divider"></div>
+
+        <!-- Header/Navbar -->
+        <div class="header-bar">
+            <div class="navigation">
+                <a href="#home">Home</a>
+                <a href="#about">About Tracer Study</a>
+                <a href="#survey">Survey Content</a>
+                <a href="#statistics">Statistics</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <!-- Logo Section -->
+            <div class="logo-container">
+                <div class="logo-image"></div>
+                <div class="logo-text">
+                    <span class="logo-title">TRACER STUDY</span>
+                    <span class="logo-subtitle">POLITEKNIK NEGERI MALANG</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome Text -->
         <span class="welcome-text">Welcome to</span>
         <span class="tracer-study-text">Tracer Study</span>
         <span class="institution-text">Politeknik Negeri Malang</span>
-        <div class="blue-divider"></div>
-        <div class="header-bar"></div>
-        <div class="navigation">
-            <span>Home</span>
-            <span>About Tracer Study</span>
-            <span>Survey Content</span>
-            <span>Statistics</span>
-            <span>Contact</span>
-        </div>
-        <div class="logo-container">
-            <div class="logo-image"></div>
-            <div class="logo-text">
-                <span class="logo-title">TRACER STUDY</span>
-                <span class="logo-subtitle">POLITEKNIK NEGERI MALANG</span>
-            </div>
-        </div>
-        <span class="description-text">Tracer Study aims to track alumni to improve the quality of education and
-            curriculum relevance.</span>
+
+        <!-- Description -->
+        <span class="description-text">
+            Tracer Study aims to track alumni to improve the quality of education and curriculum relevance.
+        </span>
+
+        <!-- Login Button -->
         <div class="start-button">
             <a href="{{ route('login') }}" class="start-button-text">Login</a>
         </div>
 
-        <div class="view-stats-button">
-            <div class="view-stats-content">
-                <span class="view-stats-text">View Alumni Statistic</span>
-                <span class="arrow-icon">→</span>
-            </div>
-        </div>
+        <!-- Info Cards -->
         <div class="info-cards-container"></div>
         <div class="info-cards-grid">
             <div class="info-card">
@@ -810,14 +68,16 @@
                     <span>Read more</span>
                 </div>
             </div>
+
             <div class="info-card">
                 <h3>Graduate User Survey</h3>
                 <p>Aimed at all users of Polinema graduates in measuring the quality of graduates from the user's point
-                    of view.</p>
+                    of view. </p>
                 <div class="read-more">
                     <span>Read more</span>
                 </div>
             </div>
+
             <div class="info-card">
                 <h3>Tracer Study Report</h3>
                 <p>Tracer Study results are reported annually and socialized to all stakeholders.</p>
@@ -828,7 +88,7 @@
         </div>
     </div>
 
-    <div class="about-section">
+    <div class="about-section" id="about">
         <span class="about-label">About Tracer Study</span>
         <div class="about-content-box">
             <span class="what-is-title">What is Tracer Study?</span>
@@ -881,27 +141,37 @@
         </div>
     </div>
 
-    <div class="stats-section">
-        <div class="stats-background">
-            <h1 class="stats-title">Alumni Statistics</h1>
 
-            <div class="profession-list-chart">
-                <div class="chart-container">
-                    <h4 class="card-title">List Profesi</h4>
-                    <canvas id="pieChart"></canvas>
-                </div>
+    {{-- chart --}}
+    <div class="statis" id="statistics">
+        <div class="chart-section">
+            <div class="chart-title">Multi Axis Line Chart</div>
+            <center>
+                <canvas class="linechart" id="multiAxisChart"></canvas>
+            </center>
+        </div>
+
+        <div class="charts-wrapper">
+            <div class="chart-box">
+                <h3>Pie Chart</h3>
+                <canvas id="pieChart"></canvas>
             </div>
 
-            <div class="compatibility-chart">
-                <div class="chart-container">
-                    <h4 class="card-title">Kesesuaian</h4>
-                    <canvas id="compatibilityPieChart"></canvas>
-                </div>
+            <div class="chart-box">
+                <h3 class="chart-title">Doughnut Chart</h3>
+                <canvas id="doughnutChart"></canvas>
             </div>
-            <div class="satisfaction-chart"></div>
-            <div class="waiting-period-chart"></div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-title">
+                <h3>Stacked Bar + Line Chart</h3>
+                <center><canvas id="stackedChart"></canvas></center>
+            </div>
         </div>
     </div>
+
+    {{-- end hart --}}
 
     <div class="purpose-section">
         <div class="purpose-container">
@@ -975,104 +245,223 @@
         </div>
     </div>
 
+
+    <div class="contact-section" id="contact">
+        <div class="footer-container">
+            <h3>Contact Us</h3>
+            <p>Politeknik Negeri Malang</p>
+            <p>Email: info@polinema.ac.id</p>
+            <p>Phone: +62 341 123456</p>
+            <p>Address: Jl. Soekarno Hatta No.9, Malang, Indonesia</p>
+            <div class="social-media">
+                <a href="https://facebook.com/polinema" target="_blank">Facebook</a> |
+                <a href="https://twitter.com/polinema" target="_blank">Twitter</a> |
+                <a href="https://instagram.com/polinema" target="_blank">Instagram</a>
+            </div>
+        </div>
+
+    </div>
+
     <script>
-        // Data for Profession List Pie Chart
-        var doughnutPieData = {
+        // --- Multi Axis Line Chart ---
+        const multiAxisCtx = document.getElementById('multiAxisChart').getContext('2d');
+
+        const multiAxisData = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
             datasets: [{
-                data: [40, 25, 20, 15],
-                backgroundColor: [
-                    'rgba(1, 22, 87, 0.9)', // Profesi 1
-                    'rgba(10, 68, 133, 0.9)', // Profesi 2
-                    'rgba(21, 143, 187, 0.9)', // Profesi 3
-                    'rgba(18, 175, 206, 0.9)' // Profesi 4
-                ],
-                borderColor: [
-                    'rgba(1, 22, 87, 1)',
-                    'rgba(10, 68, 133, 1)',
-                    'rgba(21, 143, 187, 1)',
-                    'rgba(18, 175, 206, 1)'
-                ],
-                borderWidth: 2
-            }],
-            labels: [
-                'UI/UX Designer',
-                'Data Scientist',
-                'Script Writer',
-                'Animator'
-            ]
-        };
-
-        // Data for Compatibility Pie Chart
-        var compatibilityData = {
-            datasets: [{
-                data: [85, 15], // Data for Sesuai vs Tidak Sesuai
-                backgroundColor: [
-                    'rgba(10, 68, 133, 1)',
-                    'rgba(21, 143, 187, 0.9)'
-                ],
-                borderColor: [
-                    'rgba(10, 68, 133, 1)',
-                    'rgba(21, 143, 187, 1)'
-                ],
-                borderWidth: 2
-            }],
-            labels: [
-                'Sesuai',
-                'Tidak Sesuai'
-            ]
-        };
-
-
-        // Options for all Pie Charts
-        var doughnutPieOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            },
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        padding: 20,
-                        usePointStyle: true,
-                        font: {
-                            size: 14
-                        }
-                    }
+                    label: 'Dataset 1 (Left Axis)',
+                    data: [65, 59, 80, 81, 56, 55],
+                    borderColor: 'rgba(1, 22, 87, 0.9)',
+                    backgroundColor: 'rgba(1, 22, 87, 0.2)',
+                    yAxisID: 'y',
+                    tension: 0.4
                 },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            label += context.parsed + '%';
-                            return label;
-                        }
+                {
+                    label: 'Dataset 2 (Right Axis)',
+                    data: [28, 48, 40, 19, 86, 27],
+                    borderColor: 'rgba(21, 143, 187, 0.9)',
+                    backgroundColor: 'rgba(21, 143, 187, 0.2)',
+                    yAxisID: 'y1',
+                    tension: 0.4
+                }
+            ]
+        };
+
+        const multiAxisConfig = {
+            type: 'line',
+            data: multiAxisData,
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                    title: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Left Axis',
+                        },
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                        title: {
+                            display: true,
+                            text: 'Right Axis',
+                        },
+                    },
+                },
+            }
+        };
+
+        new Chart(multiAxisCtx, multiAxisConfig);
+
+        // --- Pie Chart and Doughnut Chart ---
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        const doughnutCtx = document.getElementById('doughnutChart').getContext('2d');
+
+        // Warna untuk dataset
+        const colors = [
+            'rgba(1, 22, 87, 0.9)', // Dataset 1
+            'rgba(21, 143, 187, 0.9)' // Dataset 2
+        ];
+
+        const bgColors = [
+            'rgba(1, 22, 87, 0.2)',
+            'rgba(21, 143, 187, 0.2)'
+        ];
+
+        const pieConfig = {
+            type: 'pie',
+            data: {
+                labels: ['Dataset 1', 'Dataset 2'],
+                datasets: [{
+                    label: 'Pie Chart',
+                    data: [65, 35],
+                    backgroundColor: colors,
+                    borderColor: bgColors,
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'bottom', // Legend di bawah
                     }
                 }
             }
         };
 
-        // Create Profession List Pie Chart
-        var pieChartCanvas = document.getElementById("pieChart").getContext("2d");
-        var pieChart = new Chart(pieChartCanvas, {
-            type: 'pie',
-            data: doughnutPieData,
-            options: doughnutPieOptions
-        });
+        const doughnutConfig = {
+            type: 'doughnut',
+            data: {
+                labels: ['Dataset 1', 'Dataset 2'],
+                datasets: [{
+                    label: 'Doughnut Chart',
+                    data: [70, 30],
+                    backgroundColor: colors,
+                    borderColor: bgColors,
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'bottom', // Legend di bawah
+                    }
+                }
+            }
+        };
 
-        // Create Compatibility Pie Chart
-        var compatibilityPieChartCanvas = document.getElementById("compatibilityPieChart").getContext("2d");
-        var compatibilityPieChart = new Chart(compatibilityPieChartCanvas, {
-            type: 'pie',
-            data: compatibilityData,
-            options: doughnutPieOptions
-        });
+        new Chart(pieCtx, pieConfig);
+        new Chart(doughnutCtx, doughnutConfig);
+
+        // --- Stacked Bar Chart with Line ---
+        const stackedCtx = document.getElementById('stackedChart').getContext('2d');
+
+        const stackedData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                    type: 'bar',
+                    label: 'Dataset 1',
+                    data: [30, 50, 40, 60, 70, 55],
+                    backgroundColor: 'rgba(1, 22, 87, 0.9)',
+                    stack: 'stack1'
+                },
+                {
+                    type: 'bar',
+                    label: 'Dataset 2',
+                    data: [20, 30, 35, 25, 16, 20],
+                    backgroundColor: 'rgba(21, 143, 187, 0.9)',
+                    stack: 'stack1'
+                },
+                {
+                    type: 'line',
+                    label: 'Line Trend',
+                    data: [50, 80, 75, 85, 86, 75],
+                    borderColor: 'rgba(1, 22, 87, 0.9)',
+                    backgroundColor: 'rgba(1, 22, 87, 0.2)',
+                    fill: false,
+                    tension: 0.4,
+                    yAxisID: 'y'
+                }
+            ]
+        };
+
+        const stackedConfig = {
+            type: 'bar',
+            data: stackedData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                stacked: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                },
+                layout: {
+                    padding: {
+                        top: 10,
+                        bottom: 10
+                    }
+                }
+            }
+        };
+
+        new Chart(stackedCtx, stackedConfig);
     </script>
+
 </body>
 
 </html>

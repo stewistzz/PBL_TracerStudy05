@@ -1,0 +1,850 @@
+/* Reset & Base */
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 14px;
+    background: rgba(247, 251, 255, 1);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* === LANDING PAGE SECTION === */
+.landing-section {
+    width: 100%;
+    height: 1166px;
+    background: rgba(255, 255, 255, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-background {
+    width: 100%;
+    height: 844px;
+    background: rgba(247, 251, 255, 1);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.hero-image {
+    width: 500px;
+    height: 500px;
+    background: url("/skydash/template/images/hero.png") center/cover;
+    position: absolute;
+    top: 195px;
+    left: 950px;
+}
+
+.welcome-text {
+    width: 390px;
+    color: rgba(42, 49, 67, 1);
+    position: absolute;
+    top: 231px;
+    left: 150px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 64px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.institution-text {
+    width: 806px;
+    color: rgba(42, 49, 67, 1);
+    position: absolute;
+    top: 416px;
+    left: 150px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 64px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tracer-study-text {
+    width: 414px;
+    color: rgba(30, 128, 193, 1);
+    position: absolute;
+    top: 320px;
+    left: 263px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 64px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.blue-divider {
+    width: 97px;
+    height: 4px;
+    background: rgba(85, 123, 165, 1);
+    position: absolute;
+    top: 366px;
+    left: 150px;
+}
+
+.header-bar {
+    width: 100%;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    z-index: 1000;
+}
+
+.navigation {
+    width: 627px;
+    height: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 38px;
+    left: 875px;
+}
+
+.navigation a {
+    color: rgba(46, 46, 46, 1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.navigation a:hover {
+    color: rgba(30, 128, 193, 1);
+}
+
+.logo-container {
+    width: 246px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    left: 150px;
+}
+
+.logo-image {
+    width: 140px;
+    height: 100px;
+    background: url("/skydash/template/images/logo.png") center/cover;
+}
+
+.logo-text {
+    margin-left: 12px;
+}
+
+.logo-title {
+    color: rgba(26, 60, 86, 1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    text-align: left;
+}
+
+.logo-subtitle {
+    color: rgba(26, 60, 86, 1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    text-align: left;
+}
+
+.description-text {
+    width: 597px;
+    color: rgba(116, 117, 126, 1);
+    position: absolute;
+    top: 547px;
+    left: 150px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: left;
+}
+
+.start-button {
+    width: 200px;
+    height: 62px;
+    background: #1E80C1;
+    padding: 14px 11px;
+    position: absolute;
+    top: 668px;
+    left: 150px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.start-button:hover {
+    background: rgba(10, 80, 130, 1);
+}
+
+.start-button-text {
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: left;
+}
+
+.view-stats-button {
+    width: 245px;
+    height: 62px;
+    background: #F7FBFF;
+    padding: 14px 10px;
+    position: absolute;
+    top: 668px;
+    left: 368px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid rgba(85, 123, 165, 1);
+    transition: background-color 0.3s ease;
+}
+
+.view-stats-button:hover {
+    background: rgba(85, 123, 165, 0.05);
+}
+
+.view-stats-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.view-stats-text {
+    color: rgba(85, 123, 165, 1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: left;
+}
+
+.arrow-icon {
+    font-size: 18px;
+    line-height: 1;
+    color: rgba(85, 123, 165, 1);
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
+
+.view-stats-button:hover .arrow-icon {
+    transform: translateX(5px);
+}
+
+.info-cards-container {
+    width: calc(100% - 300px);
+    height: 230px;
+    background: rgba(255, 255, 255, 1);
+    position: absolute;
+    top: 795px;
+    left: 150px;
+    border: 1px solid rgba(241, 240, 240, 1);
+    border-radius: 6px;
+}
+
+.info-cards-grid {
+    width: calc(100% - 374px);
+    height: 161px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 830px;
+    left: 187px;
+}
+
+.info-card {
+    width: 315px;
+    height: 161px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info-card h3 {
+    color: rgba(42, 49, 67, 1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    text-align: left;
+    margin: 0;
+}
+
+.info-card p {
+    color: rgba(42, 49, 67, 1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: left;
+    margin: 0;
+}
+
+.read-more {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: rgba(30, 128, 193, 1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: left;
+    transition: color 0.3s ease;
+    width: fit-content;
+}
+
+.read-more span {
+    margin-right: 5px;
+}
+
+.read-more::after {
+    content: '→';
+    font-size: 14px;
+    line-height: 1;
+    margin-left: 5px;
+    transition: margin-left 0.3s ease;
+}
+
+.read-more:hover {
+    color: rgba(10, 80, 130, 1);
+}
+
+.read-more:hover::after {
+    margin-left: 10px;
+}
+
+/* === ABOUT PAGE SECTION === */
+.about-section {
+    width: 100%;
+    height: 1166px;
+    background: rgba(255, 255, 255, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-label {
+    width: 191px;
+    color: rgba(105, 105, 105, 1);
+    position: absolute;
+    top: 9px;
+    left: 960px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: left;
+}
+
+.about-content-box {
+    width: 570px;
+    height: 207px;
+    /* background: url("https://via.placeholder.com/555x207/F0F0F0/000000?text=Section+Image") center/cover; */
+    margin: 10px;
+    position: absolute;
+    top: 54px;
+    left: 950px;
+}
+
+.what-is-title {
+    width: 570px;
+    color: rgba(42, 49, 67, 1);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    text-align: left;
+}
+
+.what-is-description {
+    width: 570px;
+    color: rgba(42, 49, 67, 1);
+    position: absolute;
+    top: 75px;
+    left: 0px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: justify;
+    line-height: 30px;
+}
+
+.about-main-image {
+    width: 459px;
+    height: 459px;
+    background: url("/skydash/template/images/about.png") center/cover;
+    position: absolute;
+    top: 9px;
+    left: 150px;
+}
+
+.benefits-label {
+    width: 235px;
+    color: rgba(105, 105, 105, 1);
+    position: absolute;
+    top: 561px;
+    left: 150px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: left;
+}
+
+.benefits-title {
+    width: 497px;
+    color: rgba(42, 49, 67, 1);
+    position: absolute;
+    top: 606px;
+    left: 150px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    text-align: left;
+}
+
+.benefits-description {
+    width: 600px;
+    color: rgba(42, 49, 67, 1);
+    position: absolute;
+    top: 675px;
+    left: 150px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    /* text-align: justify; */
+    line-height: 30px;
+}
+
+.benefit-card-1 {
+    width: 470px;
+    height: 154px;
+    background: rgba(255, 255, 255, 1);
+    padding: 35px 29px;
+    margin: 10px;
+    position: absolute;
+    top: 475px;
+    left: 900px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+}
+
+.benefit-card-2 {
+    width: 470px;
+    height: 154px;
+    background: rgba(255, 255, 255, 1);
+    padding: 23px 22px;
+    margin: 10px;
+    position: absolute;
+    top: 700px;
+    left: 1000px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+}
+
+.benefit-card-3 {
+    width: 470px;
+    height: 154px;
+    background: rgba(255, 255, 255, 1);
+    padding: 23px 22px;
+    margin: 10px;
+    position: absolute;
+    top: 925px;
+    left: 900px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+}
+
+.benefit-content {
+    width: 399px;
+    height: 83px;
+    position: relative;
+}
+
+.benefit-number {
+    width: 70px;
+    height: 70px;
+    background: rgba(85, 123, 165, 1);
+    border-radius: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.benefit-number-text {
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.benefit-text-container {
+    width: 299px;
+    height: 83px;
+    position: absolute;
+    top: 0px;
+    left: 100px;
+}
+
+.benefit-title {
+    width: 299px;
+    color: rgba(46, 46, 46, 1);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.benefit-desc {
+    width: 310px;
+    color: #6A6A6A;
+    position: absolute;
+    top: 35px;
+    left: 0px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+/* === STATISTICS SECTION === */
+.stats-section {
+    width: 100%;
+    background: #fff;
+    padding: 50px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.stats-background {
+    background: rgba(247, 251, 255, 1);
+    padding: 40px 20px;
+    border-radius: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.stats-title {
+    font-size: 40px;
+    font-weight: 600;
+    color: rgba(42, 49, 67, 1);
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Grid Layout */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Card Style for Charts */
+.chart-container {
+    background: #fff;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2A3143;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+canvas {
+    width: 100% !important;
+    height: 300px !important;
+    max-width: 400px;
+}
+
+/* Card Style for Images */
+.image-card {
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* === PURPOSE SECTION === */
+.purpose-section {
+    width: 100%;
+    height: 1166px;
+    background: rgba(255, 255, 255, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.purpose-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.purpose-left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 2rem;
+}
+
+.purpose-left img {
+    max-width: 100%;
+    height: auto;
+}
+
+.purpose-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.purpose-pre-title {
+    font-size: 20px;
+    font-weight: 400;
+    color: #696969;
+}
+
+.purpose-main-title {
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.25;
+    margin: 0.5rem 0 2.5rem 0;
+    background: linear-gradient(to right, rgba(42, 49, 67, 1));
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.purpose-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.purpose-item {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+}
+
+.purpose-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(42, 49, 67, 0.1);
+}
+
+.purpose-item .item-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.purpose-item .icon {
+    font-size: 16px;
+    color: #1e80c1;
+    transition: transform 0.4s ease, color 0.3s ease;
+}
+
+.purpose-item:hover .icon {
+    transform: rotate(180deg);
+    color: #0a5082;
+}
+
+.purpose-item .item-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #1e80c1;
+    transition: color 0.3s ease;
+}
+
+.purpose-item:hover .item-title {
+    color: #0a5082;
+}
+
+.purpose-item .item-description {
+    font-size: 18px;
+    font-weight: 400;
+    color: #696969;
+    line-height: 1.6;
+    margin-top: 0;
+    padding-left: 2.5rem;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.purpose-item.collapsed .item-description {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.purpose-item.collapsed:hover .item-description {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 1rem;
+}
+
+.contact-section {
+    width: 100%;
+    background: rgba(247, 251, 255, 1);
+    position: relative;
+    overflow: hidden;
+    /* width: 191px; */
+    margin-bottom: 20px;
+    margin-top: 20px;
+    left: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: left;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f7fbff;
+    margin: 0;
+    padding: 0;
+}
+
+.chart-section {
+    max-width: 1300px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    color: #2a3143;
+    margin-bottom: 30px;
+}
+
+#multiAxisChart {
+    width: 100%;
+    /* atau misal 80% untuk jarak kiri-kanan */
+    display: flex;
+    justify-content: center;
+    /* Center horizontal */
+    align-items: center;
+}
+
+canvas.linechart {
+    width: 50% !important;
+    /* Biar memanjang */
+    max-width: 1000px;
+    /* Boleh kamu sesuaikan */
+    height: auto !important;
+}
+
+canvas.linechart {
+    width: 50% !important;
+    /* Biar memanjang */
+    max-width: 1000px;
+    /* Boleh kamu sesuaikan */
+    height: auto !important;
+}
+
+.charts-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+.chart-box {
+    width: 350px;
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.chart-box h3 {
+    margin-bottom: 25px;
+    /* jarak judul ke chart */
+    font-size: 20px;
+}
+
+
+
+#stackedChart {
+    width: 100%;
+    height: 400px;
+    margin: 30px;
+}
+
+
+.contact-section .footer-container {
+    margin-left: 30px;
+    /* Jarak kiri */
+    max-width: 600px;
+    /* agar lebar tidak terlalu penuh */
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.contact-section .footer-container h3 {
+    margin-bottom: 15px;
+}
+
+.contact-section .footer-container p {
+    margin: 5px 0;
+}
+
+.contact-section .social-media a {
+    color: #1a73e8;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.contact-section .social-media a:hover {
+    text-decoration: underline;
+}

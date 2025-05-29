@@ -8,4 +8,11 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+
+    plugins: [laravel({
+        input: ['resources/css/app.css', 'resources/css/style_landing.css', 'resources/js/app.js'],
+        refresh: true,
+    })],
 });
+
+
