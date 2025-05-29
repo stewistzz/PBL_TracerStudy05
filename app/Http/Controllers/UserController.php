@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UsersModel;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
 class UserController extends Controller
@@ -24,16 +25,17 @@ class UserController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     return '
-                        <div class="d-flex justify-content-center gap-2">
-                            <button class="btn btn-sm py-2 btn-warning btn-edit" data-id="' . $row->user_id . '">
+                        <div class="d-flex justify-content-center gap-2 mr-2">
+                            <button type="button" class="btn btn-warning py-2 btn-edit" data-id="' . $row->user_id . '">
                                 <i class="mdi mdi-pencil"></i> Edit
                             </button>
-                            <button class="btn btn-sm btn-danger btn-hapus" data-id="' . $row->user_id . '">
+                            <button type="button" class="btn btn-danger btn-hapus" data-id="' . $row->user_id . '">
                                 <i class="mdi mdi-delete"></i> Hapus
                             </button>
                         </div>
-        ';
+                    ';
                 })
+
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -47,6 +49,7 @@ class UserController extends Controller
         // Validasi input
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:100|unique:users,username',
+            'password' => 'required|string|max:100',
             'role'     => 'required|in:admin,alumni'
         ]);
 
@@ -61,6 +64,7 @@ class UserController extends Controller
         try {
             UsersModel::create([
                 'username' => $request->username,
+                'password' => $request->password,
                 'role'     => $request->role
             ]);
 
@@ -107,55 +111,119 @@ class UserController extends Controller
             ], 404);
         }
     }
-    // public function update_ajax(Request $request, $id)
-    // {
-    //     // Validasi input
-    //     $validator = Validator::make($request->all(), [
-    //         'username' => 'required|string|max:100|unique:users,username,' . $id,
-    //         'role'     => 'required|in:admin,alumni'
-    //     ]);
+    public function update_ajax(Request $request, $id)
+    {
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:100|unique:users,username',
+            'password' => 'required|string|max:100',
+            'role'     => 'required|in:admin,alumni'
+        ]);
 
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Validasi gagal',
-    //             'errors' => $validator->errors()
-    //         ], 422);
-    //     }
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
-    //     try {
-    //         $users = UsersModel::findOrFail($id);
-    //         $users->update([
-    //             'username' => $request->username,
-    //             'role' => $request->role
-    //         ]);
+        try {
+            $users = UsersModel::findOrFail($id);
+            $users->update([
+                'username' => $request->username,
+                'password' => $request->password,
+                'role' => $request->role
+            ]);
 
-    //         return response()->json([
-    //             'status' => true,
-    //             'message' => 'User berhasil diperbarui'
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Gagal memperbarui user'
-    //         ], 500);
-    //     }
-    // }
+            return response()->json([
+                'status' => true,
+                'message' => 'User berhasil diperbarui'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Gagal memperbarui user'
+            ], 500);
+        }
+    }
 
-    // public function destroy_ajax($id)
-    // {
-    //     try {
-    //         $users = UsersModel::findOrFail($id);
-    //         $users->delete();
+    public function destroy_ajax($id)
+    {
+        try {
+            $users = UsersModel::findOrFail($id);
+            $users->delete();
 
-    //         return response()->json([
-    //             'status' => true,
-    //             'message' => 'User berhasil dihapus'
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Gagal menghapus user'
-    //         ], 500);
-    //     }
+            return response()->json([
+                'status' => true,
+                'message' => 'User berhasil dihapus'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Gagal menghapus user'
+            ], 500);
+        }
+    }
+
+    public function import()
+    {
+        return view('user.import');
+    }
+
+    // Proses upload & import via AJAX
+    public function importAjax(Request $request)
+    {
+        $rules = [
+            'file_user' => ['required', 'mimes:xlsx,xls', 'max:2048'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'   => false,
+                'message'  => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
+            ]);
+        }
+
+        // Load spreadsheet
+        $file        = $request->file('file_user');
+        $spreadsheet = IOFactory::load($file->getRealPath());
+        $sheet       = $spreadsheet->getActiveSheet();
+        $rows        = $sheet->toArray();
+
+        // Ambil header dan sisanya sebagai data
+        $header = array_shift($rows);
+        $insert = [];
+
+        foreach ($rows as $row) {
+            // Pastikan kolom pertama (username) tidak kosong
+            if (!empty($row[0])) {
+                $insert[] = [
+                    'username'   => $row[0],
+                    'password'   => bcrypt($row[1]), // enkripsi password
+                    'role'       => $row[2],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+        }
+
+        if (!empty($insert)) {
+            // Insert & abaikan duplikat (jika ada unique constraint di DB)
+            UsersModel::insertOrIgnore($insert);
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Data user berhasil diimport: ' . count($insert) . ' record',
+            ]);
+        }
+
+        return response()->json([
+            'status'  => false,
+            'message' => 'Tidak ada data user untuk diimport.',
+        ]);
+    }
 }
