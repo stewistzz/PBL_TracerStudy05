@@ -59,6 +59,8 @@
             </a>
             <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('data_pengguna.index') }}">Data Pengguna</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="pages/ui-features/buttons.html">Tabel Kepuasan</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="pages/ui-features/dropdowns.html">Grafik Kepuasan</a>
