@@ -103,8 +103,8 @@
             </a>
             <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="#">Alumni</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Pengguna</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('kategori_pertanyaan.index') }}">Kategori</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('pertanyaan.index') }}">Pertanyaan</a></li>
                 </ul>
             </div>
         </li>

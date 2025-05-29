@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfesiController;
 use App\Http\Controllers\KategoriProfesiController;
+use App\Http\Controllers\KategoriPertanyaanController;
 use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\TracerStudyController;
 use App\Http\Controllers\KesesuaianPekerjaanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PertanyaanController;
 
 
 // route landingpage
@@ -26,18 +28,18 @@ Route::middleware(['auth'])->group(function () {
     // Admin Routes
     Route::middleware(['check.role:admin'])->group(function () {
         Route::get('/admin/dashboard', [AuthController::class, 'adminDashboard'])->name('admin.dashboard');
-        
+
         // Profesi Routes
         Route::prefix('profesi')->name('profesi.')->group(function () {
             Route::get('/', [ProfesiController::class, 'index'])->name('index');
             Route::get('/list', [ProfesiController::class, 'list'])->name('list');
-            
+
             // AJAX Routes
             Route::get('/create_ajax', [ProfesiController::class, 'create_ajax'])->name('create_ajax');
             Route::post('/ajax', [ProfesiController::class, 'store_ajax'])->name('store_ajax');
             Route::get('/{id}/edit_ajax', [ProfesiController::class, 'edit_ajax'])->name('edit_ajax');
             Route::post('/{id}/update_ajax', [ProfesiController::class, 'update_ajax'])->name('update_ajax');
-            
+
             // Delete Routes
             Route::get('/{id}/delete_ajax', [ProfesiController::class, 'confirm_ajax'])->name('confirm_ajax');
             Route::delete('/{id}/delete_ajax', [ProfesiController::class, 'delete_ajax'])->name('delete_ajax');
@@ -77,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [AlumniController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
         });
-    });
+
         // route untuk user
         Route::prefix('user')->name('user.')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('index');
@@ -95,7 +97,42 @@ Route::middleware(['auth'])->group(function () {
 
         // route untuk data kesesuaian
         Route::get('/admin/kesesuaian', [KesesuaianPekerjaanController::class, 'index'])->name('admin.kesesuaian');
+
+        // route untuk pertanyaan
+        Route::prefix('pertanyaan')->name('pertanyaan.')->group(function () {
+            Route::get('/', [PertanyaanController::class, 'index'])->name('index');
+            Route::get('/list', [PertanyaanController::class, 'list'])->name('list');
+
+            // AJAX Routes
+            Route::get('/create_ajax', [PertanyaanController::class, 'create_ajax'])->name('create_ajax');
+            Route::post('/ajax', [PertanyaanController::class, 'store_ajax'])->name('store_ajax');
+            Route::get('/{id}/edit_ajax', [PertanyaanController::class, 'edit_ajax'])->name('edit_ajax');
+            Route::post('/{id}/update_ajax', [PertanyaanController::class, 'update_ajax'])->name('update_ajax');
+
+            // Delete Routes
+            Route::get('/{id}/delete_ajax', [PertanyaanController::class, 'confirm_ajax'])->name('confirm_ajax');
+            Route::delete('/{id}/delete_ajax', [PertanyaanController::class, 'delete_ajax'])->name('delete_ajax');
+            Route::delete('/{id}', [PertanyaanController::class, 'destroy'])->name('destroy');
+        });
     });
+
+
+    Route::prefix('kategori_pertanyaan')->name('kategori_pertanyaan.')->group(function () {
+            Route::get('/', [KategoriPertanyaanController::class, 'index'])->name('index');
+            Route::get('/list', [KategoriPertanyaanController::class, 'list'])->name('list');
+
+            // AJAX Routes
+            Route::get('/create_ajax', [KategoriPertanyaanController::class, 'create_ajax'])->name('create_ajax');
+            Route::post('/ajax', [KategoriPertanyaanController::class, 'store_ajax'])->name('store_ajax');
+            Route::get('/{id}/edit_ajax', [KategoriPertanyaanController::class, 'edit_ajax'])->name('edit_ajax');
+            Route::post('/{id}/update_ajax', [KategoriPertanyaanController::class, 'update_ajax'])->name('update_ajax');
+
+            // Delete Routes
+            Route::get('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'confirm_ajax'])->name('confirm_ajax');
+            Route::delete('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'delete_ajax'])->name('delete_ajax');
+            Route::delete('/{id}', [KategoriPertanyaanController::class, 'destroy'])->name('destroy');
+        });
+
 
     // Alumni Routes
     Route::middleware(['check.role:alumni'])->group(function () {
@@ -113,3 +150,5 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/success', [TracerStudyController::class, 'success'])->name('success');
         });
     });
+});
+
