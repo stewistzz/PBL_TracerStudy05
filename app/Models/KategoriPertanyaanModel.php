@@ -10,7 +10,7 @@ class KategoriPertanyaanModel extends Model
     protected $table = 'kategori_pertanyaan';
     protected $primaryKey = 'kode_kategori';
     protected $keyType = 'string';
-    protected $fillable = ['nama_kategori'];
+    protected $fillable = ['kode_kategori','nama_kategori','deskripsi'];
 
     // Relasi: Satu kategori punya banyak pertanyaan
     public function pertanyaans()
