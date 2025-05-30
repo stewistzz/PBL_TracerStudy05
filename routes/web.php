@@ -11,6 +11,7 @@ use App\Http\Controllers\AlumniTracerController;
 use App\Http\Controllers\TracerStudyController;
 use App\Http\Controllers\KesesuaianPekerjaanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DataPenggunaController;
 use App\Http\Controllers\PertanyaanController;
 
 
@@ -23,6 +24,18 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'postLogin']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Survey Routes (untuk pengguna_lulusan mengisi survei via token)
+Route::prefix('survey')->name('survey.')->group(function () {
+    Route::get('/access/{token}', [App\Http\Controllers\SurveyController::class, 'accessSurvey'])->name('access');
+    Route::post('/access/{token}', [App\Http\Controllers\SurveyController::class, 'submitSurvey'])->name('submit');
+    Route::get('/invalid', function () {
+        return view('survey.survey_invalid')->with('error', session('error'));
+    })->name('invalid');
+    Route::get('/success', function () {
+        return view('survey.survey_success')->with('success', session('success'));
+    })->name('success');
+});
 
 // Protected Routes
 Route::middleware(['auth'])->group(function () {
@@ -79,6 +92,17 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [AlumniController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [AlumniController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
+        });
+
+            // route untuk data pengguna
+        Route::prefix('data_pengguna')->name('data_pengguna.')->group(function () {
+            Route::get('/', [DataPenggunaController::class, 'index'])->name('index');
+            Route::get('/list', [DataPenggunaController::class, 'list'])->name('list');
+            Route::get('/create', [DataPenggunaController::class, 'create_ajax'])->name('create');
+            Route::post('/store', [DataPenggunaController::class, 'store_ajax'])->name('store');
+            Route::get('/edit/{id}', [DataPenggunaController::class, 'edit_ajax'])->name('edit');
+            Route::post('/update/{id}', [DataPenggunaController::class, 'update_ajax'])->name('update');
+            Route::delete('/destroy/{id}', [DataPenggunaController::class, 'destroy_ajax'])->name('destroy');
         });
 
         // route untuk user

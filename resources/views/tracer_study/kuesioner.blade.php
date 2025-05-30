@@ -1,93 +1,94 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Kuesioner Alumni</h4>
-                    <p class="card-description">Jawab pertanyaan berikut terkait pengalaman kerja Anda.</p>
-                    
-                    @if (session('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+<div class="content-wrapper py-4">
+    <div class="container bg-white p-4 rounded shadow">
+        <h2 class="mb-3">Kuesioner Alumni</h2>
+        <p class="mb-4">Silakan isi kuesioner di bawah ini sesuai pengalaman Anda.</p>
 
-                    @if ($pertanyaan->isEmpty())
-                        <div class="alert alert-warning" role="alert">
-                            Belum ada pertanyaan kuesioner yang tersedia. Silakan hubungi admin untuk informasi lebih lanjut.
-                        </div>
-                        <a href="{{ route('tracer-study.index') }}" class="btn btn-secondary">Kembali</a>
-                    @else
-                        <form action="{{ route('tracer-study.store-kuesioner') }}" method="POST">
-                            @csrf
-                            @foreach ($pertanyaan as $index => $item)
-                                <div class="form-group">
-                                    <label for="jawaban_{{ $item->pertanyaan_id }}">
-                                        {{ $index + 1 }}. {{ $item->isi_pertanyaan }}
-                                        @if ($item->wajib)
-                                            <span class="text-danger">*</span>
-                                        @endif
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
+        @if ($pertanyaan->isEmpty())
+            <div class="alert alert-warning">Belum ada pertanyaan kuesioner tersedia.</div>
+            <a href="{{ route('tracer-study.index') }}" class="btn btn-secondary">Kembali</a>
+        @else
+            <form action="{{ route('tracer-study.store-kuesioner') }}" method="POST">
+                @csrf
+                @foreach ($pertanyaan as $index => $p)
+                    @php $existing = $jawabanExisting[$p->pertanyaan_id] ?? null; @endphp
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            {{ $index + 1 }}. {{ ucfirst($p->isi_pertanyaan) }}
+                            @if ($p->wajib) <span class="text-danger">*</span> @endif
+                        </label>
+
+                        @if ($p->jenis_pertanyaan == 'isian')
+                            <input type="text"
+                                name="jawaban[{{ $p->pertanyaan_id }}]"
+                                class="form-control @error('jawaban.' . $p->pertanyaan_id) is-invalid @enderror"
+                                value="{{ old('jawaban.' . $p->pertanyaan_id, $existing) }}"
+                                {{ $p->wajib ? 'required' : '' }}>
+                        @elseif ($p->jenis_pertanyaan == 'pilihan_ganda')
+                            @foreach ($p->opsiPilihan as $opsi)
+                                <div class="form-check">
+                                    <input type="radio"
+                                        name="jawaban[{{ $p->pertanyaan_id }}]"
+                                        value="{{ $opsi->teks_opsi }}"
+                                        class="form-check-input"
+                                        id="opsi_{{ $p->pertanyaan_id }}_{{ $opsi->id }}"
+                                        {{ $existing == $opsi->teks_opsi ? 'checked' : '' }}
+                                        {{ $p->wajib ? 'required' : '' }}>
+                                    <label class="form-check-label" for="opsi_{{ $p->pertanyaan_id }}_{{ $opsi->id }}">
+                                        {{ $opsi->teks_opsi }}
                                     </label>
-                                    @if ($item->tipe === 'pilihan_ganda')
-                                        @foreach ($item->opsiPilihan as $opsi)
-                                            <div class="form-check">
-                                                <input type="radio" class="form-check-input" 
-                                                       name="jawaban[{{ $item->pertanyaan_id }}]" 
-                                                       id="opsi_{{ $item->pertanyaan_id }}_{{ $opsi->id }}" 
-                                                       value="{{ $opsi->teks_opsi }}"
-                                                       {{ isset($jawabanExisting[$item->pertanyaan_id]) && $jawabanExisting[$item->pertanyaan_id] === $opsi->teks_opsi ? 'checked' : '' }}
-                                                       {{ $item->wajib ? 'required' : '' }}>
-                                                <label class="form-check-label" for="opsi_{{ $item->pertanyaan_id }}_{{ $opsi->id }}">
-                                                    {{ $opsi->teks_opsi }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                        @error("jawaban.{$item->pertanyaan_id}")
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    @elseif ($item->tipe === 'checkbox')
-                                        @foreach ($item->opsiPilihan as $opsi)
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" 
-                                                       name="jawaban[{{ $item->pertanyaan_id }}][]" 
-                                                       id="opsi_{{ $item->pertanyaan_id }}_{{ $opsi->id }}" 
-                                                       value="{{ $opsi->teks_opsi }}"
-                                                       {{ isset($jawabanExisting[$item->pertanyaan_id]) && in_array($opsi->teks_opsi, explode(', ', $jawabanExisting[$item->pertanyaan_id])) ? 'checked' : '' }}
-                                                       {{ $item->wajib ? 'required' : '' }}>
-                                                <label class="form-check-label" for="opsi_{{ $item->pertanyaan_id }}_{{ $opsi->id }}">
-                                                    {{ $opsi->teks_opsi }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                        @error("jawaban.{$item->pertanyaan_id}")
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    @else
-                                        <textarea class="form-control @error("jawaban.{$item->pertanyaan_id}") is-invalid @enderror" 
-                                                  name="jawaban[{{ $item->pertanyaan_id }}]" 
-                                                  id="jawaban_{{ $item->pertanyaan_id }}" 
-                                                  rows="4" {{ $item->wajib ? 'required' : '' }}>{{ old("jawaban.{$item->pertanyaan_id}", $jawabanExisting[$item->pertanyaan_id] ?? '') }}</textarea>
-                                        @error("jawaban.{$item->pertanyaan_id}")
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    @endif
                                 </div>
                             @endforeach
-                            <button type="submit" class="btn btn-primary">Simpan dan Selesaikan</button>
-                            <a href="{{ route('tracer-study.index') }}" class="btn btn-secondary">Kembali</a>
-                        </form>
-                    @endif
+                        @elseif ($p->jenis_pertanyaan == 'skala')
+                            <select name="jawaban[{{ $p->pertanyaan_id }}]"
+                                    class="form-select @error('jawaban.' . $p->pertanyaan_id) is-invalid @enderror"
+                                    {{ $p->wajib ? 'required' : '' }}>
+                                <option value="">Pilih skala</option>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <option value="{{ $i }}" {{ $existing == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                @endfor
+                            </select>
+                        @elseif ($p->jenis_pertanyaan == 'ya_tidak')
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input"
+                                       name="jawaban[{{ $p->pertanyaan_id }}]"
+                                       value="Ya"
+                                       id="ya_{{ $p->pertanyaan_id }}"
+                                       {{ $existing == 'Ya' ? 'checked' : '' }} {{ $p->wajib ? 'required' : '' }}>
+                                <label class="form-check-label" for="ya_{{ $p->pertanyaan_id }}">Ya</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input"
+                                       name="jawaban[{{ $p->pertanyaan_id }}]"
+                                       value="Tidak"
+                                       id="tidak_{{ $p->pertanyaan_id }}"
+                                       {{ $existing == 'Tidak' ? 'checked' : '' }} {{ $p->wajib ? 'required' : '' }}>
+                                <label class="form-check-label" for="tidak_{{ $p->pertanyaan_id }}">Tidak</label>
+                            </div>
+                        @endif
+
+                        @error('jawaban.' . $p->pertanyaan_id)
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                @endforeach
+
+                <div class="d-flex justify-content-start gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">Simpan Jawaban</button>
+                    <a href="{{ route('tracer-study.index') }}" class="btn btn-secondary">Kembali</a>
                 </div>
-            </div>
-        </div>
+            </form>
+        @endif
     </div>
 </div>
 @endsection
