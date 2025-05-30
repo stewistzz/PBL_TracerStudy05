@@ -11,10 +11,25 @@ class TracerStudyModel extends Model
     protected $table = 'tracer_study';
     protected $primaryKey = 'tracer_id';
     protected $fillable = [
-        'alumni_id', 'instansi_id', 'kategori_profesi_id', 'profesi_id',
-        'nama_atasan_langsung', 'email_atasan_langsung', 'jabatan_atasan_langsung',
-        'no_hp_atasan_langsung', 'tanggal_pengisian', 'tanggal_pertama_kerja',
-        'tanggal_mulai_kerja_instansi_saat_ini', 'status'
+        'alumni_id',
+        'instansi_id',
+        'kategori_profesi_id',
+        'profesi_id',
+        'tanggal_pengisian',
+        'tanggal_pertama_kerja',
+        'tanggal_mulai_kerja_instansi_saat_ini',
+        'nama_atasan_langsung',
+        'email_atasan_langsung',
+        'jabatan_atasan_langsung',
+        'no_hp_atasan_langsung',
+        'status'
+    ];
+
+    // solusi model data dari tanggal tidak tampil
+    protected $casts = [
+        'tanggal_pengisian' => 'datetime',
+        'tanggal_pertama_kerja' => 'datetime',
+        'tanggal_mulai_kerja_instansi_saat_ini' => 'datetime',
     ];
 
     // Relasi: Satu tracer study terkait satu alumni

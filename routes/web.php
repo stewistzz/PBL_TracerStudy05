@@ -7,6 +7,7 @@ use App\Http\Controllers\KategoriProfesiController;
 use App\Http\Controllers\KategoriPertanyaanController;
 use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\AlumniTracerController;
 use App\Http\Controllers\TracerStudyController;
 use App\Http\Controllers\KesesuaianPekerjaanController;
 use App\Http\Controllers\UserController;
@@ -17,7 +18,7 @@ use App\Http\Controllers\PertanyaanController;
 Route::get('/', function () {
     return view('landing_page');
 });
-    
+
 // Auth Routes 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'postLogin']);
@@ -118,20 +119,27 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::prefix('kategori_pertanyaan')->name('kategori_pertanyaan.')->group(function () {
-            Route::get('/', [KategoriPertanyaanController::class, 'index'])->name('index');
-            Route::get('/list', [KategoriPertanyaanController::class, 'list'])->name('list');
+        Route::get('/', [KategoriPertanyaanController::class, 'index'])->name('index');
+        Route::get('/list', [KategoriPertanyaanController::class, 'list'])->name('list');
 
-            // AJAX Routes
-            Route::get('/create_ajax', [KategoriPertanyaanController::class, 'create_ajax'])->name('create_ajax');
-            Route::post('/ajax', [KategoriPertanyaanController::class, 'store_ajax'])->name('store_ajax');
-            Route::get('/{id}/edit_ajax', [KategoriPertanyaanController::class, 'edit_ajax'])->name('edit_ajax');
-            Route::post('/{id}/update_ajax', [KategoriPertanyaanController::class, 'update_ajax'])->name('update_ajax');
+        // AJAX Routes
+        Route::get('/create_ajax', [KategoriPertanyaanController::class, 'create_ajax'])->name('create_ajax');
+        Route::post('/ajax', [KategoriPertanyaanController::class, 'store_ajax'])->name('store_ajax');
+        Route::get('/{id}/edit_ajax', [KategoriPertanyaanController::class, 'edit_ajax'])->name('edit_ajax');
+        Route::post('/{id}/update_ajax', [KategoriPertanyaanController::class, 'update_ajax'])->name('update_ajax');
 
-            // Delete Routes
-            Route::get('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'confirm_ajax'])->name('confirm_ajax');
-            Route::delete('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'delete_ajax'])->name('delete_ajax');
-            Route::delete('/{id}', [KategoriPertanyaanController::class, 'destroy'])->name('destroy');
-        });
+        // Delete Routes
+        Route::get('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'confirm_ajax'])->name('confirm_ajax');
+        Route::delete('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'delete_ajax'])->name('delete_ajax');
+        Route::delete('/{id}', [KategoriPertanyaanController::class, 'destroy'])->name('destroy');
+    });
+
+    // route untuk alumni_tracer
+    Route::prefix('alumni_tracer')->name('alumni_tracer.')->group(function () {
+        Route::get('/', [AlumniTracerController::class, 'index'])->name('index');
+        Route::get('/list', [AlumniTracerController::class, 'list'])->name('list');
+    });
+
 
 
     // Alumni Routes
@@ -151,4 +159,3 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 });
-
