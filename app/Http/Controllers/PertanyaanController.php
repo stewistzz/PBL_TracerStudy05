@@ -82,7 +82,6 @@ class PertanyaanController extends Controller
                 'message' => 'Pertanyaan berhasil disimpan'
             ]);
         }
-
         return redirect()->route('pertanyaan.index');
     }
 
@@ -164,7 +163,6 @@ class PertanyaanController extends Controller
             ], 500);
         }
     }
-
 
     // public function edit_ajax($id)
     // {

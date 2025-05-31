@@ -81,7 +81,7 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="{{ route('alumni.index') }}">Data Alumni</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Data Tracer</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('alumni_tracer.index') }}">Data Tracer</a>
                     </li>
                 </ul>
             </div>
