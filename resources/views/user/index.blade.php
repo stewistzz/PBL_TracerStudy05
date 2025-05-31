@@ -12,10 +12,9 @@
                 sehingga pengelolaan akses dan data menjadi lebih tertata dan efisien.
             </p>
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <!-- Tombol Import (rata kiri) -->
-                <button onclick="modalAction('{{ url('user/import') }}')"
-                    class="btn btn-success d-flex align-items-center gap-2">
-                    <i class="mdi mdi-upload fs-5 mr-2"></i> Import User
+                <!-- Tombol Import -->
+                <button class="btn btn-success" onclick="modalAction('{{ url('/user/import') }}')">
+                    <i class="fa fa-upload mr-2"></i> Import User
                 </button>
 
                 <!-- Tombol Tambah (rata kanan) -->
@@ -51,13 +50,27 @@
             </form>
         </div>
     </div>
+    <!-- Placeholder Modal -->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 @endsection
 
 @push('js')
     <script>
+        function modalAction(url) {
+            $.get(url, function(res) {
+                $('#myModal').html(res); // Masukkan isi modal
+                $('#myModal').modal('show'); // Tampilkan modal
+            });
+        }
         window.loadTable = function() {
             $('#users-table').DataTable().ajax.reload();
         };
+
+        function modalAction(url = '') {
+            $('#myModal').load(url, function() {
+                $('#myModal').modal('show');
+            });
+        }
 
         $(document).ready(function() {
             let table = $('#users-table').DataTable({

@@ -1,4 +1,5 @@
 @extends('layouts.template')
+    <link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
 
 @section('content')
     <div class="card">
@@ -26,7 +27,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>User</th>
+                            <th>Username</th>
                             <th>Nama</th>
                             <th>NIM</th>
                             <th>Email</th>
