@@ -1,50 +1,64 @@
 @extends('layouts.template')
 
+    <link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
+
 @section('content')
-    <!-- Card Pie Chart Jenis Instansi -->
+    <!-- Row: Pie Chart dan Detail Instansi -->
     <div class="row">
-        <div class="col-lg-4 grid-margin grid-margin-lg-0 stretch-card mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title fw-bold">Sebaran Jenis Instansi</h4>
-                    <div class="doughnutjs-wrapper d-flex justify-content-center">
-                        <canvas id="instansiChart" style="display: block; height: 240px; width: 240px;"></canvas>
-                    </div>
+
+        <!-- Card: Pie Chart Jenis Instansi -->
+        <div class="col-lg-4 mb-4">
+            <div class="card rounded-4">
+                <div class="card-body text-center">
+                    <h4 class="card-title fw-bold mb-4">Sebaran Jenis Instansi</h4>
+                    <canvas id="instansiChart" width="240" height="240"></canvas>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-8 grid-margin grid-margin-lg-0 stretch-card m-auto">
-            <div>
-                <h3 class="">Detail sebaran <b>instansi</b> alumni Politeknik Negeri Malang</h3>
-                <div class="mt-4 mb-4">
-                    <h1>{{ $instansiData->sum('total') }}</h1>
-                    <p>Total Alumni Berdasarkan Instansi</p>
+        <!-- Card: Detail Instansi -->
+        <div class="col-lg-8">
+            <div class="card rounded-4 shadow-sm h-100 p-4">
+                <h2 class="fw-bold mb-3 text-dark">Detail Sebaran Instansi Alumni</h2>
+                <h2><b style="color: rgb(30, 161, 201);">Politeknik Negeri Malang</b></h2>
+
+                <div class="my-4">
+                    <h1 class="display-3 fw-black text-dark">{{ $instansiData->sum('total') }}</h1>
+                    <h5>Total Alumni Berdasarkan Instansi</h5>
                 </div>
-                <p>Grafik ini menampilkan distribusi alumni berdasarkan jenis instansi tempat mereka bekerja (Pemerintah,
-                    Swasta, BUMN, dan Pendidikan Tinggi).</p>
+
+                <p class="text-muted fs-10 text-justify">
+                    Grafik ini menampilkan data sebaran alumni
+                    <span class="fw-semibold text-dark">Politeknik Negeri Malang</span>
+                    berdasarkan jenis instansi tempat mereka bekerja, seperti Pemerintah, Swasta, BUMN,
+                    maupun Pendidikan Tinggi. Informasi ini membantu institusi memahami orientasi karier lulusan
+                    serta meningkatkan kerja sama strategis dengan berbagai sektor kerja.
+                </p>
             </div>
         </div>
+
     </div>
 
-
-    <div class="card">
+    <!-- Card: Tabel Data Instansi -->
+    <div class="card mt-4">
         <div class="card-body">
+
             <h4 class="card-title">Data Instansi</h4>
-            <p class="card-description">
-                Kelola data instansi dengan mudah
-            </p>
+            <p class="card-description">Kelola data instansi dengan mudah</p>
 
             <div class="d-flex justify-content-end mb-3">
-                <button class="btn btn-sm btn-primary" id="btn-tambah">Tambah Instansi</button>
+                <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
+                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
+                    Tambah Instansi
+                </button>
             </div>
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
-            <div class="table-responsive">
-                <table class="table" id="instansi-table">
+            <div class="table-responsive ">
+                <table class="table " id="instansi-table">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -52,25 +66,26 @@
                             <th>Jenis</th>
                             <th>Skala</th>
                             <th>Lokasi</th>
-                            {{-- <th>Alamat</th> --}}
                             <th>No HP</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                 </table>
             </div>
+
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal: Form Tambah/Edit Instansi -->
     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <!-- Akan diisi AJAX -->
+                <!-- Akan diisi melalui AJAX -->
             </div>
         </div>
     </div>
 @endsection
+
 
 @push('js')
     <script>
@@ -174,7 +189,6 @@
     {{-- script pie chart --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Pie Chart untuk jenis instansi
         const instansiCtx = document.getElementById('instansiChart').getContext('2d');
 
         const instansiChart = new Chart(instansiCtx, {
@@ -182,10 +196,11 @@
             data: {
                 labels: {!! json_encode($instansiData->pluck('jenis_instansi')) !!},
                 datasets: [{
-                    label: 'Total Alumni',
+                    label: 'Sebaran Jenis Instansi Alumni',
                     data: {!! json_encode($instansiData->pluck('total')) !!},
                     backgroundColor: [
-                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                        '#9966FF', '#FF9F40', '#66BB6A', '#EF5350'
                     ],
                     hoverOffset: 10
                 }]
@@ -195,6 +210,15 @@
                 plugins: {
                     legend: {
                         position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                return `${label}: ${value} orang`;
+                            }
+                        }
                     }
                 }
             }

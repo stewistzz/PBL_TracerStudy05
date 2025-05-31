@@ -1,18 +1,24 @@
 @extends('layouts.template')
+<link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
 
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Data Pengguna Lulusan</h4>
+            <h3 class="font-weight-bold">Data Pengguna Lulusan</h3>
+            <hr>
             <p class="card-description">
-                Kelola data pengguna lulusan dengan mudah
+                Kelola data pengguna lulusan dengan mudah dan efisien. Fitur ini memungkinkan Anda untuk menambahkan,
+                mengedit,
+                serta menghapus data pengguna lulusan sesuai kebutuhan, sehingga mempermudah pengelolaan data alumni dan
+                pelaporan.
             </p>
             <div class="d-flex justify-content-end mb-3">
-                <button class="btn btn-primary d-flex align-items-center gap-1" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5"></i>
+                <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
+                    <i class="mdi mdi-plus-circle-outline fs-5 me-2"></i>
                     Tambah Data
                 </button>
             </div>
+
 
             <div class="table-responsive">
                 <table class="table" id="data-pengguna-table">

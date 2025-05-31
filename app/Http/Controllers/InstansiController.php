@@ -46,8 +46,14 @@ class InstansiController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 return '
-                    <button class="btn btn-warning btn-sm btn-edit" data-id="' . $row->instansi_id . '">Edit</button>
-                    <button class="btn btn-danger btn-sm btn-hapus" data-id="' . $row->instansi_id . '">Hapus</button>
+                    <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-sm py-2 btn-warning btn-edit mr-2" data-id="' . $row->instansi_id . '">
+                                <i class="mdi mdi-pencil"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger btn-hapus" data-id="' . $row->instansi_id . '">
+                                <i class="mdi mdi-delete"></i> Hapus
+                            </button>
+                        </div>
                 ';
             })
             ->rawColumns(['action'])

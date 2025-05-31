@@ -7,7 +7,7 @@
         <p class="card-description">Daftar tracer alumni</p>
 
         <div class="table-responsive">
-            <table class="table table-bordered" id="tracer-table">
+            <table class="table" id="tracer-table">
                 <thead>
                     <tr>
                         <th>No</th>

@@ -25,13 +25,14 @@ class KategoriProfesiController extends Controller
                 ->addColumn('action', function ($row) {
                     return '
                         <div class="d-flex justify-content-center gap-2">
-                            <button class="btn btn-sm py-2 btn-warning btn-edit" data-id="' . $row->kategori_id . '">
+                            <button class="btn btn-sm py-2 btn-warning btn-edit mr-2" data-id="' . $row->kategori_id . '">
                                 <i class="mdi mdi-pencil"></i> Edit
                             </button>
                             <button class="btn btn-sm btn-danger btn-hapus" data-id="' . $row->kategori_id . '">
                                 <i class="mdi mdi-delete"></i> Hapus
                             </button>
                         </div>
+
                         ';
                 })
 

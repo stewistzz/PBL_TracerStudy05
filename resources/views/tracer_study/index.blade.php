@@ -1,86 +1,127 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12 grid-margin">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h4 class="font-weight-bold mb-0">Tracer Study</h4>
-                </div>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="font-weight-bold">Tracer Study</h3>
+            <hr>
+            <p class="card-description">
+                Lengkapi semua langkah untuk menyelesaikan tracer study agar hasilnya dapat kami proses dengan baik.
+            </p>
+
+            <div class="d-flex justify-content-end mb-3">
+                <a href="{{ route('tracer-study.data-diri') }}" class="btn btn-primary d-flex align-items-center gap-1">
+                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
+                    Isi Data Diri
+                </a>
             </div>
+
+            <div class="table-responsive">
+                <table class="table" id="tracer-study-table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Progres Data Diri</th>
+                            <th>Progres Data Atasan</th>
+                            <th>Progres Kuesioner</th>
+                            <th>Status</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            @if ($progress['kuesioner'])
+                <div class="alert alert-success mt-4">
+                    Selamat! Anda telah menyelesaikan Tracer Study.
+                    <a href="{{ route('tracer-study.success') }}" class="alert-link">Lihat hasil</a>.
+                </div>
+            @endif
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Progres Pengisian Tracer Study</h4>
-                    <p class="card-description">Lengkapi semua langkah untuk menyelesaikan tracer study.</p>
-                    
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-success" role="progressbar" 
-                             style="width: {{ ($progress['data_diri'] ? 33 : 0) + ($progress['data_atasan'] ? 33 : 0) + ($progress['kuesioner'] ? 34 : 0) }}%" 
-                             aria-valuenow="{{ ($progress['data_diri'] ? 33 : 0) + ($progress['data_atasan'] ? 33 : 0) + ($progress['kuesioner'] ? 34 : 0) }}" 
-                             aria-valuemin="0" aria-valuemax="100">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card border-primary mb-3">
-                                <div class="card-header {{ $progress['data_diri'] ? 'bg-success text-white' : 'bg-primary text-white' }}">
-                                    <h5 class="card-title mb-0">Data Diri</h5>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">Lengkapi informasi pribadi dan pekerjaan Anda.</p>
-                                    <a href="{{ route('tracer-study.data-diri') }}" 
-                                       class="btn {{ $progress['data_diri'] ? 'btn-outline-success' : 'btn-primary' }}">
-                                        {{ $progress['data_diri'] ? 'Sudah Diisi' : 'Isi Sekarang' }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card border-primary mb-3">
-                                <div class="card-header {{ $progress['data_atasan'] ? 'bg-success text-white' : 'bg-primary text-white' }}">
-                                    <h5 class="card-title mb-0">Data Atasan</h5>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">Masukkan informasi atasan langsung Anda.</p>
-                                    <a href="{{ route('tracer-study.data-atasan') }}" 
-                                       class="btn {{ $progress['data_atasan'] ? 'btn-outline-success' : 'btn-primary' }} {{ !$progress['data_diri'] ? 'disabled' : '' }}">
-                                        {{ $progress['data_atasan'] ? 'Sudah Diisi' : 'Isi Sekarang' }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card border-primary mb-3">
-                                <div class="card-header {{ $progress['kuesioner'] ? 'bg-success text-white' : 'bg-primary text-white' }}">
-                                    <h5 class="card-title mb-0">Kuesioner</h5>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">Jawab pertanyaan terkait pengalaman kerja Anda.</p>
-                                    <a href="{{ route('tracer-study.kuesioner') }}" 
-                                       class="btn {{ $progress['kuesioner'] ? 'btn-outline-success' : 'btn-primary' }} {{ !$progress['data_atasan'] ? 'disabled' : '' }}">
-                                        {{ $progress['kuesioner'] ? 'Sudah Diisi' : 'Isi Sekarang' }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    @if ($progress['kuesioner'])
-                        <div class="alert alert-success" role="alert">
-                            Selamat! Anda telah menyelesaikan Tracer Study. 
-                            <a href="{{ route('tracer-study.success') }}" class="alert-link">Lihat hasil</a>.
-                        </div>
-                    @endif
+    <!-- Modal -->
+    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="form-data">
+                <div class="modal-content">
+                    <!-- Isi modal akan diisi oleh AJAX -->
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-</div>
 @endsection
+
+@push('js')
+    <script>
+        window.loadTable = function() {
+            $('#tracer-study-table').DataTable().ajax.reload();
+        };
+
+        $(document).ready(function() {
+            let table = $('#tracer-study-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('tracer-study.list') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'progress_data_diri',
+                        name: 'progress_data_diri',
+                        render: function(data) {
+                            return data ? '<span class="badge bg-success">Sudah</span>' :
+                                '<span class="badge bg-secondary">Belum</span>';
+                        }
+                    },
+                    {
+                        data: 'progress_data_atasan',
+                        name: 'progress_data_atasan',
+                        render: function(data) {
+                            return data ? '<span class="badge bg-success">Sudah</span>' :
+                                '<span class="badge bg-secondary">Belum</span>';
+                        }
+                    },
+                    {
+                        data: 'progress_kuesioner',
+                        name: 'progress_kuesioner',
+                        render: function(data) {
+                            return data ? '<span class="badge bg-success">Sudah</span>' :
+                                '<span class="badge bg-secondary">Belum</span>';
+                        }
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        render: function(data) {
+                            return data ? '<span class="text-success fw-bold">Selesai</span>' :
+                                '<span class="text-warning fw-bold">Proses</span>';
+                        }
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    }
+                ],
+                responsive: true,
+                language: {
+                    processing: '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>'
+                }
+            });
+
+            // Contoh event untuk tombol aksi jika ada di kolom action,
+            // misal membuka modal edit, hapus, dll bisa kamu tambahkan di sini
+        });
+    </script>
+@endpush

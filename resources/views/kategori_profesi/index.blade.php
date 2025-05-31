@@ -3,16 +3,20 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Data Kategori Profesi</h4>
+            <h3 class="font-weight-bold">Data Kategori Profesi</h3>
+            <hr>
             <p class="card-description">
-                Kelola data kategori profesi dengan mudah
+                Kelola data kategori profesi dengan mudah untuk mendukung pengelompokan berbagai jenis pekerjaan secara
+                terstruktur. Fitur ini memungkinkan Anda menambahkan, mengedit, dan menghapus kategori profesi sesuai
+                kebutuhan, sehingga mempermudah pengelolaan data tenaga kerja, penyaringan informasi, dan pelaporan.
             </p>
             <div class="d-flex justify-content-end mb-3">
-                <button class="btn btn-sm btn-primary d-flex align-items-center gap-1" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5"></i>
+                <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
+                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
                     Tambah Kategori
                 </button>
             </div>
+
 
 
             <div class="table-responsive">
@@ -119,5 +123,4 @@
             });
         });
     </script>
-
 @endpush

@@ -1,8 +1,9 @@
 <?php
-// app/Http/Controllers/usersController.php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\UsersModel;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -171,59 +172,65 @@ class UserController extends Controller
         return view('user.import');
     }
 
-    // Proses upload & import via AJAX
-    public function importAjax(Request $request)
+    public function import_ajax(Request $request)
     {
         $rules = [
-            'file_user' => ['required', 'mimes:xlsx,xls', 'max:2048'],
+            'file_user' => ['required', 'mimes:xlsx,xls', 'max:1024'],
         ];
 
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return response()->json([
-                'status'   => false,
-                'message'  => 'Validasi Gagal',
+                'status' => false,
+                'message' => 'Validasi Gagal',
                 'msgField' => $validator->errors(),
             ]);
         }
 
-        // Load spreadsheet
-        $file        = $request->file('file_user');
-        $spreadsheet = IOFactory::load($file->getRealPath());
-        $sheet       = $spreadsheet->getActiveSheet();
-        $rows        = $sheet->toArray();
+        try {
+            $file = $request->file('file_user');
+            $spreadsheet = IOFactory::load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $rows = $sheet->toArray();
 
-        // Ambil header dan sisanya sebagai data
-        $header = array_shift($rows);
-        $insert = [];
+            $insert = [];
+            $dataTampil = [];
+            $header = array_shift($rows); // Buang baris header
 
-        foreach ($rows as $row) {
-            // Pastikan kolom pertama (username) tidak kosong
-            if (!empty($row[0])) {
-                $insert[] = [
-                    'username'   => $row[0],
-                    'password'   => bcrypt($row[1]), // enkripsi password
-                    'role'       => $row[2],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
+            foreach ($rows as $row) {
+                if (!empty($row[0])) {
+                    $insert[] = [
+                        'username' => $row[0],
+                        'password' => Hash::make($row[1]),
+                        'role' => $row[2],
+                        'created_at' => now(),
+                    ];
+                    // hanya username & role yang ingin ditampilkan
+                    $dataTampil[] = [
+                        'username' => $row[0],
+                        'role' => $row[2],
+                    ];
+                }
             }
-        }
 
-        if (!empty($insert)) {
-            // Insert & abaikan duplikat (jika ada unique constraint di DB)
-            UsersModel::insertOrIgnore($insert);
-
+            if (!empty($insert)) {
+                UsersModel::insertOrIgnore($insert);
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil diimpor: ' . count($insert) . ' user',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data kosong atau tidak valid',
+                ]);
+            }
+        } catch (\Exception $e) {
             return response()->json([
-                'status'  => true,
-                'message' => 'Data user berhasil diimport: ' . count($insert) . ' record',
+                'status' => false,
+                'message' => 'Kesalahan saat membaca file: ' . $e->getMessage(),
             ]);
         }
-
-        return response()->json([
-            'status'  => false,
-            'message' => 'Tidak ada data user untuk diimport.',
-        ]);
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\KesesuaianPekerjaanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DataPenggunaController;
 use App\Http\Controllers\PertanyaanController;
+use App\Http\Controllers\KepuasanController;
 
 
 // route landingpage
@@ -104,6 +105,18 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [DataPenggunaController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [DataPenggunaController::class, 'destroy_ajax'])->name('destroy');
         });
+
+        // Kepuasan Routes (Admin)
+        Route::prefix('kepuasan')->name('kepuasan.')->group(function () {
+            Route::get('/', [KepuasanController::class, 'index'])->name('index');
+            Route::get('/list', [KepuasanController::class, 'list'])->name('list');
+            Route::get('/create', [KepuasanController::class, 'create_ajax'])->name('create');
+            Route::post('/store', [KepuasanController::class, 'store_ajax'])->name('store');
+            Route::get('/edit/{id}', [KepuasanController::class, 'edit_ajax'])->name('edit');
+            Route::post('/update/{id}', [KepuasanController::class, 'update_ajax'])->name('update');
+            Route::delete('/destroy/{id}', [KepuasanController::class, 'destroy_ajax'])->name('destroy');
+        });
+
 
         // route untuk user
         Route::prefix('user')->name('user.')->group(function () {
