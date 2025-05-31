@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-    <link rel="stylesheet" href="{{ asset('skydash/template/css/styleinstansi.css') }}">
+    <link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
 
 @section('content')
     <!-- Row: Pie Chart dan Detail Instansi -->
