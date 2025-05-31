@@ -94,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
         });
 
-            // route untuk data pengguna
+        // route untuk data pengguna
         Route::prefix('data_pengguna')->name('data_pengguna.')->group(function () {
             Route::get('/', [DataPenggunaController::class, 'index'])->name('index');
             Route::get('/list', [DataPenggunaController::class, 'list'])->name('list');
@@ -159,10 +159,18 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // route untuk alumni_tracer
-    Route::prefix('alumni_tracer')->name('alumni_tracer.')->group(function () {
-        Route::get('/', [AlumniTracerController::class, 'index'])->name('index');
-        Route::get('/list', [AlumniTracerController::class, 'list'])->name('list');
-    });
+    // Route::prefix('alumni_tracer')->name('alumni_tracer.')->group(function () {
+    //     Route::get('/', [AlumniTracerController::class, 'index'])->name('index');
+    //     Route::get('/list', [AlumniTracerController::class, 'list'])->name('list');
+
+    //     // route untuk kirim token
+    //     Route::post('/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('kirim_token');
+
+    // });
+
+    Route::get('/alumni-tracer', [AlumniTracerController::class, 'index'])->name('alumni_tracer.index');
+    Route::get('/alumni-tracer/list', [AlumniTracerController::class, 'list'])->name('alumni_tracer.list');
+    Route::post('/alumni-tracer/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('alumni_tracer.kirim_token');
 
 
 

@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('jabatan_atasan_langsung', 100);
             $table->string('no_hp_atasan_langsung', 20)->nullable();
             $table->string('email_atasan_langsung', 255);
-            $table->enum('status', ['draft', 'completed'])->default('draft');
+            $table->enum('status6', ['draft', 'completed'])->default('draft');
             $table->timestamps();
         });
     }
