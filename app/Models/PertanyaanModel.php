@@ -33,4 +33,9 @@ class PertanyaanModel extends Model
     {
         return $this->hasMany(JawabanPenggunaModel::class, 'pertanyaan_id', 'pertanyaan_id');
     }
+
+ public function admin()
+{
+    return $this->belongsTo(AdminModel::class, 'created_by', 'admin_id'); // Sesuaikan dengan model dan kolom
+}
 }
