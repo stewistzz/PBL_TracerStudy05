@@ -3,46 +3,66 @@
 @section('content')
     <!-- Card Pie Chart Profesi -->
     <div class="row">
-        <div class="col-lg-4 grid-margin grid-margin-lg-0 stretch-card mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title fw-bold">Sebaran Profesi Alumni</h4>
-                    <div class="doughnutjs-wrapper d-flex justify-content-center">
-                        <canvas id="profesiChart" style="display: block; height: 240px; width: 240px;"></canvas>
-                    </div>
+        <!-- Card Chart -->
+        <div class="col-lg-4 mb-4">
+            <div class="card rounded-4">
+                <div class="card-body text-center">
+                    <h4 class="card-title fw-bold mb-4">Sebaran Profesi Alumni</h4>
+                    <canvas id="profesiChart" width="240" height="240"></canvas>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-8 grid-margin grid-margin-lg-0 stretch-card m-auto">
-            <div>
-                <h3 class="">Detail sebaran <b>profesi</b> alumni Politeknik Negeri Malang</h3>
-                <div class="mt-4 mb-4">
+        <!-- Card Detail -->
+        <div class="col-lg-8">
+            <div class="card rounded-4 shadow-sm h-100 p-4">
+                <h2 class="fw-bold mb-3 text-dark">
+                    <b>Detail Sebaran Profesi Alumni</b><br>
+                </h2>
+                <h2><b style="color: rgb(30, 161, 201);">Politeknik Negeri Malang</b></h2>
 
-                    <h1>{{ $jumlah_profesi }}</h1>
-                    <p>Total Profesi</p>
+
+                <div class="my-4">
+                    <h1 class="display-3 fw-black text-dark">{{ $jumlah_profesi }}</h1>
+                    <h5>Total Profesi</h5>
                 </div>
-                <p>Grafik menunjukkan sebaran data profesi mahasiswa Politeknik Negeri Malang berdasarkan data tracer alumni
-                    4 tahun terakhir.</p>
+
+                <p class="text-muted fs-10" style="text-align: justify;">
+                    Grafik ini menampilkan data sebaran profesi alumni
+                    <span class="fw-semibold text-dark">Politeknik Negeri Malang</span>
+                    berdasarkan hasil <i>tracer study</i> selama 4 tahun terakhir.
+                    Informasi ini memberikan gambaran tren karier lulusan, bidang pekerjaan
+                    yang paling diminati, serta menjadi acuan dalam evaluasi dan pengembangan
+                    program studi untuk meningkatkan relevansi pendidikan dengan kebutuhan industri.
+                </p>
             </div>
         </div>
+
+    </div>
+
+
+
     </div>
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Data Profesi</h4>
+            <h3 class="font-weight-bold">Data Profesi</h3>
+            <hr>
             <p class="card-description">
-                Kelola data profesi dan kategori profesi
+                Halaman ini menyediakan fitur untuk mengelola data profesi dan kategori profesi alumni secara terstruktur.
+                Data ini menjadi bagian penting dalam pelaksanaan tracer study, yang bertujuan untuk memantau jejak karier
+                lulusan, mengevaluasi keterkaitan antara pendidikan dan dunia kerja, serta sebagai dasar dalam pengembangan
+                kurikulum dan peningkatan mutu program studi.
             </p>
             {{-- <button class="btn btn-primary mb-3" id="btn-tambah">Tambah Profesi</button> --}}
 
 
             <div class="d-flex justify-content-end mb-3">
                 <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')"
-                    class="btn btn-sm btn-primary d-flex align-items-center gap-1">
-                    <i class="mdi mdi-plus-circle-outline fs-5"></i>
-                    Tambah Data
+                    class="btn btn-info d-flex align-items-center gap-2" id="btn-tambah">
+                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
                 </button>
             </div>
+
 
             <div class="table-responsive">
                 <table class="table text-center" id="profesi-table">
@@ -156,11 +176,23 @@
                     label: 'Sebaran Profesi Alumni',
                     data: {!! json_encode($data->pluck('total')) !!},
                     backgroundColor: [
-                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                        '#9966FF', '#FF9F40', '#C9CBCF', '#FF5E5E',
-                        '#5EF0D9', '#A5A5A5', '#8ED081', '#C17CCF',
-                        '#F5A623', '#34C759', '#C4C4C4'
+                        '#004E7C', // Navy Blue
+                        '#0077B6', // Blue Ocean
+                        '#0096C7', // Sky Blue
+                        '#00B4D8', // Light Blue
+                        '#48CAE4', // Soft Cyan
+                        '#90E0EF', // Pale Blue
+                        '#CAF0F8', // Very Pale Blue
+                        '#023E8A', // Dark Blue
+                        '#007F5F', // Deep Sea Green
+                        '#00B894', // Aqua Green
+                        '#55EFC4', // Mint Green
+                        '#1B262C', // Dark Slate
+                        '#0F4C75', // Strong Blue
+                        '#3282B8', // Medium Blue
+                        '#66BFBF', // Light Sea Green
                     ],
+
                     hoverOffset: 10
                 }]
             },
