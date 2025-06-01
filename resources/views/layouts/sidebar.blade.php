@@ -113,7 +113,7 @@
         {{-- end kuisioner admin --}}
 
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+            <a class="nav-link" href="{{ route('admin.index') }}">
                 <i class="mdi mdi-account-key menu-icon"></i>
                 <span class="menu-title">Admin</span>
             </a>

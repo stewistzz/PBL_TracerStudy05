@@ -14,7 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DataPenggunaController;
 use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\KepuasanController;
-
+use App\Http\Controllers\AdminController;
 
 // route landingpage
 Route::get('/', function () {
@@ -93,6 +93,17 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [AlumniController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [AlumniController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
+        });
+
+        // route untuk admin
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::get('/', [AdminController::class, 'index'])->name('index');
+            Route::get('/list', [AdminController::class, 'list'])->name('list');
+            Route::get('/create', [AdminController::class, 'create'])->name('create');
+            Route::post('/store', [AdminController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [AdminController::class, 'update'])->name('update');
+            Route::delete('/destroy/{id}', [AdminController::class, 'destroy_ajax'])->name('destroy');
         });
 
         // route untuk data pengguna

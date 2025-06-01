@@ -9,7 +9,7 @@ class AdminModel extends Model
 {
     protected $table = 'admin';
     protected $primaryKey = 'admin_id';
-    protected $fillable = ['user_id', 'nama'];
+    protected $fillable = ['user_id', 'nama', 'email'];
 
     // Relasi: Satu admin terkait satu user
     public function user()
