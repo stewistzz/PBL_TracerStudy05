@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\JawabanPenggunaModel;
+
 
 class DataPenggunaModel extends Model
 {
@@ -23,4 +25,10 @@ class DataPenggunaModel extends Model
         'no_hp',
         'email',
     ];
+
+    // modifikasi
+    public function jawaban()
+    {
+        return $this->hasMany(JawabanPenggunaModel::class, 'pengguna_id', 'pengguna_id');
+    }
 }

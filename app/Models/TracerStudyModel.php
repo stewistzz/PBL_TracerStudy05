@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Model;
 
+
+
 class TracerStudyModel extends Model
 {
     protected $table = 'tracer_study';
