@@ -116,6 +116,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [DataPenggunaController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [DataPenggunaController::class, 'destroy_ajax'])->name('destroy');
         });
+        
 
         // Kepuasan Routes (Admin)
         Route::prefix('kepuasan')->name('kepuasan.')->group(function () {
@@ -182,6 +183,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{id}', [KategoriPertanyaanController::class, 'destroy'])->name('destroy');
     });
 
+    // pengguna belum isi dan export
+    Route::get('/pengguna-kepuasan/belum-isi', [KepuasanController::class, 'penggunaBelumIsi'])->name('pengguna_kepuasan.belum_isi');
+Route::get('/pengguna-kepuasan/export-belum-isi', [KepuasanController::class, 'exportPenggunaBelumIsi'])->name('pengguna_kepuasan.export_belum_isi');
+
+
     // route untuk alumni_tracer
     // Route::prefix('alumni_tracer')->name('alumni_tracer.')->group(function () {
     //     Route::get('/', [AlumniTracerController::class, 'index'])->name('index');
@@ -195,6 +201,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/alumni-tracer', [AlumniTracerController::class, 'index'])->name('alumni_tracer.index');
     Route::get('/alumni-tracer/list', [AlumniTracerController::class, 'list'])->name('alumni_tracer.list');
     Route::post('/alumni-tracer/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('alumni_tracer.kirim_token');
+    Route::delete('/alumni-tracer/{id}', [AlumniTracerController::class, 'destroy']);
+    // export
+    Route::get('/alumni-tracer/belum-isi', [AlumniTracerController::class, 'alumniBelumIsi'])->name('alumni_tracer.belum_isi');
+    Route::get('/alumni-tracer/export-belum-isi', [AlumniTracerController::class, 'exportBelumIsi'])->name('alumni_tracer.export_belum_isi');
+    // rekap tracer
+        Route::get('/alumni-tracer/export-rekap-tracer', [AlumniTracerController::class, 'exportRekapTracer'])->name('alumni_tracer.export_rekap_tracer');
+
+
 
 
 

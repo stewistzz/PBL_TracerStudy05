@@ -14,6 +14,6 @@ class AdminModel extends Model
     // Relasi: Satu admin terkait satu user
     public function user()
     {
-        return $this->belongsTo(UsersModel::class, 'user_id', 'id');
+        return $this->belongsTo(UsersModel::class, 'user_id', 'user_id');
     }
 }
