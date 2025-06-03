@@ -115,6 +115,17 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [DataPenggunaController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [DataPenggunaController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [DataPenggunaController::class, 'destroy_ajax'])->name('destroy');
+
+            // CRUD Routes
+            Route::get('/create_ajax', [DataPenggunaController::class, 'create_ajax'])->name('data_pengguna.create_ajax');
+            Route::post('/ajax', [DataPenggunaController::class, 'store_ajax'])->name('data_pengguna.store_ajax');
+            Route::get('/{id}/edit_ajax', [DataPenggunaController::class, 'edit_ajax'])->name('data_pengguna.edit_ajax');
+            Route::put('/{id}/update_ajax', [DataPenggunaController::class, 'update_ajax'])->name('data_pengguna.update_ajax');
+            Route::delete('/{id}/delete_ajax', [DataPenggunaController::class, 'destroy_ajax'])->name('data_pengguna.destroy_ajax');
+
+            // Import Routes
+            Route::get('/import', [DataPenggunaController::class, 'import'])->name('import');
+            Route::post('/import_ajax', [DataPenggunaController::class, 'import_ajax'])->name('import_ajax');
         });
 
         // Kepuasan Routes (Admin)

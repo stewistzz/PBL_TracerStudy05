@@ -8,6 +8,9 @@ use App\Models\PenggunaLulusan;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Log;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class DataPenggunaController extends Controller
 {
@@ -39,11 +42,11 @@ class DataPenggunaController extends Controller
 
             // Query data dengan error handling
             $data = DataPenggunaModel::select([
-                'pengguna_id', 
-                'nama', 
-                'instansi', 
-                'jabatan', 
-                'no_hp', 
+                'pengguna_id',
+                'nama',
+                'instansi',
+                'jabatan',
+                'no_hp',
                 'email'
             ]);
 
@@ -66,7 +69,6 @@ class DataPenggunaController extends Controller
 
             Log::info('DataTables response prepared successfully');
             return $dataTable;
-
         } catch (\Exception $e) {
             Log::error('DataTables error: ' . $e->getMessage(), [
                 'file' => $e->getFile(),
@@ -111,8 +113,8 @@ class DataPenggunaController extends Controller
             if ($validator->fails()) {
                 Log::warning('Validation failed', $validator->errors()->toArray());
                 return response()->json([
-                    'status' => false, 
-                    'message' => 'Validasi gagal', 
+                    'status' => false,
+                    'message' => 'Validasi gagal',
                     'errors' => $validator->errors()
                 ], 422);
             }
@@ -126,13 +128,12 @@ class DataPenggunaController extends Controller
             ]);
 
             Log::info('Data created successfully', ['id' => $pengguna->pengguna_id]);
-            
+
             return response()->json([
-                'status' => true, 
+                'status' => true,
                 'message' => 'Data pengguna lulusan berhasil ditambahkan',
                 'data' => $pengguna
             ], 200);
-
         } catch (\Exception $e) {
             Log::error('Store error: ' . $e->getMessage(), [
                 'file' => $e->getFile(),
@@ -140,7 +141,7 @@ class DataPenggunaController extends Controller
             ]);
 
             return response()->json([
-                'status' => false, 
+                'status' => false,
                 'message' => 'Gagal menambahkan data: ' . $e->getMessage()
             ], 500);
         }
@@ -174,8 +175,8 @@ class DataPenggunaController extends Controller
             if ($validator->fails()) {
                 Log::warning('Update validation failed', $validator->errors()->toArray());
                 return response()->json([
-                    'status' => false, 
-                    'message' => 'Validasi gagal', 
+                    'status' => false,
+                    'message' => 'Validasi gagal',
                     'errors' => $validator->errors()
                 ], 422);
             }
@@ -190,13 +191,12 @@ class DataPenggunaController extends Controller
             ]);
 
             Log::info('Data updated successfully', ['id' => $id]);
-            
+
             return response()->json([
-                'status' => true, 
+                'status' => true,
                 'message' => 'Data pengguna lulusan berhasil diperbarui',
                 'data' => $pengguna
             ], 200);
-
         } catch (\Exception $e) {
             Log::error('Update error: ' . $e->getMessage(), [
                 'file' => $e->getFile(),
@@ -204,7 +204,7 @@ class DataPenggunaController extends Controller
             ]);
 
             return response()->json([
-                'status' => false, 
+                'status' => false,
                 'message' => 'Gagal memperbarui data: ' . $e->getMessage()
             ], 500);
         }
@@ -219,12 +219,11 @@ class DataPenggunaController extends Controller
             $pengguna->delete();
 
             Log::info('Data deleted successfully', ['id' => $id]);
-            
+
             return response()->json([
-                'status' => true, 
+                'status' => true,
                 'message' => 'Data pengguna lulusan berhasil dihapus'
             ], 200);
-
         } catch (\Exception $e) {
             Log::error('Delete error: ' . $e->getMessage(), [
                 'file' => $e->getFile(),
@@ -232,9 +231,96 @@ class DataPenggunaController extends Controller
             ]);
 
             return response()->json([
-                'status' => false, 
+                'status' => false,
                 'message' => 'Gagal menghapus data: ' . $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function import()
+    {
+        return view('data_pengguna.import');
+    }
+
+    public function import_ajax(Request $request)
+    {
+        $rules = [
+            'file_pengguna' => ['required', 'mimes:xlsx,xls', 'max:1024'], // 1MB max file size
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
+            ]);
+        }
+
+        try {
+            $file = $request->file('file_pengguna');
+            $spreadsheet = IOFactory::load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $rows = $sheet->toArray();
+
+            $insert = [];
+            $dataTampil = [];
+
+            // Remove header row
+            if (count($rows) > 0) {
+                $header = array_shift($rows);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'File kosong atau tidak ada data.',
+                ]);
+            }
+
+            foreach ($rows as $row) {
+                // Check if the first cell (e.g., 'nama') is not empty to consider it a valid row
+                if (!empty($row[0])) {
+                    $insert[] = [
+                        'nama' => $row[0] ?? null,
+                        'instansi' => $row[1] ?? null,
+                        'jabatan' => $row[2] ?? null,
+                        'no_hp' => $row[3] ?? null,
+                        // Corrected: Assuming email is in the 5th column (index 4)
+                        'email' => $row[4] ?? null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+
+                    $dataTampil[] = [
+                        'username' => $row[0] ?? null, // Using 'nama' as 'username'
+                        'role' => $row[2] ?? null,     // Using 'jabatan' as 'role'
+                    ];
+                }
+            }
+
+            if (!empty($insert)) {
+                DataPenggunaModel::insertOrIgnore($insert);
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil diimpor: ' . count($insert) . ' pengguna',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Tidak ada data valid untuk diimpor dari file.',
+                ]);
+            }
+        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Kesalahan saat membaca format file: Pastikan file adalah format XLSX atau XLS yang valid. Detail: ' . $e->getMessage(),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan saat proses impor: ' . $e->getMessage(),
+            ]);
         }
     }
 }
