@@ -122,11 +122,13 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('kepuasan')->name('kepuasan.')->group(function () {
             Route::get('/', [KepuasanController::class, 'index'])->name('index');
             Route::get('/list', [KepuasanController::class, 'list'])->name('list');
+             Route::get('/grafik', [KepuasanController::class, 'grafik'])->name('grafik');
             Route::get('/create', [KepuasanController::class, 'create_ajax'])->name('create');
             Route::post('/store', [KepuasanController::class, 'store_ajax'])->name('store');
             Route::get('/edit/{id}', [KepuasanController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [KepuasanController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [KepuasanController::class, 'destroy_ajax'])->name('destroy');
+            Route::get('/export-excel', [KepuasanController::class, 'exportExcel'])->name('export-excel');
         });
 
         // route untuk user
@@ -218,6 +220,7 @@ Route::get('/pengguna-kepuasan/export-belum-isi', [KepuasanController::class, 'e
         // Tracer Study Routes
         Route::prefix('tracer-study')->name('tracer-study.')->group(function () {
             Route::get('/', [TracerStudyController::class, 'index'])->name('index');
+            
             Route::get('/data-diri', [TracerStudyController::class, 'showDataDiri'])->name('data-diri');
             Route::post('/data-diri', [TracerStudyController::class, 'storeDataDiri'])->name('store-data-diri');
             Route::get('/data-atasan', [TracerStudyController::class, 'showDataAtasan'])->name('data-atasan');
