@@ -38,7 +38,7 @@
                 <i class="fas fa-home"></i>
                 Kembali ke Beranda
             </a>
-            <a href="mailto:admin@example.com" class="contact-button">
+            <a href="mailto:afgangalihf@gmail.com" class="contact-button">
                 <i class="fas fa-envelope"></i>
                 Hubungi Admin
             </a>
