@@ -115,14 +115,18 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [DataPenggunaController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [DataPenggunaController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [DataPenggunaController::class, 'destroy_ajax'])->name('destroy');
+
+            // pengguna belum isi dan export
+            Route::get('/belum-isi', [DataPenggunaController::class, 'penggunaBelumIsi'])->name('belum_isi');
+            Route::get('/export-belum-isi', [DataPenggunaController::class, 'exportPenggunaBelumIsi'])->name('export_belum_isi');
         });
-        
+
 
         // Kepuasan Routes (Admin)
         Route::prefix('kepuasan')->name('kepuasan.')->group(function () {
             Route::get('/', [KepuasanController::class, 'index'])->name('index');
             Route::get('/list', [KepuasanController::class, 'list'])->name('list');
-             Route::get('/grafik', [KepuasanController::class, 'grafik'])->name('grafik');
+            Route::get('/grafik', [KepuasanController::class, 'grafik'])->name('grafik');
             Route::get('/create', [KepuasanController::class, 'create_ajax'])->name('create');
             Route::post('/store', [KepuasanController::class, 'store_ajax'])->name('store');
             Route::get('/edit/{id}', [KepuasanController::class, 'edit_ajax'])->name('edit');
@@ -184,10 +188,6 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{id}', [KategoriPertanyaanController::class, 'destroy'])->name('destroy');
     });
 
-    // pengguna belum isi dan export
-    Route::get('/pengguna-kepuasan/belum-isi', [KepuasanController::class, 'penggunaBelumIsi'])->name('pengguna_kepuasan.belum_isi');
-Route::get('/pengguna-kepuasan/export-belum-isi', [KepuasanController::class, 'exportPenggunaBelumIsi'])->name('pengguna_kepuasan.export_belum_isi');
-
 
     // route untuk alumni_tracer
     // Route::prefix('alumni_tracer')->name('alumni_tracer.')->group(function () {
@@ -207,7 +207,7 @@ Route::get('/pengguna-kepuasan/export-belum-isi', [KepuasanController::class, 'e
     Route::get('/alumni-tracer/belum-isi', [AlumniTracerController::class, 'alumniBelumIsi'])->name('alumni_tracer.belum_isi');
     Route::get('/alumni-tracer/export-belum-isi', [AlumniTracerController::class, 'exportBelumIsi'])->name('alumni_tracer.export_belum_isi');
     // rekap tracer
-        Route::get('/alumni-tracer/export-rekap-tracer', [AlumniTracerController::class, 'exportRekapTracer'])->name('alumni_tracer.export_rekap_tracer');
+    Route::get('/alumni-tracer/export-rekap-tracer', [AlumniTracerController::class, 'exportRekapTracer'])->name('alumni_tracer.export_rekap_tracer');
 
 
 
@@ -220,7 +220,7 @@ Route::get('/pengguna-kepuasan/export-belum-isi', [KepuasanController::class, 'e
         // Tracer Study Routes
         Route::prefix('tracer-study')->name('tracer-study.')->group(function () {
             Route::get('/', [TracerStudyController::class, 'index'])->name('index');
-            
+
             Route::get('/data-diri', [TracerStudyController::class, 'showDataDiri'])->name('data-diri');
             Route::post('/data-diri', [TracerStudyController::class, 'storeDataDiri'])->name('store-data-diri');
             Route::get('/data-atasan', [TracerStudyController::class, 'showDataAtasan'])->name('data-atasan');

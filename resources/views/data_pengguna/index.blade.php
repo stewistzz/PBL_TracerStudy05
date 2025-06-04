@@ -38,6 +38,42 @@
         </div>
     </div>
 
+    {{-- data alumni yang belum mengisi --}}
+    <div class="col-12 grid-margin stretch-card mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Data Pengguna Belum Mengisi Survey Kepuasan</h4>
+                <p class="card-description text-muted">Berikut ini adalah Pengguna Lulusan atausan yang belum mengisi survey kepuasan 
+                    POLINEMA</p>
+
+                {{-- export --}}
+                <a href="{{ route('data_pengguna.export_belum_isi') }}" class="btn btn-warning btn-sm"><i
+                        class="mdi mdi-file-excel"></i> Export ke Excel</a>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" id="survey-table-belum-isi">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Instansi</th>
+                                <th>Jabatan</th>
+                                <th>No. HP</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                {{-- <th>Aksi</th> --}}
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal -->
     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -193,6 +229,47 @@
                         }
                     }
                 });
+            });
+        });
+    </script>
+    {{-- script pengguna yang belum mengisi --}}
+    <script>
+        $(document).ready(function() {
+            $('#survey-table-belum-isi').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('data_pengguna.belum_isi') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'instansi',
+                        name: 'instansi'
+                    },
+                    {
+                        data: 'jabatan',
+                        name: 'jabatan'
+                    },
+                    {
+                        data: 'no_hp',
+                        name: 'no_hp'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
             });
         });
     </script>
