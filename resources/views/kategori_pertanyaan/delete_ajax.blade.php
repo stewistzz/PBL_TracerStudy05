@@ -1,29 +1,39 @@
-<form id="form-delete" action="{{ url('/kategori_pertanyaan/' . $data->kode_kategori . '/delete_ajax') }}" method="POST">
-    @csrf
-    @method('DELETE') <!-- Spoofing agar method menjadi DELETE -->
+<div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content shadow-lg">
+        <form id="form-delete" action="{{ url('/kategori_pertanyaan/' . $data->kode_kategori . '/delete_ajax') }}" method="POST">
+            @csrf
+            @method('DELETE')
 
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title text-white">Hapus Data</h5>
-                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    <i class="mdi mdi-alert-circle-outline mr-2"></i>Konfirmasi Hapus
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
 
-            <div class="modal-body">
-                <p>Apakah Anda yakin ingin menghapus kategori berikut ini?</p>
-                <ul>
+            <div class="modal-body text-center">
+                <i class="mdi mdi-delete-forever text-danger display-4"></i>
+                <p class="mt-3 mb-2 font-weight-bold">Yakin ingin menghapus kategori ini?</p>
+                <ul class="list-unstyled text-muted small">
                     <li><strong>ID:</strong> {{ $data->kode_kategori }}</li>
-                    <li><strong>Nama Kategori:</strong> {{ $data->nama_kategori }}</li>
+                    <li><strong>Nama:</strong> {{ $data->nama_kategori }}</li>
                 </ul>
             </div>
 
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-secondary">Batal</button>
-                <button type="submit" class="btn btn-danger">Hapus</button>
+            <div class="modal-footer justify-content-center">
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="mdi mdi-check-circle-outline"></i> Ya, Hapus
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">
+                    <i class="mdi mdi-close-circle-outline"></i> Batal
+                </button>
             </div>
-        </div>
+        </form>
     </div>
-</form>
+</div>
+
 
 
 <script>

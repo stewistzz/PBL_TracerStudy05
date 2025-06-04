@@ -2,34 +2,43 @@
     @csrf
     <div class="modal-dialog modal-md">
         <div class="modal-content">
-            <div class="modal-header bg-warning">
-                <h5 class="modal-title">Edit Kategori</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-header bg-warning text-white">
+                <h5 class="modal-title"><i class="mdi mdi-pencil-box-outline"></i> Edit Kategori Pertanyaan</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span>&times;</span>
+                </button>
             </div>
 
             <div class="modal-body">
+                {{-- Kode Kategori --}}
                 <div class="form-group">
-                    <label>Kode Kategori</label>
-                    <input type="text" name="kode_kategori" value="{{ $data->kode_kategori }}" class="form-control">
-                    <span class="text-danger error-text" id="error-kode_kategori"></span>
+                    <label for="kode_kategori"><i class="mdi mdi-barcode"></i> Kode Kategori</label>
+                    <input type="text" name="kode_kategori" class="form-control form-control-lg" value="{{ $data->kode_kategori }}" placeholder="Masukkan kode kategori">
+                    <small class="text-danger error-text" id="error-kode_kategori"></small>
                 </div>
 
+                {{-- Nama Kategori --}}
                 <div class="form-group">
-                    <label>Nama Kategori</label>
-                    <input type="text" name="nama_kategori" value="{{ $data->nama_kategori }}" class="form-control">
-                    <span class="text-danger error-text" id="error-nama_kategori"></span>
+                    <label for="nama_kategori"><i class="mdi mdi-format-title"></i> Nama Kategori</label>
+                    <input type="text" name="nama_kategori" class="form-control form-control-lg" value="{{ $data->nama_kategori }}" placeholder="Masukkan nama kategori">
+                    <small class="text-danger error-text" id="error-nama_kategori"></small>
                 </div>
 
+                {{-- Deskripsi --}}
                 <div class="form-group">
-                    <label>Deskripsi</label>
-                    <textarea name="deskripsi" class="form-control">{{ $data->deskripsi }}</textarea>
-                    <span class="text-danger error-text" id="error-deskripsi"></span>
+                    <label for="deskripsi"><i class="mdi mdi-text-subject"></i> Deskripsi</label>
+                    <textarea name="deskripsi" class="form-control form-control-lg" rows="3" placeholder="Masukkan deskripsi">{{ $data->deskripsi }}</textarea>
+                    <small class="text-danger error-text" id="error-deskripsi"></small>
                 </div>
             </div>
 
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-warning">Update</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            <div class="modal-footer bg-light">
+                <button type="submit" class="btn btn-warning btn-lg">
+                    <i class="mdi mdi-content-save"></i> Perbarui
+                </button>
+                <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">
+                    <i class="mdi mdi-close-circle-outline"></i> Batal
+                </button>
             </div>
         </div>
     </div>
