@@ -15,43 +15,60 @@ class AlumniController extends Controller
         return view('alumni.index');
     }
 
-    public function list()
-    {
-        $data = AlumniModel::with('user')->select([
-            'alumni_id',
-            'user_id',
-            'nama',
-            'nim',
-            'email',
-            'no_hp',
-            'program_studi',
-            'tahun_lulus'
-        ]);
+           public function filter_ajax()
+{
+    return view('alumni.filter_ajax');
+}
+    // app/Http/Controllers/AlumniController.php
+public function list(Request $request)
+{
+    $data = AlumniModel::with('user')->select([
+        'alumni_id',
+        'user_id',
+        'nama',
+        'nim',
+        'email',
+        'no_hp',
+        'program_studi',
+        'tahun_lulus'
+    ]);
 
-        return DataTables::of($data)
-            ->addIndexColumn()
-            ->addColumn('username', function ($row) {
-                // Ambil username dari relasi user
-                return $row->user ? $row->user->username : '-';
-            })
-            ->addColumn('tahun_lulus_formatted', function ($row) {
-                return $row->tahun_lulus ? $row->tahun_lulus->format('Y') : '-';
-            })
-            ->addColumn('action', function ($row) {
-                return '
-                    <div class="d-flex justify-content-center gap-2">
-                            <button class="btn btn-sm py-2 btn-warning btn-edit mr-2" data-id="' . $row->alumni_id . '">
-                                <i class="mdi mdi-pencil"></i> Edit
-                            </button>
-                            <button class="btn btn-sm btn-danger btn-hapus" data-id="' . $row->alumni_id . '">
-                                <i class="mdi mdi-delete"></i> Hapus
-                            </button>
-                        </div>
-                ';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+    // Terapkan filter jika ada
+    if ($request->has('program_studi') && $request->program_studi != '') {
+        $data->where('program_studi', $request->program_studi);
     }
+
+    if ($request->has('tahun_lulus_start') && $request->tahun_lulus_start != '') {
+        $data->whereYear('tahun_lulus', '>=', $request->tahun_lulus_start);
+    }
+
+    if ($request->has('tahun_lulus_end') && $request->tahun_lulus_end != '') {
+        $data->whereYear('tahun_lulus', '<=', $request->tahun_lulus_end);
+    }
+
+    return DataTables::of($data)
+        ->addIndexColumn()
+        ->addColumn('username', function ($row) {
+            return $row->user ? $row->user->username : '-';
+        })
+        ->addColumn('tahun_lulus_formatted', function ($row) {
+            return $row->tahun_lulus ? $row->tahun_lulus->format('Y') : '-';
+        })
+        ->addColumn('action', function ($row) {
+            return '
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm py-2 btn-warning btn-edit mr-2" data-id="' . $row->alumni_id . '">
+                        <i class="mdi mdi-pencil"></i> Edit
+                    </button>
+                    <button class="btn btn-sm btn-danger btn-hapus" data-id="' . $row->alumni_id . '">
+                        <i class="mdi mdi-delete"></i> Hapus
+                    </button>
+                </div>
+            ';
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+}
 
     public function create_ajax()
     {
@@ -171,4 +188,33 @@ class AlumniController extends Controller
             'message' => 'Data alumni berhasil dihapus'
         ]);
     }
+
+     // Konfirmasi hapus (AJAX)
+    public function confirm_ajax($id)
+    {
+        $data = AlumniModel::where('alumni_id', $id)->firstOrFail();
+        return view('alumni.delete_ajax', compact('data'));
+    }
+
+    // Hapus (AJAX)
+    public function delete_ajax($id)
+    {
+        $alumni = AlumniModel::where('alumni_id', $id)->firstOrFail();
+
+        try {
+            $alumni->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'Data alumni berhasil dihapus.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Gagal menghapus data alumni.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+ 
 }

@@ -1,8 +1,6 @@
-<div class="modal-header">
+<div class="modal-header bg-primary text-white">
     <h5 class="modal-title" id="modalLabel">Tambah Alumni</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">×</span>
-    </button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
 <div class="modal-body">
@@ -71,8 +69,8 @@
         </div>
         
         <div class="modal-footer">
-            <button type="submit" class="btn btn-success" id="btn-submit">Simpan</button>
-            <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit">Simpan</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
         </div>
     </form>
 </div>
@@ -114,11 +112,7 @@ $(document).ready(function () {
                 console.log('Success response:', res);
                 if (res.status) {
                     $('#modal-form').modal('hide');
-                    if (typeof loadTable === 'function') {
-                        loadTable();
-                    } else {
-                        location.reload();
-                    }
+                    $('#alumni-table').DataTable().ajax.reload();
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',

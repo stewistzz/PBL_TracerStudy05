@@ -1,5 +1,7 @@
 @extends('layouts.template')
-    <link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
+<link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
 @section('content')
     <div class="card">
@@ -15,6 +17,10 @@
                 <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
                     <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
                     Tambah Alumni
+                </button>
+                <button type="button" class="btn btn-primary d-flex align-items-center gap-1 ms-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <i class="mdi mdi-filter fs-5 mr-2"></i>
+                    Filter
                 </button>
             </div>
 
@@ -37,34 +43,58 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    {{-- Tidak perlu <tfoot> jika total tidak ditampilkan di footer --}}
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal untuk Form Create/Edit dan Hapus -->
     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                {{-- Konten form (create/edit) akan di‐load via AJAX --}}
+                {{-- Konten form (create/edit/hapus) akan di‐load via AJAX --}}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Filter -->
+    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="filterModalLabel">Filter Data Alumni</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="filterFormContent">
+                    <p>Loading form...</p> <!-- Debugging placeholder -->
+                </div>
             </div>
         </div>
     </div>
 @endsection
 
 @push('js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Fungsi untuk reload DataTable dari luar (bisa dipanggil setelah store/update/destroy)
-        window.loadTable = function() {
-            $('#alumni-table').DataTable().ajax.reload(null, false);
-        };
-
         $(document).ready(function() {
+            console.log('jQuery loaded:', typeof $ !== 'undefined'); // Debugging
+            console.log('Bootstrap loaded:', typeof bootstrap !== 'undefined'); // Debugging
+
             let table = $('#alumni-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('alumni.list') }}",
+                ajax: {
+                    url: "{{ route('alumni.list') }}",
+                    data: function(d) {
+                        d.program_studi = $('#filter_program_studi').val();
+                        d.tahun_lulus_start = $('#filter_tahun_lulus_start').val();
+                        d.tahun_lulus_end = $('#filter_tahun_lulus_end').val();
+                    }
+                },
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -72,8 +102,8 @@
                         searchable: false
                     },
                     {
-                        data: 'username', // Nama kolom yang dikirim dari controller (addColumn('user_name', …))
-                        name: 'username' // Untuk keperluan sorting/search di relasi User
+                        data: 'username',
+                        name: 'username'
                     },
                     {
                         data: 'nama',
@@ -96,11 +126,11 @@
                         name: 'program_studi'
                     },
                     {
-                        data: 'tahun_lulus_formatted', // Misalnya controller mengirimkan field ini
+                        data: 'tahun_lulus_formatted',
                         name: 'tahun_lulus'
                     },
                     {
-                        data: 'action', // Tombol Edit & Hapus (dikirim oleh controller)
+                        data: 'action',
                         name: 'action',
                         orderable: false,
                         searchable: false
@@ -108,56 +138,84 @@
                 ]
             });
 
-            // Tombol Tambah → load form create via AJAX
+            // Tombol Tambah
             $('#btn-tambah').on('click', function() {
+                console.log('Tombol Tambah clicked'); // Debugging
                 $.get('{{ route('alumni.create') }}', function(res) {
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 });
             });
 
-            // Tombol Edit → load form edit via AJAX
+            // Tombol Edit
             $('#alumni-table').on('click', '.btn-edit', function() {
                 let id = $(this).data('id');
+                console.log('Tombol Edit clicked, ID:', id); // Debugging
                 let url = '{{ route('alumni.edit', ':id') }}'.replace(':id', id);
-
                 $.get(url, function(res) {
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 });
             });
 
-            // Tombol Hapus → kirim DELETE via AJAX
+            // Tombol Hapus
             $('#alumni-table').on('click', '.btn-hapus', function() {
                 let id = $(this).data('id');
-                if (!confirm("Yakin ingin menghapus data ini?")) return;
+                console.log('Tombol Hapus clicked, ID:', id); // Debugging
+                let url = '{{ route('alumni.confirm_ajax', ':id') }}'.replace(':id', id);
+                $.get(url, function(res) {
+                    $('#modal-form .modal-content').html(res);
+                    $('#modal-form').modal('show');
+                });
+            });
 
-                let url = '{{ route('alumni.destroy', ':id') }}'.replace(':id', id);
-
+            // Load form filter saat modal dibuka
+            $('#filterModal').on('show.bs.modal', function() {
+                console.log('Modal filter opened'); // Debugging
                 $.ajax({
-                    url: url,
-                    type: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
+                    url: "{{ route('alumni.filter') }}",
+                    type: 'GET',
                     success: function(res) {
-                        table.ajax.reload(null, false);
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: res.message,
-                            confirmButtonText: 'OK'
-                        });
+                        console.log('Filter form loaded:', res); // Debugging
+                        $('#filterFormContent').html(res);
                     },
-                    error: function(err) {
-                        console.error('Delete Error:', err);
+                    error: function(xhr) {
+                        console.error('AJAX Error:', xhr); // Debugging
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Gagal menghapus data!'
+                            text: 'Gagal memuat form filter! Status: ' + xhr.status
                         });
                     }
                 });
+            });
+
+            // Submit form filter
+            $(document).on('submit', '#filterForm', function(e) {
+                e.preventDefault();
+                console.log('Filter form submitted'); // Debugging
+                let start = $('#filter_tahun_lulus_start').val();
+                let end = $('#filter_tahun_lulus_end').val();
+                if (start && end && parseInt(start) > parseInt(end)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Tahun mulai harus lebih kecil dari tahun akhir!'
+                    });
+                    return;
+                }
+                table.ajax.reload();
+                $('#filterModal').modal('hide');
+            });
+
+            // Reset filter
+            $(document).on('click', '#resetFilter', function() {
+                console.log('Reset filter clicked'); // Debugging
+                $('#filter_program_studi').val('');
+                $('#filter_tahun_lulus_start').val('');
+                $('#filter_tahun_lulus_end').val('');
+                table.ajax.reload();
+                $('#filterModal').modal('hide');
             });
         });
     </script>
