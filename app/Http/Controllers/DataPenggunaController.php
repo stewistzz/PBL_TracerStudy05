@@ -267,7 +267,7 @@ class DataPenggunaController extends Controller
         $sheet->setCellValue('B1', 'Nama');
         $sheet->setCellValue('C1', 'Instansi');
         $sheet->setCellValue('D1', 'Jabatan');
-        $sheet->setCellValue('E1', 'No HP');
+        $sheet->setCellValue('E1', 'No_HP');
         $sheet->setCellValue('F1', 'Email');
         $sheet->setCellValue('G1', 'Status');
 
