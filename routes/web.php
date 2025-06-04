@@ -129,7 +129,6 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/destroy/{id}', [KepuasanController::class, 'destroy_ajax'])->name('destroy');
         });
 
-
         // route untuk user
         Route::prefix('user')->name('user.')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('index');
