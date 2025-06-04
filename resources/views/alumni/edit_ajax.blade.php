@@ -1,8 +1,6 @@
-<div class="modal-header">
+<div class="modal-header bg-warning text-dark">
     <h5 class="modal-title" id="modalLabel">Edit Alumni</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">×</span>
-    </button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
 <div class="modal-body">
@@ -10,14 +8,14 @@
         <input type="hidden" name="alumni_id" id="alumni_id" value="{{ $alumni->alumni_id }}">
         
         <div class="row">
-           <div class="col-md-6">
-    <div class="form-group">
-        <label for="user_id">User <span class="text-danger">*</span></label>
-     <input type="text" name="user_id_display" id="user_id_display" class="form-control" value="{{ $alumni->user ? $alumni->user->user_id : 'Tidak ada user terkait' }}" readonly>
-        <input type="hidden" name="user_id" value="{{ $alumni->user_id }}">
-        <div class="invalid-feedback" id="error_user_id"></div>
-    </div>
-</div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="user_id">User <span class="text-danger">*</span></label>
+                    <input type="text" name="user_id_display" id="user_id_display" class="form-control" value="{{ $alumni->user ? $alumni->user->user_id : 'Tidak ada user terkait' }}" readonly>
+                    <input type="hidden" name="user_id" value="{{ $alumni->user_id }}">
+                    <div class="invalid-feedback" id="error_user_id"></div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="nama">Nama Alumni</label>
@@ -64,13 +62,12 @@
         <div class="form-group">
             <label for="tahun_lulus">Tahun Lulus</label>
             <input type="date" name="tahun_lulus" id="tahun_lulus" class="form-control" value="{{ $alumni->tahun_lulus ? $alumni->tahun_lulus->format('Y-m-d') : '' }}">
-            <small class="text-muted">Akan diisi oleh dosen</small>
             <div class="invalid-feedback" id="error_tahun_lulus"></div>
         </div>
         
         <div class="modal-footer">
-            <button type="submit" class="btn btn-success" id="btn-submit">Update</button>
-            <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-warning" id="btn-submit">Update</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
         </div>
     </form>
 </div>
@@ -107,7 +104,7 @@ $(document).ready(function () {
                     if (typeof loadTable === 'function') {
                         loadTable();
                     } else {
-                        location.reload();
+                        $('#alumni-table').DataTable().ajax.reload();
                     }
                     Swal.fire({
                         icon: 'success',

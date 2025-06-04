@@ -88,17 +88,18 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/destroy/{id}', [InstansiController::class, 'destroy_ajax'])->name('destroy');
         });
 
-        // Alumni Routes (Admin)
-        Route::prefix('alumni')->name('alumni.')->group(function () {
-            Route::get('/', [AlumniController::class, 'index'])->name('index');
-            Route::get('/list', [AlumniController::class, 'list'])->name('list');
-            Route::get('/create', [AlumniController::class, 'create_ajax'])->name('create');
-            Route::post('/store', [AlumniController::class, 'store_ajax'])->name('store');
-            Route::get('/edit/{id}', [AlumniController::class, 'edit_ajax'])->name('edit');
-            Route::post('/update/{id}', [AlumniController::class, 'update_ajax'])->name('update');
-            Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
-        });
-
+      Route::prefix('alumni')->name('alumni.')->group(function () {
+    Route::get('/', [AlumniController::class, 'index'])->name('index');
+    Route::get('/list', [AlumniController::class, 'list'])->name('list');
+    Route::get('/create', [AlumniController::class, 'create_ajax'])->name('create');
+    Route::post('/store', [AlumniController::class, 'store_ajax'])->name('store');
+    Route::get('/edit/{id}', [AlumniController::class, 'edit_ajax'])->name('edit');
+    Route::post('/update/{id}', [AlumniController::class, 'update_ajax'])->name('update');
+    Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
+    Route::get('/filter', [AlumniController::class, 'filter_ajax'])->name('filter');
+    Route::get('/{id}/confirm_ajax', [AlumniController::class, 'confirm_ajax'])->name('confirm_ajax');
+    Route::delete('/{id}/delete_ajax', [AlumniController::class, 'delete_ajax'])->name('delete_ajax');
+});
         // route untuk admin
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', [AdminController::class, 'index'])->name('index');
@@ -171,7 +172,7 @@ Route::middleware(['auth'])->group(function () {
             // Delete Routes
             Route::get('/{id}/delete_ajax', [PertanyaanController::class, 'confirm_ajax'])->name('confirm_ajax');
             Route::delete('/{id}/delete_ajax', [PertanyaanController::class, 'delete_ajax'])->name('delete_ajax');
-            Route::delete('/{id}', [PertanyaanController::class, 'destroy'])->name('destroy');
+            //Route::delete('/{id}', [PertanyaanController::class, 'destroy'])->name('destroy');
         });
     });
 
