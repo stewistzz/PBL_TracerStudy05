@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\UsersModel;
+
 
 class AuthController extends Controller
 {
@@ -28,7 +31,7 @@ class AuthController extends Controller
             if (Auth::user()->hasRole('admin')) {
                 return redirect()->intended('/admin/dashboard');
             }
-          return redirect()->intended('/alumni_i/dashboard');
+            return redirect()->intended('/alumni_i/dashboard');
         }
 
         return back()->withErrors([
@@ -54,5 +57,30 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+    }
+
+    // forgot password
+    public function showResetForm()
+    {
+        return view('auth.forgot-password');
+    }
+
+    public function processReset(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $user = UsersModel::where('username', $request->username)->first();
+
+        if (!$user) {
+            return back()->withErrors(['username' => 'Username tidak ditemukan.'])->withInput();
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('login')->with('status', 'Password berhasil diubah. Silakan login dengan password baru.');
     }
 }
