@@ -1,30 +1,35 @@
 @extends('layouts.template')
-<link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
-
 
 @section('content')
-    <div class="card">
+    <!-- Card Header -->
+    <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
-            <h4 class="card-title">Data Kategori Pertanyaan</h4>
-            <p class="card-description">
-                Kelola data kategori dari pertanyaan
-            </p>
-
-            <div class="d-flex justify-content-end mb-3">
-                <button onclick="modalAction('{{ route('kategori_pertanyaan.create_ajax') }}')"
-                    class="btn btn-sm btn-primary">
-                    <i class="mdi mdi-plus-circle-outline"></i> Tambah Kategori
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0 text-primary">
+                    <i class="mdi mdi-format-list-bulleted-square me-1"></i> Manajemen Data Kategori Pertanyaan
+                </h4>
+                <button onclick="modalAction('{{ route('kategori_pertanyaan.create_ajax') }}')" class="btn btn-sm btn-primary shadow">
+                    <i class="mdi mdi-plus-circle-outline"></i> Tambah Pertanyaan
                 </button>
             </div>
+            <p class="card-description text-muted">Kelola kategori pertanyaan untuk <strong>Alumni</strong> dan <strong>Pengguna</strong>.</p>
+        </div>
+    </div>
 
-            <div class="table-responsive mb-4">
-                <table class="table text-center" id="kategori_pertanyaan_table">
-                    <thead>
+    <!-- Tabel Kategori -->
+    <div class="card shadow-sm border-left-primary mb-4">
+        <div class="card-body">
+            <h5 class="card-title text-primary">
+                <i class="mdi mdi-table-large me-2"></i> Data Kategori Pertanyaan
+            </h5>
+            <div class="table-responsive mt-3">
+                <table class="table table-striped table-hover table-bordered align-middle" id="kategori_pertanyaan_table">
+                    <thead class="bg-light text-center">
                         <tr>
-                            <th>Kode Kategori</th>
-                            <th>Nama Kategori</th>
-                            <th>Deskripsi</th>
-                            <th>Action</th>
+                            <th class="text-end">Kode Kategori</th>
+                            <th class="text-end">Nama Kategori</th>
+                            <th class="text-end">Deskripsi</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                 </table>
@@ -32,6 +37,7 @@
         </div>
     </div>
 
+    <!-- Modal -->
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static"></div>
 @endsection
 
@@ -48,24 +54,11 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('kategori_pertanyaan.list') }}",
-                columns: [{
-                        data: 'kode_kategori',
-                        name: 'kode_kategori'
-                    },
-                    {
-                        data: 'nama_kategori',
-                        name: 'nama_kategori'
-                    },
-                    {
-                        data: 'deskripsi',
-                        name: 'deskripsi'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    }
+                columns: [
+                    { data: 'kode_kategori', name: 'kode_kategori', className: 'text-end' },
+                    { data: 'nama_kategori', name: 'nama_kategori', className: 'text-end' },
+                    { data: 'deskripsi', name: 'deskripsi', className: 'text-end' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center' }
                 ]
             });
         });
