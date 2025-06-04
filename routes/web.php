@@ -26,6 +26,10 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'postLogin']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// forgot password
+Route::get('/reset-password', [AuthController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'processReset'])->name('password.process');
+
 // Survey Routes (untuk pengguna_lulusan mengisi survei via token)
 Route::prefix('survey')->name('survey.')->group(function () {
     Route::get('/access/{token}', [App\Http\Controllers\SurveyController::class, 'accessSurvey'])->name('access');
