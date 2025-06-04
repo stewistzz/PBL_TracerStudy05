@@ -119,6 +119,7 @@
                                     <option value="Pendidikan Tinggi" {{ old('jenis_instansi') == 'Pendidikan Tinggi' ? 'selected' : '' }}>Pendidikan Tinggi</option>
                                     <option value="Pemerintah" {{ old('jenis_instansi') == 'Pemerintah' ? 'selected' : '' }}>Pemerintah</option>
                                     <option value="Swasta" {{ old('jenis_instansi') == 'Swasta' ? 'selected' : '' }}>Swasta</option>
+                                    <option value="Swasta" {{ old('jenis_instansi') == 'Bumn' ? 'selected' : '' }}>BUMN</option>
                                 </select>
                                 @error('jenis_instansi')
                                     <div class="invalid-feedback">{{ $message }}</div>

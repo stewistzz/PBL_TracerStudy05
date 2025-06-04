@@ -66,13 +66,26 @@
 @endif
 --}}
 
-@if (Auth::check())
+
+{{-- - @if (Auth::check())
     @if (Auth::user()->role == 'admin')
         @include('layouts.sidebar')
     @elseif (Auth::user()->role == 'alumni')
         @include('layouts.sidebarAlumni')
     @endif
 @endif
+--}}
+
+@if (Auth::check() && !Request::is('survey/*'))
+    @if (Auth::user()->role == 'admin')
+        @include('layouts.sidebar')
+    @elseif (Auth::user()->role == 'alumni')
+        @include('layouts.sidebarAlumni')
+    @endif
+@endif
+
+
+
 
         <div class="main-panel">
             <div class="content-wrapper">

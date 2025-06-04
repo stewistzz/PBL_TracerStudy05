@@ -33,6 +33,8 @@ class TracerStudyController extends Controller
         
         return view('tracer_study.index', compact('tracerStudy', 'progress'));
     }
+
+    
     
     // STEP 1: Data Diri
     // Modifikasi method showDataDiri

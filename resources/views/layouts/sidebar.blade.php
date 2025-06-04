@@ -63,7 +63,8 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('kepuasan.index') }}">Tabel Kepuasan</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/dropdowns.html">Grafik Kepuasan</a>
+                    <li class="nav-item">
+                <a class="nav-link" href="{{ route('kepuasan.grafik') }}">Grafik Kepuasan</a>
                     </li>
                 </ul>
             </div>
