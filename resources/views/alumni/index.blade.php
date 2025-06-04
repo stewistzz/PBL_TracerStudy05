@@ -14,13 +14,17 @@
                 sehingga mempermudah pengelolaan informasi alumni secara terstruktur dan efisien.
             </p>
             <div class="d-flex justify-content-end mb-3">
-                <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
+                <button type="button" class="btn btn-primary d-flex align-items-center gap-1" id="btn-tambah">
                     <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
                     Tambah Alumni
                 </button>
                 <button type="button" class="btn btn-primary d-flex align-items-center gap-1 ms-2" data-bs-toggle="modal" data-bs-target="#filterModal">
                     <i class="mdi mdi-filter fs-5 mr-2"></i>
                     Filter
+                </button>
+                <button type="button" class="btn btn-success d-flex align-items-center gap-1 ms-2" id="btn-export">
+                    <i class="mdi mdi-file-excel fs-5 mr-2"></i>
+                    Export Excel
                 </button>
             </div>
 
@@ -48,11 +52,11 @@
         </div>
     </div>
 
-    <!-- Modal untuk Form Create/Edit dan Hapus -->
+    <!-- Modal untuk Form Create/Edit -->
     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                {{-- Konten form (create/edit/hapus) akan di‐load via AJAX --}}
+                {{-- Konten form (create/edit) akan di‐load via AJAX --}}
             </div>
         </div>
     </div>
@@ -61,13 +65,22 @@
     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-               <div class="modal-header bg-primary text-white">
+                <div class="modal-header">
                     <h5 class="modal-title" id="filterModalLabel">Filter Data Alumni</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="filterFormContent">
-                    <p>Loading form...</p> <!-- Debugging placeholder -->
+                    <p>Loading form...</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Hapus -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                {{-- Konten form hapus akan di-load via AJAX --}}
             </div>
         </div>
     </div>
@@ -81,8 +94,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
-            console.log('jQuery loaded:', typeof $ !== 'undefined'); // Debugging
-            console.log('Bootstrap loaded:', typeof bootstrap !== 'undefined'); // Debugging
+            console.log('jQuery loaded:', typeof $ !== 'undefined');
+            console.log('Bootstrap loaded:', typeof bootstrap !== 'undefined');
 
             let table = $('#alumni-table').DataTable({
                 processing: true,
@@ -140,7 +153,7 @@
 
             // Tombol Tambah
             $('#btn-tambah').on('click', function() {
-                console.log('Tombol Tambah clicked'); // Debugging
+                console.log('Tombol Tambah clicked');
                 $.get('{{ route('alumni.create') }}', function(res) {
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
@@ -150,7 +163,7 @@
             // Tombol Edit
             $('#alumni-table').on('click', '.btn-edit', function() {
                 let id = $(this).data('id');
-                console.log('Tombol Edit clicked, ID:', id); // Debugging
+                console.log('Tombol Edit clicked, ID:', id);
                 let url = '{{ route('alumni.edit', ':id') }}'.replace(':id', id);
                 $.get(url, function(res) {
                     $('#modal-form .modal-content').html(res);
@@ -161,26 +174,39 @@
             // Tombol Hapus
             $('#alumni-table').on('click', '.btn-hapus', function() {
                 let id = $(this).data('id');
-                console.log('Tombol Hapus clicked, ID:', id); // Debugging
+                console.log('Tombol Hapus clicked, ID:', id);
                 let url = '{{ route('alumni.confirm_ajax', ':id') }}'.replace(':id', id);
                 $.get(url, function(res) {
-                    $('#modal-form .modal-content').html(res);
-                    $('#modal-form').modal('show');
+                    $('#deleteModal .modal-content').html(res);
+                    $('#deleteModal').modal('show');
                 });
+            });
+
+            // Tombol Export Excel
+            $('#btn-export').on('click', function() {
+                let program_studi = $('#filter_program_studi').val() || '';
+                let tahun_lulus_start = $('#filter_tahun_lulus_start').val() || '';
+                let tahun_lulus_end = $('#filter_tahun_lulus_end').val() || '';
+                let url = '{{ route('alumni.export_excel') }}?' + $.param({
+                    program_studi: program_studi,
+                    tahun_lulus_start: tahun_lulus_start,
+                    tahun_lulus_end: tahun_lulus_end
+                });
+                window.location.href = url;
             });
 
             // Load form filter saat modal dibuka
             $('#filterModal').on('show.bs.modal', function() {
-                console.log('Modal filter opened'); // Debugging
+                console.log('Modal filter opened');
                 $.ajax({
                     url: "{{ route('alumni.filter') }}",
                     type: 'GET',
                     success: function(res) {
-                        console.log('Filter form loaded:', res); // Debugging
+                        console.log('Filter form loaded:', res);
                         $('#filterFormContent').html(res);
                     },
                     error: function(xhr) {
-                        console.error('AJAX Error:', xhr); // Debugging
+                        console.error('AJAX Error:', xhr);
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
@@ -193,7 +219,7 @@
             // Submit form filter
             $(document).on('submit', '#filterForm', function(e) {
                 e.preventDefault();
-                console.log('Filter form submitted'); // Debugging
+                console.log('Filter form submitted');
                 let start = $('#filter_tahun_lulus_start').val();
                 let end = $('#filter_tahun_lulus_end').val();
                 if (start && end && parseInt(start) > parseInt(end)) {
@@ -210,7 +236,7 @@
 
             // Reset filter
             $(document).on('click', '#resetFilter', function() {
-                console.log('Reset filter clicked'); // Debugging
+                console.log('Reset filter clicked');
                 $('#filter_program_studi').val('');
                 $('#filter_tahun_lulus_start').val('');
                 $('#filter_tahun_lulus_end').val('');
