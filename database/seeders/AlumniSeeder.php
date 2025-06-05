@@ -17,7 +17,7 @@ class AlumniSeeder extends Seeder
             DB::table('alumni')->insert([
                 'user_id' => $user->user_id,
                 'nama' => 'Ahmad Yudi',
-                'nim' => '2341766111',
+                'nim' => '2341766001',
                 'email' => 'yudi@example.com',
                 'no_hp' => '081234567890',
                 'program_studi' => 'TI',

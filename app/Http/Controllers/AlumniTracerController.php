@@ -42,6 +42,17 @@ class AlumniTracerController extends Controller
                 ->addColumn('jabatan_atasan', fn($row) => $row->jabatan_atasan_langsung ?? '-')
                 ->addColumn('no_hp_atasan', fn($row) => $row->no_hp_atasan_langsung ?? '-')
                 ->addColumn('email_atasan', fn($row) => $row->email_atasan_langsung ?? '-')
+                // masa tunggu
+                ->addColumn('masa_tunggu', function ($row) {
+                    if ($row->alumni && $row->alumni->tahun_lulus && $row->tanggal_pertama_kerja) {
+                        $tahunLulus = \Carbon\Carbon::parse($row->alumni->tahun_lulus);
+                        $tanggalKerja = \Carbon\Carbon::parse($row->tanggal_pertama_kerja);
+
+                        $diffInMonths = $tahunLulus->diffInMonths($tanggalKerja);
+                        return $diffInMonths . ' bulan';
+                    }
+                    return '-';
+                })
                 ->addColumn('status', fn($row) => ucfirst($row->status))
                 ->addColumn('action', function ($row) {
                     $btnClass = $row->status === 'done' ? 'btn-success' : 'btn-warning';
@@ -202,7 +213,7 @@ class AlumniTracerController extends Controller
 
         // Export file
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $filename = 'Data_Alumni_Belum_Mengisi_' . date("Y-m-d") . ".xlsx";
+        $filename = 'Rekap_Data_Tracer_Alumni' . date("Y-m-d") . ".xlsx";
 
         // Headers
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -239,7 +250,8 @@ class AlumniTracerController extends Controller
         $sheet->setCellValue('J1', 'jabatan_atasan');
         $sheet->setCellValue('K1', 'no_hp_atasan');
         $sheet->setCellValue('L1', 'email_atasan');
-        $sheet->setCellValue('M1', 'Status Pengisian');
+        $sheet->setCellValue('M1', 'masa_tunggu');
+        $sheet->setCellValue('N1', 'Status Pengisian');
 
         // Set bold untuk header
         $sheet->getStyle("A1:H1")->getFont()->setBold(true);
@@ -261,7 +273,18 @@ class AlumniTracerController extends Controller
             $sheet->setCellValue('J' . $baris, $value->jabatan_atasan_langsung);
             $sheet->setCellValue('K' . $baris, $value->no_hp_atasan_langsung);
             $sheet->setCellValue('L' . $baris, $value->email_atasan_langsung);
-            $sheet->setCellValue('M' . $baris, 'Berhasil Mengisi');
+            // $sheet->setCellValue('M' . $baris, $value->masa_tunggu);
+            // Hitung masa tunggu
+            $masaTunggu = '-';
+            if ($value->alumni && $value->alumni->tahun_lulus && $value->tanggal_pertama_kerja) {
+                $tahunLulus = \Carbon\Carbon::parse($value->alumni->tahun_lulus);
+                $tanggalKerja = \Carbon\Carbon::parse($value->tanggal_pertama_kerja);
+                $diffInMonths = $tahunLulus->diffInMonths($tanggalKerja);
+                $masaTunggu = $diffInMonths . ' bulan';
+            }
+            $sheet->setCellValue('M' . $baris, $masaTunggu);
+
+            $sheet->setCellValue('N' . $baris, 'Berhasil Mengisi');
 
             $baris++;
             $no++;
