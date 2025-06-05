@@ -57,49 +57,40 @@ public function showDataDiri()
 // Modifikasi method storeDataDiri
 public function storeDataDiri(Request $request)
 {
+    // Validasi input
+    
     $request->validate([
         'tanggal_pertama_kerja' => 'required|date',
         'tanggal_mulai_kerja_instansi_saat_ini' => 'required|date',
-        'instansi_id' => 'nullable|exists:instansi,instansi_id',
-        'instansi_baru' => 'nullable|string|max:255',
-        'jenis_instansi' => 'required_if:instansi_baru,!=,null|in:Pendidikan Tinggi,Pemerintah,Swasta',
-        'skala' => 'required_if:instansi_baru,!=,null|in:nasional,internasional,wirausaha',
-        'lokasi' => 'required_if:instansi_baru,!=,null|string|max:100',
+        'pilihan_instansi' => 'required|in:existing,baru',
+        'instansi_id' => 'required_if:pilihan_instansi,existing|nullable|exists:instansi,instansi_id',
+        'instansi_baru' => 'required_if:pilihan_instansi,baru|nullable|string|max:255',
+        'jenis_instansi' => 'required_if:pilihan_instansi,baru|nullable|in:Pendidikan Tinggi,Pemerintah,Swasta,BUMN',
+        'skala' => 'required_if:pilihan_instansi,baru|nullable|in:nasional,internasional,wirausaha',
+        'lokasi' => 'required_if:pilihan_instansi,baru|nullable|string|max:100',
         'no_hp_instansi' => 'nullable|string|max:15',
         'kategori_profesi_id' => 'required|exists:kategori_profesi,kategori_id',
         'profesi_id' => 'required|exists:profesi,profesi_id',
     ], [
-        'instansi_id.required_without' => 'Pilih instansi atau isi nama instansi baru',
-        'instansi_baru.required_without' => 'Pilih instansi atau isi nama instansi baru',
-        'jenis_instansi.required_if' => 'Jenis instansi wajib diisi untuk instansi baru',
-        'skala.required_if' => 'Skala instansi wajib diisi untuk instansi baru',
-        'lokasi.required_if' => 'Lokasi instansi wajib diisi untuk instansi baru',
+        'pilihan_instansi.required' => 'Pilih opsi instansi (existing atau baru).',
+        'instansi_id.required_if' => 'Pilih instansi dari daftar yang tersedia.',
+        'instansi_baru.required_if' => 'Masukkan nama instansi baru.',
+        'jenis_instansi.required_if' => 'Jenis instansi wajib diisi untuk instansi baru.',
+        'skala.required_if' => 'Skala instansi wajib diisi untuk instansi baru.',
+        'lokasi.required_if' => 'Lokasi instansi wajib diisi untuk instansi baru.',
     ]);
 
-    // Custom validation: pastikan salah satu dari instansi_id atau instansi_baru diisi
-    if (empty($request->instansi_id) && empty($request->instansi_baru)) {
-        return back()->withErrors([
-            'instansi' => 'Pilih instansi yang tersedia atau isi nama instansi baru'
-        ])->withInput();
-    }
-
-    // Jika keduanya diisi, prioritaskan instansi yang dipilih
-    if (!empty($request->instansi_id) && !empty($request->instansi_baru)) {
-        return back()->withErrors([
-            'instansi' => 'Pilih salah satu: instansi yang tersedia ATAU isi instansi baru'
-        ])->withInput();
-    }
-    
+    // Ambil alumni_id dari pengguna yang login
     $alumni_id = auth()->user()->alumni->alumni_id;
-    
+
     DB::transaction(function () use ($request, $alumni_id) {
         $instansi_id = $request->instansi_id;
-        
-        // Jika instansi baru diisi, buat entry baru di tabel instansi
-        if (!empty($request->instansi_baru)) {
+
+        // Jika memilih instansi baru
+        if ($request->pilihan_instansi == 'baru') {
             // Cek apakah instansi dengan nama yang sama sudah ada
             $existingInstansi = InstansiModel::where('nama_instansi', $request->instansi_baru)->first();
-            
+
             if ($existingInstansi) {
                 $instansi_id = $existingInstansi->instansi_id;
             } else {
@@ -114,7 +105,7 @@ public function storeDataDiri(Request $request)
                 $instansi_id = $newInstansi->instansi_id;
             }
         }
-        
+
         // Update atau create tracer study
         TracerStudyModel::updateOrCreate(
             ['alumni_id' => $alumni_id],
@@ -128,7 +119,7 @@ public function storeDataDiri(Request $request)
             ]
         );
     });
-    
+
     return redirect()->route('tracer-study.data-atasan')
                     ->with('success', 'Data diri berhasil disimpan!');
 }
