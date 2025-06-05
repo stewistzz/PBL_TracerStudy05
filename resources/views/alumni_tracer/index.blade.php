@@ -1,80 +1,82 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="row">
-    {{-- Card: Tracer Study Data --}}
-    <div class="col-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Data Tracer Study</h4>
-                <p class="card-description text-muted">Daftar tracer alumni yang telah mengisi</p>
+    <div class="row">
+        {{-- Card: Tracer Study Data --}}
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Data Tracer Study</h4>
+                    <p class="card-description text-muted">Daftar tracer alumni yang telah mengisi</p>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="{{ route('alumni_tracer.export_rekap_tracer') }}" class="btn btn-success btn-sm">
-                        <i class="mdi mdi-file-excel"></i> Export ke Excel
-                    </a>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{{ route('alumni_tracer.export_rekap_tracer') }}" class="btn btn-success btn-sm">
+                            <i class="mdi mdi-file-excel"></i> Export ke Excel
+                        </a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered" id="tracer-table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Alumni</th>
+                                    <th>Instansi</th>
+                                    <th>Kategori Profesi</th>
+                                    <th>Profesi</th>
+                                    <th>Tanggal Pengisian</th>
+                                    <th>Tgl Pertama Kerja</th>
+                                    <th>Tgl Mulai Instansi</th>
+                                    <th>Nama Atasan</th>
+                                    <th>Jabatan Atasan</th>
+                                    <th>No HP Atasan</th>
+                                    <th>Email Atasan</th>
+                                    <th>Masa Tunggu</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered" id="tracer-table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>No</th>
-                                <th>Alumni</th>
-                                <th>Instansi</th>
-                                <th>Kategori Profesi</th>
-                                <th>Profesi</th>
-                                <th>Tanggal Pengisian</th>
-                                <th>Tgl Pertama Kerja</th>
-                                <th>Tgl Mulai Instansi</th>
-                                <th>Nama Atasan</th>
-                                <th>Jabatan Atasan</th>
-                                <th>No HP Atasan</th>
-                                <th>Email Atasan</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                    </table>
+        {{-- Card: Belum Mengisi Tracer --}}
+        <div class="col-12 grid-margin stretch-card mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Data Alumni Belum Mengisi Tracer Study</h4>
+                    <p class="card-description text-muted">Berikut ini adalah alumni yang belum mengisi tracer study
+                        POLINEMA</p>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{{ route('alumni_tracer.export_belum_isi') }}" class="btn btn-warning btn-sm">
+                            <i class="mdi mdi-file-excel"></i> Export ke Excel
+                        </a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" id="tracer-table-belum-isi">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Alumni</th>
+                                    <th>NIM</th>
+                                    <th>Program Studi</th>
+                                    <th>No HP</th>
+                                    <th>Email</th>
+                                    <th>Tahun Lulus</th>
+                                    <th>Status</th>
+                                    {{-- <th>Aksi</th> --}}
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- Card: Belum Mengisi Tracer --}}
-    <div class="col-12 grid-margin stretch-card mt-4">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Data Alumni Belum Mengisi Tracer Study</h4>
-                <p class="card-description text-muted">Berikut ini adalah alumni yang belum mengisi tracer study POLINEMA</p>
-
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="{{ route('alumni_tracer.export_belum_isi') }}" class="btn btn-warning btn-sm">
-                        <i class="mdi mdi-file-excel"></i> Export ke Excel
-                    </a>
-                </div>
-
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered" id="tracer-table-belum-isi">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>No</th>
-                                <th>Alumni</th>
-                                <th>NIM</th>
-                                <th>Program Studi</th>
-                                <th>No HP</th>
-                                <th>Email</th>
-                                <th>Tahun Lulus</th>
-                                <th>Status</th>
-                                {{-- <th>Aksi</th> --}}
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 
@@ -197,6 +199,10 @@
                     {
                         data: 'email_atasan',
                         name: 'email_atasan_langsung'
+                    },
+                    {
+                        data: 'masa_tunggu',
+                        name: 'masa_tunggu'
                     },
                     {
                         data: 'status',
