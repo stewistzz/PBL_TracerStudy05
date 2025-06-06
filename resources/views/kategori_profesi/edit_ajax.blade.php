@@ -24,7 +24,9 @@ $(document).ready(function () {
         e.preventDefault();
         
         let id = $('#kategori_id').val();
-        console.log('Kategori ID:', id); // Debug
+        let url = "{{ route('kategori_profesi.update', ':id') }}".replace(':id', id);
+        
+      
         
         // Reset error states
         $('.form-control').removeClass('is-invalid');
@@ -35,7 +37,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "{{ route('kategori_profesi.update', '') }}/" + id,
+            url: url,
             data: $(this).serialize(),
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -43,7 +45,6 @@ $(document).ready(function () {
             success: function (res) {
                 if (res.status) {
                     $('#modal-form').modal('hide');
-                    // Reload tabel di index.blade.php
                     loadTable();
                     Swal.fire({
                         icon: 'success',
@@ -54,6 +55,7 @@ $(document).ready(function () {
                 }
             },
             error: function (err) {
+                console.log('Error:', err); // Debug error
                 if (err.status === 422) {
                     let errors = err.responseJSON.errors;
                     if (errors.nama_kategori) {
