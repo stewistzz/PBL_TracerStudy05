@@ -2,7 +2,7 @@
 <div class="modal-header">
     <h5 class="modal-title" id="modalLabel">Edit Kategori</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span>×</span>
+        <span aria-hidden="true">×</span>
     </button>
 </div>
 <div class="modal-body">
@@ -20,13 +20,17 @@
 
 <script>
 $(document).ready(function () {
-    $('#form-data').submit(function (e) {
+    console.log('Edit form loaded'); // Debug: Pastikan script dijalankan
+    // Pastikan event submit hanya terikat sekali
+    $('#form-data').off('submit').on('submit', function (e) {
         e.preventDefault();
+        console.log('Form submitted'); // Debug: Pastikan submit terdeteksi
         
         let id = $('#kategori_id').val();
         let url = "{{ route('kategori_profesi.update', ':id') }}".replace(':id', id);
         
-      
+        console.log('URL:', url); // Debug URL
+        console.log('Data:', $(this).serialize()); // Debug data
         
         // Reset error states
         $('.form-control').removeClass('is-invalid');
@@ -43,6 +47,7 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             success: function (res) {
+                console.log('Success response:', res); // Debug
                 if (res.status) {
                     $('#modal-form').modal('hide');
                     loadTable();
@@ -55,7 +60,7 @@ $(document).ready(function () {
                 }
             },
             error: function (err) {
-                console.log('Error:', err); // Debug error
+                console.log('Error:', err); // Debug
                 if (err.status === 422) {
                     let errors = err.responseJSON.errors;
                     if (errors.nama_kategori) {

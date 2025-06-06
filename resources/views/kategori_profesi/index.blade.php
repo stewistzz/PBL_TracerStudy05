@@ -1,15 +1,12 @@
 @extends('layouts.template')
 
 @section('content')
-    {{-- tampilan untuk card header --}}
-    <!-- Card Header -->
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="card-title mb-0 text-primary">
                     <i class="mdi mdi-format-list-bulleted-square me-1"></i> Manajemen Data Kategori Pertanyaan
                 </h4>
-
                 <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
                     <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
                     Tambah Kategori
@@ -20,7 +17,6 @@
                 kebutuhan, sehingga mempermudah pengelolaan data tenaga kerja, penyaringan informasi, dan pelaporan.</p>
         </div>
     </div>
-
 
     <div class="card">
         <div class="card-body">
@@ -54,7 +50,6 @@
 
 @push('js')
     <script>
-        // Fungsi loadTable dibuat global agar bisa diakses oleh create_ajax dan edit_ajax
         window.loadTable = function() {
             $('#kategori-table').DataTable().ajax.reload();
         };
@@ -64,7 +59,8 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('kategori_profesi.list') }}",
-                columns: [{
+                columns: [
+                    {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
@@ -83,7 +79,9 @@
                 ]
             });
 
-            $('#btn-tambah').click(function() {
+            // Pastikan event listener hanya terikat sekali
+            $(document).off('click', '#btn-tambah').on('click', '#btn-tambah', function() {
+                console.log('Tombol Tambah diklik'); // Debug
                 $.get('{{ route('kategori_profesi.create') }}', function(res) {
                     console.log('Create Response:', res); // Debug
                     $('#modal-form .modal-content').html(res);
@@ -91,16 +89,18 @@
                 });
             });
 
-            $('#kategori-table').on('click', '.btn-edit', function() {
+            $(document).off('click', '.btn-edit').on('click', '.btn-edit', function() {
                 let id = $(this).data('id');
-                $.get('{{ route('kategori_profesi.edit', ':id') }}'.replace(':id', id), function(res) {
+                let url = '{{ route('kategori_profesi.edit', ':id') }}'.replace(':id', id);
+                console.log('Edit URL:', url); // Debug
+                $.get(url, function(res) {
                     console.log('Edit Response:', res); // Debug
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 });
             });
 
-            $('#kategori-table').on('click', '.btn-hapus', function() {
+            $(document).off('click', '.btn-hapus').on('click', '.btn-hapus', function() {
                 if (confirm("Yakin ingin menghapus data ini?")) {
                     let id = $(this).data('id');
                     $.ajax({
@@ -119,6 +119,7 @@
                             });
                         },
                         error: function(err) {
+                            console.log('Delete Error:', err); // Debug
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
@@ -127,6 +128,13 @@
                         }
                     });
                 }
+            });
+
+            // Bersihkan event listener dan modal saat ditutup
+            $('#modal-form').on('hidden.bs.modal', function () {
+                console.log('Modal ditutup, membersihkan konten dan event'); // Debug
+                $('#modal-form .modal-content').empty(); // Kosongkan isi modal
+                $('#form-data').off('submit'); // Hapus semua event submit
             });
         });
     </script>
