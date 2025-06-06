@@ -100,6 +100,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/confirm_ajax', [AlumniController::class, 'confirm_ajax'])->name('confirm_ajax');
             Route::delete('/{id}/delete_ajax', [AlumniController::class, 'delete_ajax'])->name('delete_ajax');
             Route::get('/export_excel', [AlumniController::class, 'export_excel'])->name('export_excel');
+            Route::get('/{id}/show_ajax', [AlumniController::class, 'show_ajax'])->name('show_ajax');
         });
         // route untuk admin
         Route::prefix('admin')->name('admin.')->group(function () {

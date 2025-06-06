@@ -29,8 +29,6 @@ class AlumniController extends Controller
             'user_id',
             'nama',
             'nim',
-            'email',
-            'no_hp',
             'program_studi',
             'tahun_lulus'
         ]);
@@ -49,16 +47,17 @@ class AlumniController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('username', function ($row) {
-                return $row->user ? $row->user->username : '-';
-            })
             ->addColumn('tahun_lulus_formatted', function ($row) {
                 return $row->tahun_lulus ? $row->tahun_lulus->format('Y') : '-';
             })
             ->addColumn('action', function ($row) {
                 return '
                     <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-sm py-2 btn-primary btn-edit mr-2" data-id="' . $row->alumni_id . '">
+                        <button class="btn btn-sm py-2 btn-secondary text-white btn-detail" data-id="' . $row->alumni_id . '">
+    <i class="mdi mdi-eye"></i> Detail
+</button>
+
+                        <button class="btn btn-sm py-2 btn-warning btn-edit" data-id="' . $row->alumni_id . '">
                             <i class="mdi mdi-pencil"></i> Edit
                         </button>
                         <button class="btn btn-sm btn-danger btn-hapus" data-id="' . $row->alumni_id . '">
@@ -71,6 +70,12 @@ class AlumniController extends Controller
             ->make(true);
     }
 
+    public function show_ajax($id)
+    {
+        $alumni = AlumniModel::with('user')->where('alumni_id', $id)->firstOrFail();
+        \Log::info('Show Alumni Data: ', $alumni->toArray());
+        return view('alumni.show_ajax', compact('alumni'));
+    }
     public function create_ajax()
     {
         $users = UsersModel::whereDoesntHave('alumni')->get();
