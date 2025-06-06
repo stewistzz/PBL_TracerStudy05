@@ -37,11 +37,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Username</th>
                             <th>Nama</th>
                             <th>NIM</th>
-                            <th>Email</th>
-                            <th>No HP</th>
                             <th>Program Studi</th>
                             <th>Tahun Lulus</th>
                             <th>Aksi</th>
@@ -52,11 +49,11 @@
         </div>
     </div>
 
-    <!-- Modal untuk Form Create/Edit -->
+    <!-- Modal untuk Form Create/Edit/Show -->
     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                {{-- Konten form (create/edit) akan di‐load via AJAX --}}
+                {{-- Konten form (create/edit/show) akan di‐load via AJAX --}}
             </div>
         </div>
     </div>
@@ -108,15 +105,12 @@
                         d.tahun_lulus_end = $('#filter_tahun_lulus_end').val();
                     }
                 },
-                columns: [{
+                columns: [
+                    {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
-                    },
-                    {
-                        data: 'username',
-                        name: 'username'
                     },
                     {
                         data: 'nama',
@@ -125,14 +119,6 @@
                     {
                         data: 'nim',
                         name: 'nim'
-                    },
-                    {
-                        data: 'email',
-                        name: 'email'
-                    },
-                    {
-                        data: 'no_hp',
-                        name: 'no_hp'
                     },
                     {
                         data: 'program_studi',
@@ -155,6 +141,17 @@
             $('#btn-tambah').on('click', function() {
                 console.log('Tombol Tambah clicked');
                 $.get('{{ route('alumni.create') }}', function(res) {
+                    $('#modal-form .modal-content').html(res);
+                    $('#modal-form').modal('show');
+                });
+            });
+
+            // Tombol Detail
+            $('#alumni-table').on('click', '.btn-detail', function() {
+                let id = $(this).data('id');
+                console.log('Tombol Detail clicked, ID:', id);
+                let url = '{{ route('alumni.show_ajax', ':id') }}'.replace(':id', id);
+                $.get(url, function(res) {
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 });
