@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header bg-warning text-white">
-                <h5 class="modal-title"><i class="mdi mdi-pencil-box-outline"></i> Edit Kategori Pertanyaan</h5>
+                <h5 class="modal-title"><i class="mdi mdi-pencil-outline"></i> Edit Kategori Pertanyaan</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span>&times;</span>
                 </button>
@@ -33,11 +33,11 @@
             </div>
 
             <div class="modal-footer bg-light">
-                <button type="submit" class="btn btn-warning btn-lg">
-                    <i class="mdi mdi-content-save"></i> Perbarui
-                </button>
-                <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="mdi mdi-close-circle-outline"></i> Batal
+                </button>
+                <button type="submit" class="btn btn-warning">
+                    <i class="mdi mdi-content-save-outline"></i> Perbarui
                 </button>
             </div>
         </div>

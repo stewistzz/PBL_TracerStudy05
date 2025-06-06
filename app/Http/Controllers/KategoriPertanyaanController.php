@@ -21,10 +21,10 @@ class KategoriPertanyaanController extends Controller
         return DataTables::of($kategori)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $btn = '<button onclick="modalAction(\'' . url('/kategori_pertanyaan/' . $row->kode_kategori . '/edit_ajax') . '\')" class="btn btn-warning py-2 btn-sm">
+                $btn = '<button onclick="modalAction(\'' . url('/kategori_pertanyaan/' . $row->kode_kategori . '/edit_ajax') . '\')" class="btn btn-warning py-1 btn-sm">
                     <i class="mdi mdi-pencil"></i>edit
                 </button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/kategori_pertanyaan/' . $row->kode_kategori . '/delete_ajax') . '\')" class="btn btn-danger py-2 btn-sm">
+                $btn .= '<button onclick="modalAction(\'' . url('/kategori_pertanyaan/' . $row->kode_kategori . '/delete_ajax') . '\')" class="btn btn-danger py-1 btn-sm">
                     <i class="mdi mdi-delete"></i>delete
                 </button>';
                 return $btn;

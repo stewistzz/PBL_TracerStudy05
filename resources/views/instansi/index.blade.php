@@ -1,11 +1,10 @@
 @extends('layouts.template')
 
-    <link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
+<link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
 
 @section('content')
     <!-- Row: Pie Chart dan Detail Instansi -->
     <div class="row">
-
         <!-- Card: Pie Chart Jenis Instansi -->
         <div class="col-lg-4 mb-4">
             <div class="card rounded-4">
@@ -17,7 +16,7 @@
         </div>
 
         <!-- Card: Detail Instansi -->
-        <div class="col-lg-8">
+        <div class="col-lg-8 mb-4">
             <div class="card rounded-4 shadow-sm h-100 p-4">
                 <h2 class="fw-bold mb-3 text-dark">Detail Sebaran Instansi Alumni</h2>
                 <h2><b style="color: rgb(30, 161, 201);">Politeknik Negeri Malang</b></h2>
@@ -43,23 +42,43 @@
     <div class="card mt-4">
         <div class="card-body">
 
-            <h4 class="card-title">Data Instansi</h4>
-            <p class="card-description">Kelola data instansi dengan mudah</p>
-
-            <div class="d-flex justify-content-end mb-3">
+            <h5 class="card-title" style="color: #2A3143;"><i class="mdi mdi-account-multiple me-1"></i>Data Instansi</h5>
+            {{-- modifikasi --}}
+            <hr>
+            {{-- modifikasi untuk penambahan masing-masing tombol tambah --}}
+            <div class="row">
+                <div class="col-9">
+                    <p class="card-description">Kelola data instansi dengan mudah</p>
+                </div>
+                <div class="col-3">
+                    <div class="d-flex justify-content-end mb-3">
+                        {{-- <button onclick="modalAction('{{ route('kategori_pertanyaan.create_ajax') }}')"
+                            style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 text-white"
+                            id="btn-tambah">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
+                        </button> --}}
+                        <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 text-white" id="btn-tambah">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
+                            Tambah Instansi
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {{-- end modifikasi --}}
+            {{-- <div class="d-flex justify-content-end mb-3">
                 <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
                     <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
                     Tambah Instansi
                 </button>
-            </div>
+            </div> --}}
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
             <div class="table-responsive ">
-                <table class="table " id="instansi-table">
-                    <thead>
+                <table class="table table-hover table-bordered " id="instansi-table">
+                    <thead class="thead-dark" style="background-color: #1E80C1; color: #FFFFFF;">
                         <tr>
                             <th>No</th>
                             <th>Nama Instansi</th>
@@ -72,7 +91,6 @@
                     </thead>
                 </table>
             </div>
-
         </div>
     </div>
 

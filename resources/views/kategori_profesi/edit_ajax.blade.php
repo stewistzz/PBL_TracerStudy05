@@ -14,8 +14,8 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="submit" class="btn btn-success" id="btn-submit">Update</button>
     <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+    <button type="submit" class="btn btn-success" id="btn-submit">Update</button>
 </div>
 
 <script>
