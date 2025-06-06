@@ -37,10 +37,10 @@ class PertanyaanController extends Controller
             return $row->admin->nama ?? '-';
         })
         ->addColumn('action', function ($row) {
-            $btn = '<button onclick="modalAction(\'' . url('/pertanyaan/' . $row->pertanyaan_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">
+            $btn = '<button onclick="modalAction(\'' . url('/pertanyaan/' . $row->pertanyaan_id . '/edit_ajax') . '\')" class="btn btn-warning py-1 btn-sm">
                 <i class="mdi mdi-pencil"></i>edit
             </button> ';
-            $btn .= '<button onclick="modalAction(\'' . url('/pertanyaan/' . $row->pertanyaan_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">
+            $btn .= '<button onclick="modalAction(\'' . url('/pertanyaan/' . $row->pertanyaan_id . '/delete_ajax') . '\')" class="btn btn-danger py-1 btn-sm">
                 <i class="mdi mdi-delete"></i>delete
             </button>';
             return $btn;

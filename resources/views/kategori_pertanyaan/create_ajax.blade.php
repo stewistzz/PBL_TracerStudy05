@@ -48,11 +48,11 @@
             </div>
 
             <div class="modal-footer bg-light">
-                <button type="button" data-dismiss="modal" class="btn btn-outline-warning">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">
                     <i class="mdi mdi-close-circle-outline"></i> Batal
                 </button>
                 <button type="submit" class="btn btn-primary">
-                    <i class="mdi mdi-content-save"></i> Simpan
+                    <i class="mdi mdi-content-save-outline"></i> Simpan
                 </button>
             </div>
         </div>

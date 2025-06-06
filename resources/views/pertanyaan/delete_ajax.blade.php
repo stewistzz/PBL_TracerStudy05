@@ -19,11 +19,11 @@
             </div>
 
             <div class="modal-footer justify-content-center">
-                <button type="submit" class="btn btn-danger btn-sm">
-                    <i class="mdi mdi-check-circle-outline"></i> Ya, Hapus
-                </button>
                 <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">
                     <i class="mdi mdi-close-circle-outline"></i> Batal
+                </button>
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="mdi mdi-check-circle-outline"></i> Ya, Hapus
                 </button>
             </div>
         </form>

@@ -15,6 +15,13 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
+                'username' => 'adminuser',
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'username' => '2341766001',
                 'password' => Hash::make('2341766001'),
                 'role' => 'alumni',
@@ -35,13 +42,7 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'username' => 'adminuser',
-                'password' => Hash::make('admin123'),
-                'role' => 'admin',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            
         ]);
     }
 }

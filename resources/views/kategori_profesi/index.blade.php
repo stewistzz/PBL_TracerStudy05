@@ -1,141 +1,170 @@
 @extends('layouts.template')
 
 @section('content')
-    <div class="card shadow-sm border-0 mb-4">
+    <div class="card shadow-sm border-0 mb-4" style="background-color: #FFFFFF;">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="card-title mb-0 text-primary">
-                    <i class="mdi mdi-format-list-bulleted-square me-1"></i> Manajemen Data Kategori Pertanyaan
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-format-list-bulleted-square me-2"></i>
+                    Manajemen Data Kategori Profesi
                 </h4>
-                <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
-                    Tambah Kategori
-                </button>
+                {{-- <button type="button" class="btn btn-sm d-flex align-items-center text-white" style="background-color: #5BAEB7;" id="btn-tambah">
+                <i class="mdi mdi-plus-circle-outline me-1"></i>
+                Tambah Kategori
+            </button> --}}
             </div>
-            <p class="card-description text-muted">Kelola data kategori profesi dengan mudah untuk mendukung pengelompokan berbagai jenis pekerjaan secara
-                terstruktur. Fitur ini memungkinkan Anda menambahkan, mengedit, dan menghapus kategori profesi sesuai
-                kebutuhan, sehingga mempermudah pengelolaan data tenaga kerja, penyaringan informasi, dan pelaporan.</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <h3 class="font-weight-bold">Data Kategori Profesi</h3>
             <hr>
-            <div class="table-responsive">
-                <table class="table" id="kategori-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Kategori</th>
-                            <th class="text-center">Action</th>
-                        </tr>
-                    </thead>
-                </table>
+            <p class="text-muted mb-0" style="color: #9B9B9B;">
+                Kelola data kategori profesi dengan mudah untuk mendukung pengelompokan berbagai jenis pekerjaan secara
+                terstruktur. Fitur ini memungkinkan Anda menambahkan, mengedit, dan menghapus kategori profesi sesuai
+                kebutuhan, sehingga mempermudah pengelolaan data tenaga kerja, penyaringan informasi, dan pelaporan.
+            </p>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm" style="background-color: #FFFFFF;">
+        <div class="card-body">
+            <h5 class="card-title" style="color: #2A3143;">Tabel Data Kategori Profesi</h5>
+
+            {{-- modifikasi menambahkan row col untuk button --}}
+            <hr>
+            {{-- modifikasi untuk penambahan masing-masing tombol tambah --}}
+            <div class="row">
+
+                <div class="col-9">
+                    <p class="card-description">
+                        Tabel ini menampilkan isi data dari jenis atau kategori profesi terkait dalam kebutuhan pengumpulan
+                        informasi mengenai Tracer Study.
+                    </p>
+                </div>
+                <div class="col-3">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button" class="btn btn-sm d-flex align-items-center text-white"
+                            style="background-color: #5BAEB7;" id="btn-tambah">
+                            <i class="mdi mdi-plus-circle-outline me-1"></i>
+                            Tambah Kategori
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="kategori-table">
+                        <thead class="thead-dark" style="background-color: #1E80C1; color: #FFFFFF;">
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama Kategori</th>
+                                <th class="text-center" scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data akan dimuat melalui AJAX -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form id="form-data">
-                <div class="modal-content">
-                    <!-- Isi modal akan diisi oleh AJAX -->
-                </div>
-            </form>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form id="form-data">
+                    <div class="modal-content">
+                        <!-- Isi modal akan diisi oleh AJAX -->
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-@endsection
+    @endsection
 
-@push('js')
-    <script>
-        window.loadTable = function() {
-            $('#kategori-table').DataTable().ajax.reload();
-        };
 
-        $(document).ready(function() {
-            let table = $('#kategori-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('kategori_profesi.list') }}",
-                columns: [
-                    {
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'nama_kategori',
-                        name: 'nama_kategori'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    }
-                ]
-            });
+    @push('js')
+        <script>
+            window.loadTable = function() {
+                $('#kategori-table').DataTable().ajax.reload();
+            };
 
-            // Pastikan event listener hanya terikat sekali
-            $(document).off('click', '#btn-tambah').on('click', '#btn-tambah', function() {
-                console.log('Tombol Tambah diklik'); // Debug
-                $.get('{{ route('kategori_profesi.create') }}', function(res) {
-                    console.log('Create Response:', res); // Debug
-                    $('#modal-form .modal-content').html(res);
-                    $('#modal-form').modal('show');
-                });
-            });
-
-            $(document).off('click', '.btn-edit').on('click', '.btn-edit', function() {
-                let id = $(this).data('id');
-                let url = '{{ route('kategori_profesi.edit', ':id') }}'.replace(':id', id);
-                console.log('Edit URL:', url); // Debug
-                $.get(url, function(res) {
-                    console.log('Edit Response:', res); // Debug
-                    $('#modal-form .modal-content').html(res);
-                    $('#modal-form').modal('show');
-                });
-            });
-
-            $(document).off('click', '.btn-hapus').on('click', '.btn-hapus', function() {
-                if (confirm("Yakin ingin menghapus data ini?")) {
-                    let id = $(this).data('id');
-                    $.ajax({
-                        url: '{{ route('kategori_profesi.destroy', ':id') }}'.replace(':id', id),
-                        type: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            $(document).ready(function() {
+                let table = $('#kategori-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('kategori_profesi.list') }}",
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex',
+                            orderable: false,
+                            searchable: false
                         },
-                        success: function(res) {
-                            table.ajax.reload();
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil!',
-                                text: res.message,
-                                confirmButtonText: 'OK'
-                            });
+                        {
+                            data: 'nama_kategori',
+                            name: 'nama_kategori'
                         },
-                        error: function(err) {
-                            console.log('Delete Error:', err); // Debug
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Gagal menghapus data!'
-                            });
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
                         }
-                    });
-                }
-            });
+                    ]
+                });
 
-            // Bersihkan event listener dan modal saat ditutup
-            $('#modal-form').on('hidden.bs.modal', function () {
-                console.log('Modal ditutup, membersihkan konten dan event'); // Debug
-                $('#modal-form .modal-content').empty(); // Kosongkan isi modal
-                $('#form-data').off('submit'); // Hapus semua event submit
+                // Pastikan event listener hanya terikat sekali
+                $(document).off('click', '#btn-tambah').on('click', '#btn-tambah', function() {
+                    console.log('Tombol Tambah diklik'); // Debug
+                    $.get('{{ route('kategori_profesi.create') }}', function(res) {
+                        console.log('Create Response:', res); // Debug
+                        $('#modal-form .modal-content').html(res);
+                        $('#modal-form').modal('show');
+                    });
+                });
+
+                $(document).off('click', '.btn-edit').on('click', '.btn-edit', function() {
+                    let id = $(this).data('id');
+                    let url = '{{ route('kategori_profesi.edit', ':id') }}'.replace(':id', id);
+                    console.log('Edit URL:', url); // Debug
+                    $.get(url, function(res) {
+                        console.log('Edit Response:', res); // Debug
+                        $('#modal-form .modal-content').html(res);
+                        $('#modal-form').modal('show');
+                    });
+                });
+
+                $(document).off('click', '.btn-hapus').on('click', '.btn-hapus', function() {
+                    if (confirm("Yakin ingin menghapus data ini?")) {
+                        let id = $(this).data('id');
+                        $.ajax({
+                            url: '{{ route('kategori_profesi.destroy', ':id') }}'.replace(':id', id),
+                            type: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            success: function(res) {
+                                table.ajax.reload();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: res.message,
+                                    confirmButtonText: 'OK'
+                                });
+                            },
+                            error: function(err) {
+                                console.log('Delete Error:', err); // Debug
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Gagal menghapus data!'
+                                });
+                            }
+                        });
+                    }
+                });
+
+                // Bersihkan event listener dan modal saat ditutup
+                $('#modal-form').on('hidden.bs.modal', function() {
+                    console.log('Modal ditutup, membersihkan konten dan event'); // Debug
+                    $('#modal-form .modal-content').empty(); // Kosongkan isi modal
+                    $('#form-data').off('submit'); // Hapus semua event submit
+                });
             });
-        });
-    </script>
-@endpush
+        </script>
+    @endpush
