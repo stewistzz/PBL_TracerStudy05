@@ -25,11 +25,8 @@
 
     <div class="form-group">
         <label for="role">Role <span class="text-danger">*</span></label>
-        <select class="form-control" name="role" id="role" required>
-            <option value="">-- Pilih Role --</option>
-            <option value="admin" {{ $users->role == 'admin' ? 'selected' : '' }}>admin</option>
-            <option value="alumni" {{ $users->role == 'alumni' ? 'selected' : '' }}>alumni</option>
-        </select>
+        <input type="text" class="form-control" name="role" id="role" value="{{ $users->role }}"
+            disabled>
         <div class="invalid-feedback" id="error_role"></div>
     </div>
 

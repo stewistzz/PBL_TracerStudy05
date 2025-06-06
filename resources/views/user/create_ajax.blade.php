@@ -20,9 +20,14 @@
     </div>
     <div class="form-group">
         <label for="role">Role <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" name="role" id="role" required>
+        <select class="form-control" name="role" id="role" required>
+            <option value="" disabled selected>Pilih Role</option>
+            <option value="admin">admin</option>
+            <option value="alumni">alumni</option>
+        </select>
         <div class="invalid-feedback" id="error_role"></div>
     </div>
+
 </div>
 
 

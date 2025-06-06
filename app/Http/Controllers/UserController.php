@@ -118,7 +118,6 @@ class UserController extends Controller
         // Validasi input
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:100|unique:users,username,' . $id . ',user_id',
-            'role'     => 'required|in:admin,alumni'
         ]);
 
         if ($validator->fails()) {
@@ -133,7 +132,7 @@ class UserController extends Controller
             $users = UsersModel::findOrFail($id);
             $users->update([
                 'username' => $request->username,
-                'role' => $request->role
+
             ]);
 
             return response()->json([
