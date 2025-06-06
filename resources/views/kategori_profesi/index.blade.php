@@ -1,24 +1,31 @@
 @extends('layouts.template')
 
 @section('content')
-    <div class="card">
+    {{-- tampilan untuk card header --}}
+    <!-- Card Header -->
+    <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
-            <h3 class="font-weight-bold">Data Kategori Profesi</h3>
-            <hr>
-            <p class="card-description">
-                Kelola data kategori profesi dengan mudah untuk mendukung pengelompokan berbagai jenis pekerjaan secara
-                terstruktur. Fitur ini memungkinkan Anda menambahkan, mengedit, dan menghapus kategori profesi sesuai
-                kebutuhan, sehingga mempermudah pengelolaan data tenaga kerja, penyaringan informasi, dan pelaporan.
-            </p>
-            <div class="d-flex justify-content-end mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0 text-primary">
+                    <i class="mdi mdi-format-list-bulleted-square me-1"></i> Manajemen Data Kategori Pertanyaan
+                </h4>
+
                 <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
                     <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
                     Tambah Kategori
                 </button>
             </div>
+            <p class="card-description text-muted">Kelola data kategori profesi dengan mudah untuk mendukung pengelompokan berbagai jenis pekerjaan secara
+                terstruktur. Fitur ini memungkinkan Anda menambahkan, mengedit, dan menghapus kategori profesi sesuai
+                kebutuhan, sehingga mempermudah pengelolaan data tenaga kerja, penyaringan informasi, dan pelaporan.</p>
+        </div>
+    </div>
 
 
-
+    <div class="card">
+        <div class="card-body">
+            <h3 class="font-weight-bold">Data Kategori Profesi</h3>
+            <hr>
             <div class="table-responsive">
                 <table class="table" id="kategori-table">
                     <thead>
