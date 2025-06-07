@@ -1,23 +1,46 @@
 @extends('layouts.template')
 
 @section('content')
+{{-- card --}}
+<div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-school me-1"></i>Data Tracer Study POLINEMA
+                </h4>
+            </div>
+            <p class="card-description text-muted">
+                Lihat data tracer study POLINEMA untuk menampilkan detail dari tracer study dan data alumni. Anda memiliki peran untuk mengirim <strong>Token Link</strong> untuk pengisian E-mail Atasan
+            </p>
+        </div>
+    </div>
+{{-- end card --}}
     <div class="row">
         {{-- Card: Tracer Study Data --}}
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Data Tracer Study</h4>
-                    <p class="card-description text-muted">Daftar tracer alumni yang telah mengisi</p>
-
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{{ route('alumni_tracer.export_rekap_tracer') }}" class="btn btn-success btn-sm">
-                            <i class="mdi mdi-file-excel"></i> Export ke Excel
-                        </a>
+                    <hr>
+                    {{-- edit --}}
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="card-description text-muted">Daftar tracer alumni yang telah mengisi</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex justify-content-end align-items-center mb-3">
+                                <a href="{{ route('alumni_tracer.export_rekap_tracer') }}" class="btn btn-sm text-white" style="background-color: #5BAEB7;">
+                                    <i class="mdi mdi-file-excel"></i> Export ke Excel
+                                </a>
+                            </div>
+                        </div>
                     </div>
+                    {{-- end edit --}}
+
 
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered" id="tracer-table">
-                            <thead class="thead-light">
+                            <thead class="thead-dark" style="background-color: #1E80C1; color: #FFFFFF;">
                                 <tr>
                                     <th>No</th>
                                     <th>Alumni</th>
@@ -43,22 +66,31 @@
         </div>
 
         {{-- Card: Belum Mengisi Tracer --}}
-        <div class="col-12 grid-margin stretch-card mt-4">
+        <div class="col-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Data Alumni Belum Mengisi Tracer Study</h4>
-                    <p class="card-description text-muted">Berikut ini adalah alumni yang belum mengisi tracer study
-                        POLINEMA</p>
-
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{{ route('alumni_tracer.export_belum_isi') }}" class="btn btn-warning btn-sm">
-                            <i class="mdi mdi-file-excel"></i> Export ke Excel
-                        </a>
+                    <hr>
+                    {{-- edit --}}
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="card-description text-muted">Berikut ini adalah alumni yang belum mengisi tracer study
+                                POLINEMA</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex justify-content-end align-items-center mb-3">
+                                <a href="{{ route('alumni_tracer.export_belum_isi') }}" class="btn btn-sm text-white" style="background-color: #5BAEB7;">
+                                    <i class="mdi mdi-file-excel"></i> Export ke Excel
+                                </a>
+                            </div>
+                        </div>
                     </div>
+                    {{-- end edit --}}
+
 
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" id="tracer-table-belum-isi">
-                            <thead class="thead-light">
+                            <thead class="thead-dark" style="background-color: #1E80C1; color: #FFFFFF;">
                                 <tr>
                                     <th>No</th>
                                     <th>Alumni</th>

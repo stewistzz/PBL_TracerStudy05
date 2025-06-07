@@ -55,24 +55,23 @@ class AlumniTracerController extends Controller
                 })
                 ->addColumn('status', fn($row) => ucfirst($row->status))
                 ->addColumn('action', function ($row) {
-                    $btnClass = $row->status === 'done' ? 'btn-success' : 'btn-warning';
-                    $btnText  = $row->status === 'done' ? 'Terkirim' : 'Kirim';
+                    $btnClass = $row->status === 'completed' ? 'btn-success' : 'btn-warning';
+                    $btnText  = $row->status === 'completed' ? 'Terkirim' : 'Kirim';
 
                     return '
-                    <button class="btn btn-sm btn-edit ' . $btnClass . '"
+                    <button class="btn btn-sm btn-edit py-1 btn-sm text-white ' . $btnClass . '"
                         data-id="' . $row->tracer_id . '"
-                        data-status="' . $row->status . '">' . $btnText . '</button>
+                        data-status="' . $row->status . '">' . '<i class="mdi mdi-send"></i>' . $btnText . '</button>
 
-                    <button class="btn btn-sm btn-danger btn-delete"
+                    <button class="btn btn-sm btn-danger btn-delete py-1 btn-sm"
                         data-id="' . $row->tracer_id . '"
                         onclick="deleteTracer(' . $row->tracer_id . ')">
-                        Hapus
+                        <i class="mdi mdi-delete"></i>delete
                     </button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
         abort(403);
     }
 
@@ -116,7 +115,7 @@ class AlumniTracerController extends Controller
             return response()->json(['message' => 'Token tidak ditemukan atau sudah kadaluarsa.'], 404);
         }
 
-        // Ubah status tracer menjadi completed
+        // Ubah status tracer menjadi done
         $tracer->status = 'completed';
         $tracer->save();
 
@@ -213,7 +212,7 @@ class AlumniTracerController extends Controller
 
         // Export file
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $filename = 'Rekap_Data_Tracer_Alumni' . date("Y-m-d") . ".xlsx";
+        $filename = 'Rekap_Data_Alumni_Belum_Isi_' . date("Y-m-d") . ".xlsx";
 
         // Headers
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -296,11 +295,11 @@ class AlumniTracerController extends Controller
         }
 
         // Nama Sheet
-        $sheet->setTitle('Data Alumni Belum Isi');
+        $sheet->setTitle('Data Kuisioner Tracer Alumni');
 
         // Export file
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $filename = 'Data_Alumni_Belum_Mengisi_' . date("Y-m-d") . ".xlsx";
+        $filename = 'Data_Rekap_Tracer_Alumni_' . date("Y-m-d") . ".xlsx";
 
         // Headers
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

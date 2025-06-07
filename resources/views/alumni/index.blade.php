@@ -4,28 +4,53 @@
 <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
 @section('content')
-    <div class="card">
+    <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
-            <h3 class="font-weight-bold">Data Alumni</h3>
-            <hr>
-            <p class="card-description">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-school me-1"></i> Manajemen Data Alumni
+                </h4>
+            </div>
+            <p class="card-description text-muted">
                 Kelola data alumni dengan mudah untuk mendukung pencatatan lulusan, pelacakan karier, dan evaluasi hasil
                 pendidikan. Fitur ini memungkinkan Anda menambahkan, mengedit, dan menghapus data alumni sesuai kebutuhan,
                 sehingga mempermudah pengelolaan informasi alumni secara terstruktur dan efisien.
             </p>
-            <div class="d-flex justify-content-end mb-3">
-                <button type="button" class="btn btn-primary d-flex align-items-center gap-1" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
-                    Tambah Alumni
-                </button>
-                <button type="button" class="btn btn-primary d-flex align-items-center gap-1 ms-2" data-bs-toggle="modal" data-bs-target="#filterModal">
-                    <i class="mdi mdi-filter fs-5 mr-2"></i>
-                    Filter
-                </button>
-                <button type="button" class="btn btn-success d-flex align-items-center gap-1 ms-2" id="btn-export">
-                    <i class="mdi mdi-file-excel fs-5 mr-2"></i>
-                    Export Excel
-                </button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h3 class="font-weight-bold">Data Alumni</h3>
+            <hr>
+            {{-- <p class="card-description">
+                Kelola data alumni dengan mudah untuk mendukung pencatatan lulusan, pelacakan karier, dan evaluasi hasil
+                pendidikan. Fitur ini memungkinkan Anda menambahkan, mengedit, dan menghapus data alumni sesuai kebutuhan,
+                sehingga mempermudah pengelolaan informasi alumni secara terstruktur dan efisien.
+            </p> --}}
+            <div class="row">
+                <div class="col-6">
+                    <p class="card-description">
+                        Kelola Alumni untuk kebutuhan pengisian survey tracer study POLINEMA
+                    </p>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-1 text-white" id="btn-tambah">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
+                            Tambah Alumni
+                        </button>
+                        <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-1 ms-2 text-white" data-bs-toggle="modal"
+                            data-bs-target="#filterModal">
+                            <i class="mdi mdi-filter fs-5 mr-2"></i>
+                            Filter
+                        </button>
+                        <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-1 ms-2 text-white" id="btn-export">
+                            <i class="mdi mdi-file-excel fs-5 mr-2"></i>
+                            Export Excel
+                        </button>
+                    </div>
+                </div>
             </div>
 
             @if (session('success'))
@@ -34,7 +59,7 @@
 
             <div class="table-responsive">
                 <table class="table" id="alumni-table">
-                    <thead>
+                    <thead class="thead-dark" style="background-color: #1E80C1; color: #FFFFFF;">
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
@@ -59,7 +84,8 @@
     </div>
 
     <!-- Modal untuk Filter -->
-    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -74,7 +100,8 @@
     </div>
 
     <!-- Modal untuk Hapus -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 {{-- Konten form hapus akan di-load via AJAX --}}
@@ -105,8 +132,7 @@
                         d.tahun_lulus_end = $('#filter_tahun_lulus_end').val();
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
