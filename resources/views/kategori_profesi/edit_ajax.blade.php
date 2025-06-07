@@ -1,5 +1,5 @@
 <!-- resources/views/kategori_profesi/edit_ajax.blade.php -->
-<div class="modal-header">
+<div class="modal-header bg-warning text-white">
     <h5 class="modal-title" id="modalLabel">Edit Kategori</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">×</span>
@@ -15,7 +15,7 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
-    <button type="submit" class="btn btn-success" id="btn-submit">Update</button>
+    <button type="submit" class="btn btn-warning" id="btn-submit">Update</button>
 </div>
 
 <script>

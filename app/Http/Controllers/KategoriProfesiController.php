@@ -147,7 +147,7 @@ class KategoriProfesiController extends Controller
         }
     }
 
-    public function destroy_ajax($id)
+    /* public function destroy_ajax($id)
     {
         try {
             $kategori = KategoriProfesiModel::findOrFail($id);
@@ -161,6 +161,35 @@ class KategoriProfesiController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Gagal menghapus kategori'
+            ], 500);
+        }
+    } */
+
+     public function confirm_ajax($id)
+    {
+        try {
+            $kategori = KategoriProfesiModel::findOrFail($id);
+            return view('kategori_profesi.delete_ajax', compact('kategori'));
+        } catch (\Exception $e) {
+            abort(404, 'Data tidak ditemukan');
+        }
+    }
+
+    public function delete_ajax($id)
+    {
+        try {
+            $kategori = KategoriProfesiModel::findOrFail($id);
+            $kategori->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Kategori berhasil dihapus.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Gagal menghapus kategori.',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
