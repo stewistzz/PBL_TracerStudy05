@@ -74,7 +74,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [KategoriProfesiController::class, 'edit_ajax'])->name('edit');
             Route::get('/show/{id}', [KategoriProfesiController::class, 'show_ajax'])->name('show');
             Route::post('/update/{id}', [KategoriProfesiController::class, 'update_ajax'])->name('update');
-            Route::delete('/destroy/{id}', [KategoriProfesiController::class, 'destroy_ajax'])->name('destroy');
+            //Route::delete('/destroy/{id}', [KategoriProfesiController::class, 'destroy_ajax'])->name('destroy');
+            Route::get('/confirm/{id}', [KategoriProfesiController::class, 'confirm_ajax'])->name('confirm');
+            Route::delete('/delete/{id}', [KategoriProfesiController::class, 'delete_ajax'])->name('delete');
         });
 
         // Instansi Routes
@@ -85,7 +87,9 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [InstansiController::class, 'store_ajax'])->name('store');
             Route::get('/edit/{id}', [InstansiController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [InstansiController::class, 'update_ajax'])->name('update');
-            Route::delete('/destroy/{id}', [InstansiController::class, 'destroy_ajax'])->name('destroy');
+            //Route::delete('/destroy/{id}', [InstansiController::class, 'destroy_ajax'])->name('destroy');
+            Route::get('/confirm/{id}', [InstansiController::class, 'confirm_ajax'])->name('confirm');
+            Route::delete('/delete/{id}', [InstansiController::class, 'delete_ajax'])->name('delete');
         });
 
         Route::prefix('alumni')->name('alumni.')->group(function () {
