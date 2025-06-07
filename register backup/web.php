@@ -62,6 +62,6 @@ Route::prefix('alumni')->name('alumni.')->group(function () {
     // Alumni Routes
   // Alumni Routes
 Route::middleware(['check.role:alumni'])->group(function () {
-    Route::get('/alumni_i/dashboard', [AuthController::class, 'alumniDashboard'])->name('alumni_i.dashboard');
+    Route::get('/alumni_i/dashboard', [AuthController::class, 'alumniDashboard'])->name('alumni.dashboard');
 });
 });

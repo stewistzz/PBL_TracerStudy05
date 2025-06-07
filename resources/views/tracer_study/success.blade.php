@@ -75,7 +75,7 @@
 
                     <!-- Action Buttons -->
                     <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        <a href="{{ route('alumni_i.dashboard') }}" class="btn btn-primary px-4">
+                        <a href="{{ route('alumni.dashboard') }}" class="btn btn-primary px-4">
                             <i class="fas fa-home me-2"></i>
                             Kembali ke Dashboard
                         </a>
