@@ -24,27 +24,27 @@ class AuthController extends Controller
     }
 
     // Proses login
-   public function postLogin(Request $request)
-{
-    $credentials = $request->validate([
-        'username' => 'required|string|max:10',
-        'password' => 'required|string|max:100'
-    ]);
+    public function postLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required|string|max:10',
+            'password' => 'required|string|max:100'
+        ]);
 
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
 
-        // Redirect berdasarkan role
-        if (Auth::user()->hasRole('admin')) {
-            return redirect()->intended('/admin/dashboard');
+            // Redirect berdasarkan role
+            if (Auth::user()->hasRole('admin')) {
+                return redirect()->intended('/admin/dashboard');
+            }
+            return redirect()->intended('/alumni_i/dashboard'); // Sesuaikan dengan rute yang didefinisikan
         }
-        return redirect()->intended('/alumni_i/dashboard'); // Sesuaikan dengan rute yang didefinisikan
-    }
 
-    return back()->withErrors([
-        'username' => 'Username atau password salah.',
-    ]);
-}
+        return back()->withErrors([
+            'username' => 'Username atau password salah.',
+        ]);
+    }
 
     // Proses registrasi
     public function store(Request $request)
@@ -115,10 +115,10 @@ class AuthController extends Controller
         return view('admin.dashboard');
     }
 
-   public function alumniDashboard()
-{
-    return view('alumni_i.dashboard'); // Sesuaikan dengan folder dan nama file
-}
+    public function alumniDashboard()
+    {
+        return view('alumni.dashboard');
+    }
 
     // Logout
     public function logout(Request $request)

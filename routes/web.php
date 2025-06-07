@@ -222,7 +222,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Alumni Routes
     Route::middleware(['check.role:alumni'])->group(function () {
-        Route::get('/alumni_i/dashboard', [AuthController::class, 'alumniDashboard'])->name('alumni_i.dashboard');
+        Route::get('/alumni/dashboard', [AuthController::class, 'alumniDashboard'])->name('alumni.dashboard');
 
         // Tracer Study Routes
         Route::prefix('tracer-study')->name('tracer-study.')->group(function () {
