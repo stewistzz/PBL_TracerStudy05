@@ -60,7 +60,7 @@
 
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-        <i class="mdi mdi-close me-1"></i>Tutup
+        <i class="mdi mdi-close-circle-outline me-1"></i>Tutup
     </button>
 </div>
 
