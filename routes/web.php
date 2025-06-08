@@ -15,6 +15,8 @@ use App\Http\Controllers\DataPenggunaController;
 use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\KepuasanController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\JawabanPenggunaController;
+use App\Http\Controllers\JawabanAlumniController;
 
 // route landingpage
 Route::get('/', function () {
@@ -142,6 +144,32 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/import', [DataPenggunaController::class, 'import'])->name('import');
             Route::post('/import_ajax', [DataPenggunaController::class, 'import_ajax'])->name('import_ajax');
         });
+
+       
+
+        // Jawaban Pengguna Routes
+        Route::prefix('jawaban_pengguna')->name('jawaban_pengguna.')->group(function () {
+                Route::get('/', [JawabanPenggunaController::class, 'index'])->name('index');
+                Route::get('/list', [JawabanPenggunaController::class, 'list'])->name('list');
+                Route::get('/export_excel', [JawabanPenggunaController::class, 'export_excel'])->name('export_excel');
+                Route::get('/{id}/delete_ajax', [JawabanPenggunaController::class, 'confirm_ajax'])->name('confirm_ajax');
+                Route::delete('/{id}/delete_ajax', [JawabanPenggunaController::class, 'delete_ajax'])->name('delete_ajax');
+                Route::get('/filter', [JawabanPenggunaController::class, 'filter'])->name('filter');
+                Route::get('/get-pertanyaan', [JawabanPenggunaController::class, 'getPertanyaan'])->name('getPertanyaan');
+                
+        });
+
+        // Jawaban Alumni Routes
+        Route::prefix('jawaban_alumni')->name('jawaban_alumni.')->group(function () {
+            Route::get('/', [JawabanAlumniController::class, 'index'])->name('index');
+            Route::get('/list', [JawabanAlumniController::class, 'list'])->name('list');
+            Route::get('/export_excel', [JawabanAlumniController::class, 'export_excel'])->name('export_excel');
+            Route::get('/{id}/delete_ajax', [JawabanAlumniController::class, 'confirm_ajax'])->name('confirm_ajax');
+            Route::delete('/{id}/delete_ajax', [JawabanAlumniController::class, 'delete_ajax'])->name('delete_ajax');
+            Route::get('/filter', [JawabanAlumniController::class, 'filter'])->name('filter');
+            Route::get('/get-pertanyaan', [JawabanAlumniController::class, 'getPertanyaan'])->name('getPertanyaan');
+        });
+
 
         // Kepuasan Routes (Admin)
         Route::prefix('kepuasan')->name('kepuasan.')->group(function () {
