@@ -249,7 +249,7 @@ public function storeDataDiri(Request $request)
         
         // Update status tracer study
         TracerStudyModel::where('alumni_id', $alumni_id)
-                  ->update(['status' => 'completed']);
+                  ->update(['status' => 'draft']);
     });
     
     return redirect()->route('tracer-study.success')
