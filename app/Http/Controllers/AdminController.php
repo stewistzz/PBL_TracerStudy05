@@ -6,12 +6,60 @@ use App\Models\UsersModel;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     public function index()
     {
         return view('admin.index');
+    }
+
+    // Method untuk menampilkan profile admin yang login
+    public function profile()
+    {
+        // Ambil user yang sedang login
+        $user = Auth::user();
+        
+        // Ambil data admin berdasarkan user_id yang login
+        $admin = AdminModel::with('user')
+                          ->where('user_id', $user->user_id)
+                          ->first();
+        
+        // Jika data admin tidak ditemukan
+        if (!$admin) {
+            return redirect()->back()->with('error', 'Data admin tidak ditemukan');
+        }
+        
+        return view('admin.profile', compact('admin'));
+    }
+
+    // Method untuk update profile admin
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+        
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string|max:50',
+            'email' => 'required|email|max:50',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                           ->withErrors($validator)
+                           ->withInput();
+        }
+
+        // Update data admin
+        $admin = AdminModel::where('user_id', $user->user_id)->first();
+        if ($admin) {
+            $admin->update([
+                'nama' => $request->nama,
+                'email' => $request->email,
+            ]);
+        }
+
+        return redirect()->route('admin.profile')->with('success', 'Profile berhasil diperbarui');
     }
 
     public function list()

@@ -110,6 +110,7 @@ Route::middleware(['auth'])->group(function () {
         });
         // route untuk admin
         Route::prefix('admin')->name('admin.')->group(function () {
+            Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
             Route::get('/', [AdminController::class, 'index'])->name('index');
             Route::get('/list', [AdminController::class, 'list'])->name('list');
             Route::get('/create', [AdminController::class, 'create'])->name('create');
