@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MasaTungguController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfesiController;
@@ -257,6 +258,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/alumni-tracer/export-belum-isi', [AlumniTracerController::class, 'exportBelumIsi'])->name('alumni_tracer.export_belum_isi');
         // rekap tracer
         Route::get('/alumni-tracer/export-rekap-tracer', [AlumniTracerController::class, 'exportRekapTracer'])->name('alumni_tracer.export_rekap_tracer');
+
+        // masa tunggu alumni
+        Route::get('/masa-tunggu', [MasaTungguController::class, 'index'])->name('masa_tunggu.index');
+        Route::get('masa-tunggu/filter', [MasaTungguController::class, 'filter_ajax'])->name('masa_tunggu.filter');
+        Route::get('masa-tunggu/export_excel', [MasaTungguController::class, 'export_excel'])->name('masa_tunggu.export');
+        Route::get('/masa-tunggu/data', [MasaTungguController::class, 'getData'])->name('masa_tunggu.data');
+
+
     });
 
 
