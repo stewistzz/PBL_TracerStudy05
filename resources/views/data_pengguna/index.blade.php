@@ -12,13 +12,15 @@
                 serta menghapus data pengguna lulusan sesuai kebutuhan, sehingga mempermudah pengelolaan data alumni dan
                 pelaporan.
             </p>
-            <div class="d-flex justify-content-end mb-3">
-                <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5 me-2"></i>
-                    Tambah Data
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button class="btn btn-success" onclick="modalAction('{{ route('data_pengguna.import') }}')">
+                    <i class="fa fa-upload mr-2"></i> Import User
+                </button>
+
+                <button class="btn btn-info d-flex align-items-center gap-2" id="btn-tambah">
+                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
                 </button>
             </div>
-
 
             <div class="table-responsive">
                 <table class="table" id="data-pengguna-table">
@@ -43,16 +45,15 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Data Pengguna Belum Mengisi Survey Kepuasan</h4>
-                <p class="card-description text-muted">Berikut ini adalah Pengguna Lulusan atausan yang belum mengisi survey kepuasan 
+                <p class="card-description text-muted">Berikut ini adalah Pengguna Lulusan atausan yang belum mengisi survey
+                    kepuasan
                     POLINEMA</p>
 
                 {{-- export --}}
                 <a href="{{ route('data_pengguna.export_belum_isi') }}" class="btn btn-warning btn-sm"><i
                         class="mdi mdi-file-excel"></i> Export ke Excel</a>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-
-                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3"></div>
 
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered" id="survey-table-belum-isi">
@@ -65,7 +66,6 @@
                                 <th>No. HP</th>
                                 <th>Email</th>
                                 <th>Status</th>
-                                {{-- <th>Aksi</th> --}}
                             </tr>
                         </thead>
                     </table>
@@ -74,21 +74,39 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal untuk Tambah/Edit -->
     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form id="form-data">
                 <div class="modal-content">
-                    <!-- Isi modal akan diisi oleh AJAX -->
                 </div>
             </form>
         </div>
+    </div>
+
+    <!-- Modal untuk Import -->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     </div>
 @endsection
 
 @push('js')
     <script>
-        // Fungsi loadTable dibuat global agar bisa diakses oleh create_ajax dan edit_ajax
+        function modalAction(url = '') {
+            $('#myModal').html('');
+            $('#myModal').load(url, function(response, status, xhr) {
+                if (status == "error") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Memuat!',
+                        text: 'Tidak dapat memuat konten modal. Silakan coba lagi. (' + xhr.status + ' ' +
+                            xhr.statusText + ')'
+                    });
+                } else {
+                    $('#myModal').modal('show');
+                }
+            });
+        }
+
         window.loadTable = function() {
             $('#data-pengguna-table').DataTable().ajax.reload();
         };
@@ -136,56 +154,76 @@
 
             $('#btn-tambah').click(function() {
                 $.get('{{ route('data_pengguna.create') }}', function(res) {
-                    console.log('Create Response:', res); // Debug
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
+                }).fail(function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Gagal memuat form tambah data.'
+                    });
                 });
             });
 
             $('#data-pengguna-table').on('click', '.btn-edit', function() {
                 let id = $(this).data('id');
                 $.get('{{ route('data_pengguna.edit', ':id') }}'.replace(':id', id), function(res) {
-                    console.log('Edit Response:', res); // Debug
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
+                }).fail(function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Gagal memuat form edit.'
+                    });
                 });
             });
 
             $('#data-pengguna-table').on('click', '.btn-hapus', function() {
-                if (confirm("Yakin ingin menghapus data ini?")) {
-                    let id = $(this).data('id');
-                    $.ajax({
-                        url: '{{ route('data_pengguna.destroy', ':id') }}'.replace(':id', id),
-                        type: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        success: function(res) {
-                            table.ajax.reload();
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil!',
-                                text: res.message,
-                                confirmButtonText: 'OK'
-                            });
-                        },
-                        error: function(err) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Gagal menghapus data!'
-                            });
-                        }
-                    });
-                }
+                let id = $(this).data('id');
+                Swal.fire({
+                    title: 'Konfirmasi Hapus',
+                    text: 'Yakin ingin menghapus data ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('data_pengguna.destroy', ':id') }}'.replace(
+                                ':id', id),
+                            type: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            success: function(res) {
+                                table.ajax.reload();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: res.message
+                                });
+                            },
+                            error: function(xhr) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: 'Tidak dapat menghapus data.'
+                                });
+                            }
+                        });
+                    }
+                });
             });
 
-            // Event handler untuk submit form (create/update)
             $(document).on('submit', '#form-data', function(e) {
                 e.preventDefault();
                 let formData = new FormData(this);
                 let url = $(this).attr('action');
-                let method = $(this).attr('method') || 'POST';
+                let method = $(this).find('input[name="_method"]').val() || 'POST';
 
                 $.ajax({
                     url: url,
@@ -194,7 +232,7 @@
                     processData: false,
                     contentType: false,
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(res) {
                         if (res.status) {
@@ -203,36 +241,45 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil!',
-                                text: res.message,
-                                confirmButtonText: 'OK'
+                                text: res.message
+                            });
+                        } else {
+                            let errorMsg = 'Validasi gagal.';
+                            if (res.errors) {
+                                errorMsg = Object.values(res.errors).map(v => v[0]).join('\n');
+                            }
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Validasi Error!',
+                                text: errorMsg
                             });
                         }
                     },
                     error: function(xhr) {
-                        let errors = xhr.responseJSON?.errors;
-                        if (errors) {
-                            let errorMsg = '';
-                            $.each(errors, function(key, value) {
-                                errorMsg += value[0] + '\n';
-                            });
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Validasi Error',
-                                text: errorMsg
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Terjadi kesalahan!'
-                            });
+                        let message = 'Terjadi kesalahan.';
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            message = Object.values(xhr.responseJSON.errors).map(v => v[0])
+                                .join('\n');
                         }
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: message
+                        });
                     }
                 });
             });
+
+            $('#modal-form').on('hidden.bs.modal', function() {
+                $(this).find('.modal-content').html('');
+            });
+
+            $('#myModal').on('hidden.bs.modal', function() {
+                $(this).html('');
+            });
         });
     </script>
-    {{-- script pengguna yang belum mengisi --}}
+
     <script>
         $(document).ready(function() {
             $('#survey-table-belum-isi').DataTable({

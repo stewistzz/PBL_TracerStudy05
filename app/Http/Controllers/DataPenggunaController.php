@@ -21,13 +21,11 @@ class DataPenggunaController extends Controller
     public function list(Request $request)
     {
         try {
-            // Log untuk debugging
             Log::info('DataTables request received', [
                 'is_ajax' => $request->ajax(),
                 'request_data' => $request->all()
             ]);
 
-            // Jika bukan AJAX request, kembalikan JSON error
             if (!$request->ajax()) {
                 return response()->json([
                     'error' => 'This endpoint only accepts AJAX requests',
@@ -35,17 +33,15 @@ class DataPenggunaController extends Controller
                 ], 400);
             }
 
-            // Cek apakah tabel dan data ada
             $count = DataPenggunaModel::count();
             Log::info('Total records in database: ' . $count);
 
-            // Query data dengan error handling
             $data = DataPenggunaModel::select([
-                'pengguna_id', 
-                'nama', 
-                'instansi', 
-                'jabatan', 
-                'no_hp', 
+                'pengguna_id',
+                'nama',
+                'instansi',
+                'jabatan',
+                'no_hp',
                 'email'
             ]);
 
@@ -61,40 +57,28 @@ class DataPenggunaController extends Controller
                                 <i class="mdi mdi-delete"></i> Hapus
                             </button>
                         </div>
-                        ';
+                    ';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
 
             Log::info('DataTables response prepared successfully');
             return $dataTable;
-
         } catch (\Exception $e) {
             Log::error('DataTables error: ' . $e->getMessage(), [
                 'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
+                'line' => $e->getLine()
             ]);
-
             return response()->json([
                 'error' => 'Server error occurred',
-                'message' => $e->getMessage(),
-                'debug' => [
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine()
-                ]
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
     public function create_ajax()
     {
-        try {
-            return view('data_pengguna.create_ajax');
-        } catch (\Exception $e) {
-            Log::error('Create form error: ' . $e->getMessage());
-            return response()->json(['error' => 'Unable to load create form'], 500);
-        }
+        return view('data_pengguna.create_ajax');
     }
 
     public function store_ajax(Request $request)
@@ -113,36 +97,31 @@ class DataPenggunaController extends Controller
             if ($validator->fails()) {
                 Log::warning('Validation failed', $validator->errors()->toArray());
                 return response()->json([
-                    'status' => false, 
-                    'message' => 'Validasi gagal', 
+                    'status' => false,
+                    'message' => 'Validasi gagal',
                     'errors' => $validator->errors()
                 ], 422);
             }
 
-            $pengguna = DataPenggunaModel::create([
-                'nama' => $request->nama,
-                'instansi' => $request->instansi,
-                'jabatan' => $request->jabatan,
-                'no_hp' => $request->no_hp,
-                'email' => $request->email,
-            ]);
+            $pengguna = DataPenggunaModel::create($request->only([
+                'nama',
+                'instansi',
+                'jabatan',
+                'no_hp',
+                'email'
+            ]));
 
             Log::info('Data created successfully', ['id' => $pengguna->pengguna_id]);
-            
+
             return response()->json([
-                'status' => true, 
+                'status' => true,
                 'message' => 'Data pengguna lulusan berhasil ditambahkan',
                 'data' => $pengguna
-            ], 200);
-
-        } catch (\Exception $e) {
-            Log::error('Store error: ' . $e->getMessage(), [
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
             ]);
-
+        } catch (\Exception $e) {
+            Log::error('Store error: ' . $e->getMessage());
             return response()->json([
-                'status' => false, 
+                'status' => false,
                 'message' => 'Gagal menambahkan data: ' . $e->getMessage()
             ], 500);
         }
@@ -152,10 +131,8 @@ class DataPenggunaController extends Controller
     {
         try {
             $pengguna = DataPenggunaModel::findOrFail($id);
-            Log::info('Edit form loaded for ID: ' . $id);
             return view('data_pengguna.edit_ajax', compact('pengguna'));
         } catch (\Exception $e) {
-            Log::error('Edit form error: ' . $e->getMessage());
             abort(404, 'Data tidak ditemukan');
         }
     }
@@ -163,8 +140,6 @@ class DataPenggunaController extends Controller
     public function update_ajax(Request $request, $id)
     {
         try {
-            Log::info('Update request received', ['id' => $id, 'data' => $request->all()]);
-
             $validator = Validator::make($request->all(), [
                 'nama'     => 'required|string|max:50',
                 'instansi' => 'required|string|max:255',
@@ -174,39 +149,30 @@ class DataPenggunaController extends Controller
             ]);
 
             if ($validator->fails()) {
-                Log::warning('Update validation failed', $validator->errors()->toArray());
                 return response()->json([
-                    'status' => false, 
-                    'message' => 'Validasi gagal', 
+                    'status' => false,
+                    'message' => 'Validasi gagal',
                     'errors' => $validator->errors()
                 ], 422);
             }
 
             $pengguna = DataPenggunaModel::findOrFail($id);
-            $pengguna->update([
-                'nama' => $request->nama,
-                'instansi' => $request->instansi,
-                'jabatan' => $request->jabatan,
-                'no_hp' => $request->no_hp,
-                'email' => $request->email,
-            ]);
+            $pengguna->update($request->only([
+                'nama',
+                'instansi',
+                'jabatan',
+                'no_hp',
+                'email'
+            ]));
 
-            Log::info('Data updated successfully', ['id' => $id]);
-            
             return response()->json([
-                'status' => true, 
+                'status' => true,
                 'message' => 'Data pengguna lulusan berhasil diperbarui',
                 'data' => $pengguna
-            ], 200);
-
-        } catch (\Exception $e) {
-            Log::error('Update error: ' . $e->getMessage(), [
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
             ]);
-
+        } catch (\Exception $e) {
             return response()->json([
-                'status' => false, 
+                'status' => false,
                 'message' => 'Gagal memperbarui data: ' . $e->getMessage()
             ], 500);
         }
@@ -215,33 +181,91 @@ class DataPenggunaController extends Controller
     public function destroy_ajax($id)
     {
         try {
-            Log::info('Delete request received', ['id' => $id]);
-
             $pengguna = DataPenggunaModel::findOrFail($id);
             $pengguna->delete();
 
-            Log::info('Data deleted successfully', ['id' => $id]);
-            
             return response()->json([
-                'status' => true, 
+                'status' => true,
                 'message' => 'Data pengguna lulusan berhasil dihapus'
-            ], 200);
-
-        } catch (\Exception $e) {
-            Log::error('Delete error: ' . $e->getMessage(), [
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
             ]);
-
+        } catch (\Exception $e) {
             return response()->json([
-                'status' => false, 
+                'status' => false,
                 'message' => 'Gagal menghapus data: ' . $e->getMessage()
             ], 500);
         }
     }
 
-    // data pengguna belumm isi
-    // menampilkan data alumni yang belum mengisi tracer
+    public function import()
+    {
+        return view('data_pengguna.import');
+    }
+
+    public function import_ajax(Request $request)
+    {
+        $rules = [
+            'file_pengguna' => ['required', 'mimes:xlsx,xls', 'max:1024'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
+            ]);
+        }
+
+        try {
+            $file = $request->file('file_pengguna');
+            $spreadsheet = IOFactory::load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $rows = $sheet->toArray();
+
+            if (count($rows) > 0) {
+                $header = array_shift($rows);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'File kosong atau tidak ada data.',
+                ]);
+            }
+
+            $insert = [];
+            foreach ($rows as $row) {
+                if (!empty($row[0])) {
+                    $insert[] = [
+                        'nama' => $row[0] ?? null,
+                        'instansi' => $row[1] ?? null,
+                        'jabatan' => $row[2] ?? null,
+                        'no_hp' => $row[3] ?? null,
+                        'email' => $row[4] ?? null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+            }
+
+            if (!empty($insert)) {
+                DataPenggunaModel::insertOrIgnore($insert);
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil diimpor: ' . count($insert) . ' pengguna',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Tidak ada data valid untuk diimpor dari file.',
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan saat proses impor: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
     public function penggunaBelumIsi()
     {
         $data = DataPenggunaModel::whereDoesntHave('jawaban')->get();
@@ -262,7 +286,6 @@ class DataPenggunaController extends Controller
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Header
         $sheet->setCellValue('A1', 'No');
         $sheet->setCellValue('B1', 'Nama');
         $sheet->setCellValue('C1', 'Instansi');
@@ -270,10 +293,8 @@ class DataPenggunaController extends Controller
         $sheet->setCellValue('E1', 'No_HP');
         $sheet->setCellValue('F1', 'Email');
         $sheet->setCellValue('G1', 'Status');
-
         $sheet->getStyle("A1:G1")->getFont()->setBold(true);
 
-        // Data
         $row = 2;
         $no = 1;
         foreach ($pengguna as $item) {
