@@ -81,9 +81,9 @@ class AlumniTracerController extends Controller
         $tracer = TracerStudyModel::with('alumni')->findOrFail($id);
 
         //  Cek status: hanya izinkan jika status bukan draft
-        if ($tracer->status === 'draft') {
-            return response()->json(['message' => 'Status masih draft. Tidak dapat mengirim token.'], 422);
-        }
+        // if ($tracer->status === 'draft') {
+        //     return response()->json(['message' => 'Status masih draft. Tidak dapat mengirim token.'], 422);
+        // }
 
         // Validasi email atasan
         if (empty($tracer->email_atasan_langsung)) {

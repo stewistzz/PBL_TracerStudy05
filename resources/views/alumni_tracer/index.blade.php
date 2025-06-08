@@ -255,14 +255,14 @@
                 var status = $(this).data('status');
                 var button = $(this);
 
-                if (status === 'draft') {
+                /* if (status === 'draft') {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Status masih draft',
                         text: 'Alumni belum melengkapi tracer study hingga form kuesioner!'
                     });
                     return;
-                }
+                }*/
 
                 Swal.fire({
                     title: 'Kirim Token?',
