@@ -46,7 +46,7 @@
         </li>
 
         {{-- sidebar Penilaian untuk admin --}}
-        <li class="nav-item">
+       <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
                 <i class="mdi mdi-star-circle menu-icon"></i>
                 <span class="menu-title">Pengguna</span>
@@ -54,34 +54,30 @@
             </a>
             <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('data_pengguna.index') }}">Data Pengguna</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('kepuasan.index') }}">Tabel Kepuasan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('kepuasan.grafik') }}">Grafik Kepuasan</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('data_pengguna.index') }}">Data Pengguna</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('kepuasan.index') }}">Tabel Kepuasan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('kepuasan.grafik') }}">Grafik Kepuasan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('jawaban_pengguna.index') }}">Jawaban Pengguna</a></li>
                 </ul>
             </div>
         </li>
         {{-- end penilaian --}}
 
-        {{-- alumni sidebar admin --}}
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-                <i class="mdi mdi-account-group menu-icon"></i>
-                <span class="menu-title">Alumni</span>
-                <i class="mdi mdi-menu-down ml-auto"></i>
-            </a>
-            <div class="collapse" id="tables">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('alumni.index') }}">Data Alumni</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('alumni_tracer.index') }}">Data Tracer</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+     {{-- alumni sidebar admin --}}
+<li class="nav-item">
+    <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+        <i class="mdi mdi-account-group menu-icon"></i>
+        <span class="menu-title">Alumni</span>
+        <i class="mdi mdi-menu-down ml-auto"></i>
+    </a>
+    <div class="collapse" id="tables">
+        <ul class="nav flex-column sub-menu">
+            <li class="nav-item"><a class="nav-link" href="{{ route('alumni.index') }}">Data Alumni</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('alumni_tracer.index') }}">Data Tracer</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('jawaban_alumni.index') }}">Jawaban Alumni</a></li>
+        </ul>
+    </div>
+</li>
         {{-- end sidebar alumni --}}
 
         {{-- Data Ueer --}}
