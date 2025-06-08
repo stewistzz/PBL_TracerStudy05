@@ -134,10 +134,14 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}/update_ajax', [DataPenggunaController::class, 'update_ajax'])->name('data_pengguna.update_ajax');
             Route::delete('/{id}/delete_ajax', [DataPenggunaController::class, 'destroy_ajax'])->name('data_pengguna.destroy_ajax');
 
+            Route::get('/export-excel', [DataPenggunaController::class, 'exportPenggunaBelumIsi'])->name('export_belum_isi');
+            Route::get('/belum-isi', [DataPenggunaController::class, 'penggunaBelumIsi'])->name('belum_isi');
+
+
             // Import Routes
             Route::get('/import', [DataPenggunaController::class, 'import'])->name('import');
             Route::post('/import_ajax', [DataPenggunaController::class, 'import_ajax'])->name('import_ajax');
-
+        });
 
         // Kepuasan Routes (Admin)
         Route::prefix('kepuasan')->name('kepuasan.')->group(function () {
@@ -186,48 +190,45 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}/delete_ajax', [PertanyaanController::class, 'delete_ajax'])->name('delete_ajax');
             //Route::delete('/{id}', [PertanyaanController::class, 'destroy'])->name('destroy');
         });
+
+
+        Route::prefix('kategori_pertanyaan')->name('kategori_pertanyaan.')->group(function () {
+            Route::get('/', [KategoriPertanyaanController::class, 'index'])->name('index');
+            Route::get('/list', [KategoriPertanyaanController::class, 'list'])->name('list');
+
+            // AJAX Routes
+            Route::get('/create_ajax', [KategoriPertanyaanController::class, 'create_ajax'])->name('create_ajax');
+            Route::post('/ajax', [KategoriPertanyaanController::class, 'store_ajax'])->name('store_ajax');
+            Route::get('/{id}/edit_ajax', [KategoriPertanyaanController::class, 'edit_ajax'])->name('edit_ajax');
+            Route::post('/{id}/update_ajax', [KategoriPertanyaanController::class, 'update_ajax'])->name('update_ajax');
+
+            // Delete Routes
+            Route::get('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'confirm_ajax'])->name('confirm_ajax');
+            Route::delete('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'delete_ajax'])->name('delete_ajax');
+            Route::delete('/{id}', [KategoriPertanyaanController::class, 'destroy'])->name('destroy');
+        });
+
+
+        // route untuk alumni_tracer
+        // Route::prefix('alumni_tracer')->name('alumni_tracer.')->group(function () {
+        //     Route::get('/', [AlumniTracerController::class, 'index'])->name('index');
+        //     Route::get('/list', [AlumniTracerController::class, 'list'])->name('list');
+
+        //     // route untuk kirim token
+        //     Route::post('/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('kirim_token');
+
+        // });
+
+        Route::get('/alumni-tracer', [AlumniTracerController::class, 'index'])->name('alumni_tracer.index');
+        Route::get('/alumni-tracer/list', [AlumniTracerController::class, 'list'])->name('alumni_tracer.list');
+        Route::post('/alumni-tracer/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('alumni_tracer.kirim_token');
+        Route::delete('/alumni-tracer/{id}', [AlumniTracerController::class, 'destroy']);
+        // export
+        Route::get('/alumni-tracer/belum-isi', [AlumniTracerController::class, 'alumniBelumIsi'])->name('alumni_tracer.belum_isi');
+        Route::get('/alumni-tracer/export-belum-isi', [AlumniTracerController::class, 'exportBelumIsi'])->name('alumni_tracer.export_belum_isi');
+        // rekap tracer
+        Route::get('/alumni-tracer/export-rekap-tracer', [AlumniTracerController::class, 'exportRekapTracer'])->name('alumni_tracer.export_rekap_tracer');
     });
-
-
-    Route::prefix('kategori_pertanyaan')->name('kategori_pertanyaan.')->group(function () {
-        Route::get('/', [KategoriPertanyaanController::class, 'index'])->name('index');
-        Route::get('/list', [KategoriPertanyaanController::class, 'list'])->name('list');
-
-        // AJAX Routes
-        Route::get('/create_ajax', [KategoriPertanyaanController::class, 'create_ajax'])->name('create_ajax');
-        Route::post('/ajax', [KategoriPertanyaanController::class, 'store_ajax'])->name('store_ajax');
-        Route::get('/{id}/edit_ajax', [KategoriPertanyaanController::class, 'edit_ajax'])->name('edit_ajax');
-        Route::post('/{id}/update_ajax', [KategoriPertanyaanController::class, 'update_ajax'])->name('update_ajax');
-
-        // Delete Routes
-        Route::get('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'confirm_ajax'])->name('confirm_ajax');
-        Route::delete('/{id}/delete_ajax', [KategoriPertanyaanController::class, 'delete_ajax'])->name('delete_ajax');
-        Route::delete('/{id}', [KategoriPertanyaanController::class, 'destroy'])->name('destroy');
-    });
-
-
-    // route untuk alumni_tracer
-    // Route::prefix('alumni_tracer')->name('alumni_tracer.')->group(function () {
-    //     Route::get('/', [AlumniTracerController::class, 'index'])->name('index');
-    //     Route::get('/list', [AlumniTracerController::class, 'list'])->name('list');
-
-    //     // route untuk kirim token
-    //     Route::post('/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('kirim_token');
-
-    // });
-
-    Route::get('/alumni-tracer', [AlumniTracerController::class, 'index'])->name('alumni_tracer.index');
-    Route::get('/alumni-tracer/list', [AlumniTracerController::class, 'list'])->name('alumni_tracer.list');
-    Route::post('/alumni-tracer/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('alumni_tracer.kirim_token');
-    Route::delete('/alumni-tracer/{id}', [AlumniTracerController::class, 'destroy']);
-    // export
-    Route::get('/alumni-tracer/belum-isi', [AlumniTracerController::class, 'alumniBelumIsi'])->name('alumni_tracer.belum_isi');
-    Route::get('/alumni-tracer/export-belum-isi', [AlumniTracerController::class, 'exportBelumIsi'])->name('alumni_tracer.export_belum_isi');
-    // rekap tracer
-    Route::get('/alumni-tracer/export-rekap-tracer', [AlumniTracerController::class, 'exportRekapTracer'])->name('alumni_tracer.export_rekap_tracer');
-
-
-
 
 
     // Alumni Routes
