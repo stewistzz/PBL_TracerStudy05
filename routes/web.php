@@ -218,7 +218,7 @@ Route::middleware(['auth'])->group(function () {
         //     Route::post('/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('kirim_token');
 
         // });
-
+        Route::get('/alumni-dashboard', [ProfesiController::class, 'index'])->middleware(['auth', 'role:alumni']);
         Route::get('/alumni-tracer', [AlumniTracerController::class, 'index'])->name('alumni_tracer.index');
         Route::get('/alumni-tracer/list', [AlumniTracerController::class, 'list'])->name('alumni_tracer.list');
         Route::post('/alumni-tracer/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('alumni_tracer.kirim_token');

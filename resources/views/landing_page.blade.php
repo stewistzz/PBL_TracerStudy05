@@ -28,7 +28,7 @@
             <div class="navigation">
                 <a href="#home">Home</a>
                 <a href="#about">About Tracer Study</a>
-                <a href="#survey">Survey Content</a>
+                <a href="#purpose">Purpose Tracer</a>
                 <a href="#statistics">Statistics</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -174,7 +174,7 @@
     {{-- end hart --}}
 
     <div class="purpose-section">
-        <div class="purpose-container">
+        <div class="purpose-container" id="purpose">
             <div class="purpose-left">
                 <img src="/skydash/template/images/jumping.png" alt="Happy Graduates Jumping">
             </div>
