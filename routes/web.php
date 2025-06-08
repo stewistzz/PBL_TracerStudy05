@@ -15,11 +15,16 @@ use App\Http\Controllers\DataPenggunaController;
 use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\KepuasanController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LandingController;
 
 // route landingpage
-Route::get('/', function () {
-    return view('landing_page');
-});
+// Route::get('/', function () {
+//     return view('landing_page');
+// });
+
+// route landingpage
+Route::get('/', [LandingController::class, 'landing_page'])->name('landing_page');
+
 
 // Auth Routes 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
