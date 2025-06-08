@@ -39,8 +39,7 @@
 
         {{-- sidebar masa tunggu --}}
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-                aria-controls="form-elements">
+            <a class="nav-link" href="{{ route('masa_tunggu.index') }}">
                 <i class="mdi mdi-timer-sand menu-icon"></i>
                 <span class="menu-title">Masa Tunggu</span>
             </a>
