@@ -1,11 +1,12 @@
 @extends('layouts.template')
 
-    <link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
+<link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
+
+
 
 @section('content')
     <!-- Row: Pie Chart dan Detail Instansi -->
     <div class="row">
-
         <!-- Card: Pie Chart Jenis Instansi -->
         <div class="col-lg-4 mb-4">
             <div class="card rounded-4">
@@ -36,13 +37,11 @@
                 </p>
             </div>
         </div>
-
     </div>
 
     <!-- Card: Tabel Data Instansi -->
     <div class="card mt-4">
         <div class="card-body">
-
             <h4 class="card-title">Data Instansi</h4>
             <p class="card-description">Kelola data instansi dengan mudah</p>
 
@@ -57,8 +56,8 @@
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
-            <div class="table-responsive ">
-                <table class="table " id="instansi-table">
+            <div class="table-responsive">
+                <table class="table" id="instansi-table">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -72,12 +71,11 @@
                     </thead>
                 </table>
             </div>
-
         </div>
     </div>
 
-    <!-- Modal: Form Tambah/Edit Instansi -->
-    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <!-- Modal: Form Tambah/Edit/Hapus Instansi -->
+    <div class="modal fade" id="modal-form" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <!-- Akan diisi melalui AJAX -->
@@ -85,7 +83,6 @@
         </div>
     </div>
 @endsection
-
 
 @push('js')
     <script>
@@ -98,7 +95,8 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('instansi.list') }}",
-                columns: [{
+                columns: [
+                    {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
@@ -120,7 +118,6 @@
                         data: 'lokasi',
                         name: 'lokasi'
                     },
-                    // { data: 'alamat', name: 'alamat' },
                     {
                         data: 'no_hp',
                         name: 'no_hp'
@@ -137,7 +134,7 @@
             // Tombol Tambah
             $('#btn-tambah').click(function() {
                 $.get('{{ route('instansi.create') }}', function(res) {
-                    console.log('Create Response:', res); // Debug
+                    console.log('Create Response:', res);
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 });
@@ -147,7 +144,7 @@
             $('#instansi-table').on('click', '.btn-edit', function() {
                 let id = $(this).data('id');
                 $.get('{{ route('instansi.edit', ':id') }}'.replace(':id', id), function(res) {
-                    console.log('Edit Response:', res); // Debug
+                    console.log('Edit Response:', res);
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 });
@@ -155,38 +152,17 @@
 
             // Tombol Hapus
             $('#instansi-table').on('click', '.btn-hapus', function() {
-                if (confirm("Yakin ingin menghapus data ini?")) {
-                    let id = $(this).data('id');
-                    $.ajax({
-                        url: '{{ route('instansi.destroy', ':id') }}'.replace(':id', id),
-                        type: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        success: function(res) {
-                            table.ajax.reload();
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil!',
-                                text: res.message,
-                                confirmButtonText: 'OK'
-                            });
-                        },
-                        error: function(err) {
-                            console.log('Delete Error:', err); // Debug
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Gagal menghapus data!'
-                            });
-                        }
-                    });
-                }
+                let id = $(this).data('id');
+                $.get('{{ route('instansi.confirm', ':id') }}'.replace(':id', id), function(res) {
+                    console.log('Confirm Delete Response:', res);
+                    $('#modal-form .modal-content').html(res);
+                    $('#modal-form').modal('show');
+                });
             });
         });
     </script>
 
-    {{-- script pie chart --}}
+    {{-- Script Pie Chart --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const instansiCtx = document.getElementById('instansiChart').getContext('2d');

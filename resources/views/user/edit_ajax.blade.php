@@ -19,15 +19,17 @@
     <div class="form-group">
         <label for="password">Password <span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="password" id="password" value="{{ $users->password }}"
-            required>
+            disabled>
         <div class="invalid-feedback" id="error_password"></div>
     </div>
 
     <div class="form-group">
         <label for="role">Role <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" name="role" id="role" value="{{ $users->role }}" required>
+        <input type="text" class="form-control" name="role" id="role" value="{{ $users->role }}"
+            disabled>
         <div class="invalid-feedback" id="error_role"></div>
     </div>
+
 </div>
 
 <div class="modal-footer">
@@ -76,10 +78,6 @@
                         if (errors.username) {
                             $('#username').addClass('is-invalid');
                             $('#error_username').text(errors.username[0]).show();
-                        }
-                        if (errors.password) {
-                            $('#password').addClass('is-invalid');
-                            $('#error_password').text(errors.password[0]).show();
                         }
                         if (errors.role) {
                             $('#role').addClass('is-invalid');

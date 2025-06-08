@@ -40,9 +40,9 @@ class ProfesiController extends Controller
             ->addColumn('action', function ($row) {
                 // $btn = '<button class="btn btn-info btn-sm viewBtn" data-id="' . $row->profesi_id . '">View</button> ';
                 // warning
-                $btn = '<button onclick="modalAction(\'' . url('/profesi/' . $row->profesi_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm py-2">Edit</button> ';
+                $btn = '<button onclick="modalAction(\'' . url('/profesi/' . $row->profesi_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm py-1"><i class="mdi mdi-pencil"></i>edit</button> ';
                 // danger
-                $btn .= '<button onclick="modalAction(\'' . url('/profesi/' . $row->profesi_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm py-2">Hapus</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/profesi/' . $row->profesi_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm py-1"><i class="mdi mdi-delete"></i>delete</button> ';
                 return $btn;
             })
             ->rawColumns(['action'])

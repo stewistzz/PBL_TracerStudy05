@@ -7,14 +7,14 @@
         <div class="col-lg-4 mb-4">
             <div class="card rounded-4">
                 <div class="card-body text-center">
-                    <h4 class="card-title fw-bold mb-4">Sebaran Profesi Alumni</h4>
+                    <h4 class="card-title fw-bold mb-3">Sebaran Profesi Alumni</h4>
                     <canvas id="profesiChart" width="240" height="240"></canvas>
                 </div>
             </div>
         </div>
 
         <!-- Card Detail -->
-        <div class="col-lg-8">
+        <div class="col-lg-8 mb-4">
             <div class="card rounded-4 shadow-sm h-100 p-4">
                 <h2 class="fw-bold mb-3 text-dark">
                     <b>Detail Sebaran Profesi Alumni</b><br>
@@ -22,7 +22,7 @@
                 <h2><b style="color: rgb(30, 161, 201);">Politeknik Negeri Malang</b></h2>
 
 
-                <div class="my-4">
+                <div class="my-2">
                     <h1 class="display-3 fw-black text-dark">{{ $jumlah_profesi }}</h1>
                     <h5>Total Profesi</h5>
                 </div>
@@ -37,36 +37,29 @@
                 </p>
             </div>
         </div>
-
     </div>
 
-
-
-    </div>
-    <div class="card">
+    <div class="card border-0 shadow-sm" style="background-color: #FFFFFF;">
         <div class="card-body">
-            <h3 class="font-weight-bold">Data Profesi</h3>
+            <h5 class="card-title" style="color: #2A3143;">Tabel Data Kategori Profesi</h5>
             <hr>
             <p class="card-description">
-                Halaman ini menyediakan fitur untuk mengelola data profesi dan kategori profesi alumni secara terstruktur.
-                Data ini menjadi bagian penting dalam pelaksanaan tracer study, yang bertujuan untuk memantau jejak karier
-                lulusan, mengevaluasi keterkaitan antara pendidikan dan dunia kerja, serta sebagai dasar dalam pengembangan
-                kurikulum dan peningkatan mutu program studi.
+                Tabel ini menampilkan isi data dari berbagai macam profesi terkait dalam kebutuhan pengumpulan informasi mengenai Tracer Study.
             </p>
             {{-- <button class="btn btn-primary mb-3" id="btn-tambah">Tambah Profesi</button> --}}
 
 
             <div class="d-flex justify-content-end mb-3">
-                <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')"
-                    class="btn btn-info d-flex align-items-center gap-2" id="btn-tambah">
+                <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')" style="background-color: #5BAEB7;"
+                    class="btn btn-sm d-flex align-items-center gap-2 text-white" id="btn-tambah">
                     <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
                 </button>
             </div>
 
 
             <div class="table-responsive">
-                <table class="table text-center" id="profesi-table">
-                    <thead>
+                <table class="table table-hover table-bordered" id="profesi-table">
+                    <thead class="thead-dark" style="background-color: #1E80C1; color: #FFFFFF;">
                         <tr>
                             <th>No</th>
                             <th>Nama Profesi</th>

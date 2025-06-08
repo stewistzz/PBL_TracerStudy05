@@ -40,6 +40,41 @@
         </div>
     </div>
 
+    {{-- data alumni yang belum mengisi --}}
+    <div class="col-12 grid-margin stretch-card mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Data Pengguna Belum Mengisi Survey Kepuasan</h4>
+                <p class="card-description text-muted">Berikut ini adalah Pengguna Lulusan atausan yang belum mengisi survey
+                    kepuasan
+                    POLINEMA</p>
+
+                {{-- export --}}
+                <a href="{{ route('data_pengguna.export_belum_isi') }}" class="btn btn-warning btn-sm"><i
+                        class="mdi mdi-file-excel"></i> Export ke Excel</a>
+
+                <div class="d-flex justify-content-between align-items-center mb-3"></div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" id="survey-table-belum-isi">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Instansi</th>
+                                <th>Jabatan</th>
+                                <th>No. HP</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Tambah/Edit -->
     <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form id="form-data">
@@ -49,19 +84,17 @@
         </div>
     </div>
 
+    <!-- Modal untuk Import -->
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     </div>
 @endsection
 
 @push('js')
     <script>
-        // Function to load content into #myModal and show it
-        // This should ideally be in a global JS file or layout if used by multiple pages.
         function modalAction(url = '') {
-            $('#myModal').html(''); // Clear previous content
+            $('#myModal').html('');
             $('#myModal').load(url, function(response, status, xhr) {
                 if (status == "error") {
-                    console.error("Error loading modal content:", xhr.status, xhr.statusText);
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal Memuat!',
@@ -74,28 +107,15 @@
             });
         }
 
-        // Global function to reload DataTable (can be called from import modal script)
         window.loadTable = function() {
             $('#data-pengguna-table').DataTable().ajax.reload();
         };
 
         $(document).ready(function() {
-            // Initialize DataTable for Data Pengguna
             let table = $('#data-pengguna-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: {
-                    url: "{{ route('data_pengguna.list') }}",
-                    type: "GET",
-                    error: function(xhr, error, code) {
-                        console.error('DataTable Ajax Error:', xhr.responseText);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'Gagal memuat data. Silakan refresh halaman.'
-                        });
-                    }
-                },
+                ajax: "{{ route('data_pengguna.list') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -132,40 +152,33 @@
                 ]
             });
 
-            // Handler untuk button tambah (create)
             $('#btn-tambah').click(function() {
                 $.get('{{ route('data_pengguna.create') }}', function(res) {
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 }).fail(function(xhr) {
-                    console.error('Failed to load create form:', xhr);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: 'Gagal memuat form tambah data: ' + (xhr.responseJSON
-                            ?.message || xhr.statusText)
+                        text: 'Gagal memuat form tambah data.'
                     });
                 });
             });
 
-            // Handler untuk button edit
             $('#data-pengguna-table').on('click', '.btn-edit', function() {
                 let id = $(this).data('id');
                 $.get('{{ route('data_pengguna.edit', ':id') }}'.replace(':id', id), function(res) {
                     $('#modal-form .modal-content').html(res);
                     $('#modal-form').modal('show');
                 }).fail(function(xhr) {
-                    console.error('Failed to load edit form:', xhr);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: 'Gagal memuat form edit: ' + (xhr.responseJSON?.message || xhr
-                            .statusText)
+                        text: 'Gagal memuat form edit.'
                     });
                 });
             });
 
-            // Handler untuk button hapus
             $('#data-pengguna-table').on('click', '.btn-hapus', function() {
                 let id = $(this).data('id');
                 Swal.fire({
@@ -191,18 +204,14 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil!',
-                                    text: res.message,
-                                    confirmButtonText: 'OK'
+                                    text: res.message
                                 });
                             },
                             error: function(xhr) {
-                                console.error('Delete error:', xhr);
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'Gagal menghapus data: ' + (xhr
-                                        .responseJSON?.message || xhr
-                                        .statusText)
+                                    title: 'Gagal!',
+                                    text: 'Tidak dapat menghapus data.'
                                 });
                             }
                         });
@@ -210,13 +219,11 @@
                 });
             });
 
-            // Event handler untuk submit form (HANYA UNTUK CREATE/UPDATE via #form-data)
             $(document).on('submit', '#form-data', function(e) {
                 e.preventDefault();
                 let formData = new FormData(this);
                 let url = $(this).attr('action');
-                let method = $(this).find('input[name="_method"]').val() ||
-                'POST'; // Check for method spoofing
+                let method = $(this).find('input[name="_method"]').val() || 'POST';
 
                 $.ajax({
                     url: url,
@@ -234,63 +241,82 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil!',
-                                text: res.message,
-                                confirmButtonText: 'OK'
+                                text: res.message
                             });
                         } else {
-                            let errorMsg = res.message || 'Terjadi kesalahan';
-                            if (res.errors) { // Standard Laravel validation errors
-                                errorMsg = '';
-                                $.each(res.errors, function(key, value) {
-                                    errorMsg += (Array.isArray(value) ? value[0] :
-                                        value) + '\n';
-                                });
-                            } else if (res.msgField) { // Legacy or specific structure
-                                errorMsg = '';
-                                $.each(res.msgField, function(key, value) {
-                                    errorMsg += (Array.isArray(value) ? value[0] :
-                                        value) + '\n';
-                                });
+                            let errorMsg = 'Validasi gagal.';
+                            if (res.errors) {
+                                errorMsg = Object.values(res.errors).map(v => v[0]).join('\n');
                             }
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Validasi Error!',
-                                text: errorMsg.trim()
+                                text: errorMsg
                             });
                         }
                     },
                     error: function(xhr) {
-                        console.error('Form submit error:', xhr);
                         let message = 'Terjadi kesalahan.';
-                        if (xhr.responseJSON) {
-                            if (xhr.responseJSON.errors) {
-                                message = '';
-                                $.each(xhr.responseJSON.errors, function(key, value) {
-                                    message += (Array.isArray(value) ? value[0] :
-                                        value) + '\n';
-                                });
-                            } else if (xhr.responseJSON.message) {
-                                message = xhr.responseJSON.message;
-                            }
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            message = Object.values(xhr.responseJSON.errors).map(v => v[0])
+                                .join('\n');
                         }
                         Swal.fire({
                             icon: 'error',
                             title: 'Error!',
-                            text: message.trim()
+                            text: message
                         });
                     }
                 });
             });
 
-            // Reset #modal-form (create/edit modal) when closed
             $('#modal-form').on('hidden.bs.modal', function() {
                 $(this).find('.modal-content').html('');
-                // Optional: Clear any validation messages if they are outside modal-content
             });
 
-            // Reset #myModal (import modal) when closed
             $('#myModal').on('hidden.bs.modal', function() {
-                $(this).html(''); // Clear loaded content
+                $(this).html('');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#survey-table-belum-isi').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('data_pengguna.belum_isi') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'instansi',
+                        name: 'instansi'
+                    },
+                    {
+                        data: 'jabatan',
+                        name: 'jabatan'
+                    },
+                    {
+                        data: 'no_hp',
+                        name: 'no_hp'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
             });
         });
     </script>

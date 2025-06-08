@@ -18,26 +18,37 @@ class PertanyaanController extends Controller
 
     // list function
     public function list(Request $request)
-    {
-        $pertanyaan = PertanyaanModel::with('kategoriPertanyaan', 'admin')
-            ->select('pertanyaan_id', 'role_target', 'isi_pertanyaan', 'jenis_pertanyaan', 'created_by', 'kode_kategori');
+{
+    $roleTarget = $request->query('role_target'); // alumni atau pengguna
 
-        return DataTables::of($pertanyaan)
-            ->addIndexColumn()
-            ->addColumn('kategori', function ($row) {
-                return $row->kategoriPertanyaan->nama_kategori ?? '-';
-            })
-            ->addColumn('admin', function ($row) {
-                return $row->admin->nama ?? '-';
-            })
-            ->addColumn('action', function ($row) {
-                $btn = '<button onclick="modalAction(\'' . url('/pertanyaan/' . $row->pertanyaan_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/pertanyaan/' . $row->pertanyaan_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button>';
-                return $btn;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+    $pertanyaan = PertanyaanModel::with('kategoriPertanyaan', 'admin')
+        ->select('pertanyaan_id', 'role_target', 'isi_pertanyaan', 'jenis_pertanyaan', 'created_by', 'kode_kategori');
+
+    if ($roleTarget) {
+        $pertanyaan->where('role_target', $roleTarget);
     }
+
+    return DataTables::of($pertanyaan)
+        ->addIndexColumn()
+        ->addColumn('kategori', function ($row) {
+            return $row->kategoriPertanyaan->nama_kategori ?? '-';
+        })
+        ->addColumn('admin', function ($row) {
+            return $row->admin->nama ?? '-';
+        })
+        ->addColumn('action', function ($row) {
+            $btn = '<button onclick="modalAction(\'' . url('/pertanyaan/' . $row->pertanyaan_id . '/edit_ajax') . '\')" class="btn btn-warning py-1 btn-sm">
+                <i class="mdi mdi-pencil"></i>edit
+            </button> ';
+            $btn .= '<button onclick="modalAction(\'' . url('/pertanyaan/' . $row->pertanyaan_id . '/delete_ajax') . '\')" class="btn btn-danger py-1 btn-sm">
+                <i class="mdi mdi-delete"></i>delete
+            </button>';
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+}
+
 
     // create ajax
     public function create_ajax()

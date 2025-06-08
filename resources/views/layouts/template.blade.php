@@ -2,6 +2,24 @@
 <html lang="en">
 
 <head>
+    <style>
+        /* Hapus tampilan loader apa pun */
+        .loader,
+        #loading,
+        .preloader,
+        .spinner,
+        .loading-screen,
+        .page-loader,
+        #preloader,
+        #global-loader {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            z-index: -1 !important;
+        }
+    </style>
+
+
     @include('layouts.header') {{-- jika ada file head --}}
 
     <!-- Google Font: Poppins -->
@@ -66,13 +84,26 @@
 @endif
 --}}
 
-@if (Auth::check())
+
+        {{-- - @if (Auth::check())
     @if (Auth::user()->role == 'admin')
         @include('layouts.sidebar')
     @elseif (Auth::user()->role == 'alumni')
         @include('layouts.sidebarAlumni')
     @endif
 @endif
+--}}
+
+        @if (Auth::check() && !Request::is('survey/*'))
+            @if (Auth::user()->role == 'admin')
+                @include('layouts.sidebar')
+            @elseif (Auth::user()->role == 'alumni')
+                @include('layouts.sidebarAlumni')
+            @endif
+        @endif
+
+
+
 
         <div class="main-panel">
             <div class="content-wrapper">
@@ -104,6 +135,11 @@
     <link rel="stylesheet" href="{{ asset('skydash/template/vendors/ti-icons/css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('skydash/template/vendors/css/vendor.bundle.base.css') }}">
     <!-- endinject -->
+    <!-- Penambahan untuk tabel kepuasan -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
 
 
     <!-- CSRF AJAX Setup -->
@@ -132,6 +168,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
+
+
+
     <script>
         $.ajaxSetup({
             headers: {
@@ -139,6 +178,14 @@
             }
         });
     </script>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.loader, #loading, .preloader, .spinner').forEach(el => {
+                el.style.display = 'none';
+            });
+        });
+    </script>
+
 
     @stack('js')
 </body>

@@ -26,6 +26,10 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'postLogin']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// forgot password
+Route::get('/reset-password', [AuthController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'processReset'])->name('password.process');
+
 // Survey Routes (untuk pengguna_lulusan mengisi survei via token)
 Route::prefix('survey')->name('survey.')->group(function () {
     Route::get('/access/{token}', [App\Http\Controllers\SurveyController::class, 'accessSurvey'])->name('access');
@@ -70,7 +74,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [KategoriProfesiController::class, 'edit_ajax'])->name('edit');
             Route::get('/show/{id}', [KategoriProfesiController::class, 'show_ajax'])->name('show');
             Route::post('/update/{id}', [KategoriProfesiController::class, 'update_ajax'])->name('update');
-            Route::delete('/destroy/{id}', [KategoriProfesiController::class, 'destroy_ajax'])->name('destroy');
+            //Route::delete('/destroy/{id}', [KategoriProfesiController::class, 'destroy_ajax'])->name('destroy');
+            Route::get('/confirm/{id}', [KategoriProfesiController::class, 'confirm_ajax'])->name('confirm');
+            Route::delete('/delete/{id}', [KategoriProfesiController::class, 'delete_ajax'])->name('delete');
         });
 
         // Instansi Routes
@@ -81,10 +87,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [InstansiController::class, 'store_ajax'])->name('store');
             Route::get('/edit/{id}', [InstansiController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [InstansiController::class, 'update_ajax'])->name('update');
-            Route::delete('/destroy/{id}', [InstansiController::class, 'destroy_ajax'])->name('destroy');
+            //Route::delete('/destroy/{id}', [InstansiController::class, 'destroy_ajax'])->name('destroy');
+            Route::get('/confirm/{id}', [InstansiController::class, 'confirm_ajax'])->name('confirm');
+            Route::delete('/delete/{id}', [InstansiController::class, 'delete_ajax'])->name('delete');
         });
 
-        // Alumni Routes (Admin)
         Route::prefix('alumni')->name('alumni.')->group(function () {
             Route::get('/', [AlumniController::class, 'index'])->name('index');
             Route::get('/list', [AlumniController::class, 'list'])->name('list');
@@ -93,8 +100,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', [AlumniController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [AlumniController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [AlumniController::class, 'destroy_ajax'])->name('destroy');
+            Route::get('/filter', [AlumniController::class, 'filter_ajax'])->name('filter');
+            Route::get('/{id}/confirm_ajax', [AlumniController::class, 'confirm_ajax'])->name('confirm_ajax');
+            Route::delete('/{id}/delete_ajax', [AlumniController::class, 'delete_ajax'])->name('delete_ajax');
+            Route::get('/export_excel', [AlumniController::class, 'export_excel'])->name('export_excel');
+            Route::get('/{id}/show_ajax', [AlumniController::class, 'show_ajax'])->name('show_ajax');
         });
-
         // route untuk admin
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', [AdminController::class, 'index'])->name('index');
@@ -126,19 +137,20 @@ Route::middleware(['auth'])->group(function () {
             // Import Routes
             Route::get('/import', [DataPenggunaController::class, 'import'])->name('import');
             Route::post('/import_ajax', [DataPenggunaController::class, 'import_ajax'])->name('import_ajax');
-        });
+
 
         // Kepuasan Routes (Admin)
         Route::prefix('kepuasan')->name('kepuasan.')->group(function () {
             Route::get('/', [KepuasanController::class, 'index'])->name('index');
             Route::get('/list', [KepuasanController::class, 'list'])->name('list');
+            Route::get('/grafik', [KepuasanController::class, 'grafik'])->name('grafik');
             Route::get('/create', [KepuasanController::class, 'create_ajax'])->name('create');
             Route::post('/store', [KepuasanController::class, 'store_ajax'])->name('store');
             Route::get('/edit/{id}', [KepuasanController::class, 'edit_ajax'])->name('edit');
             Route::post('/update/{id}', [KepuasanController::class, 'update_ajax'])->name('update');
             Route::delete('/destroy/{id}', [KepuasanController::class, 'destroy_ajax'])->name('destroy');
+            Route::get('/export-excel', [KepuasanController::class, 'exportExcel'])->name('export-excel');
         });
-
 
         // route untuk user
         Route::prefix('user')->name('user.')->group(function () {
@@ -172,7 +184,7 @@ Route::middleware(['auth'])->group(function () {
             // Delete Routes
             Route::get('/{id}/delete_ajax', [PertanyaanController::class, 'confirm_ajax'])->name('confirm_ajax');
             Route::delete('/{id}/delete_ajax', [PertanyaanController::class, 'delete_ajax'])->name('delete_ajax');
-            Route::delete('/{id}', [PertanyaanController::class, 'destroy'])->name('destroy');
+            //Route::delete('/{id}', [PertanyaanController::class, 'destroy'])->name('destroy');
         });
     });
 
@@ -193,6 +205,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{id}', [KategoriPertanyaanController::class, 'destroy'])->name('destroy');
     });
 
+
     // route untuk alumni_tracer
     // Route::prefix('alumni_tracer')->name('alumni_tracer.')->group(function () {
     //     Route::get('/', [AlumniTracerController::class, 'index'])->name('index');
@@ -206,16 +219,25 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/alumni-tracer', [AlumniTracerController::class, 'index'])->name('alumni_tracer.index');
     Route::get('/alumni-tracer/list', [AlumniTracerController::class, 'list'])->name('alumni_tracer.list');
     Route::post('/alumni-tracer/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('alumni_tracer.kirim_token');
+    Route::delete('/alumni-tracer/{id}', [AlumniTracerController::class, 'destroy']);
+    // export
+    Route::get('/alumni-tracer/belum-isi', [AlumniTracerController::class, 'alumniBelumIsi'])->name('alumni_tracer.belum_isi');
+    Route::get('/alumni-tracer/export-belum-isi', [AlumniTracerController::class, 'exportBelumIsi'])->name('alumni_tracer.export_belum_isi');
+    // rekap tracer
+    Route::get('/alumni-tracer/export-rekap-tracer', [AlumniTracerController::class, 'exportRekapTracer'])->name('alumni_tracer.export_rekap_tracer');
+
+
 
 
 
     // Alumni Routes
     Route::middleware(['check.role:alumni'])->group(function () {
-        Route::get('/alumni_i/dashboard', [AuthController::class, 'alumniDashboard'])->name('alumni_i.dashboard');
+        Route::get('/alumni/dashboard', [AuthController::class, 'alumniDashboard'])->name('alumni.dashboard');
 
         // Tracer Study Routes
         Route::prefix('tracer-study')->name('tracer-study.')->group(function () {
             Route::get('/', [TracerStudyController::class, 'index'])->name('index');
+
             Route::get('/data-diri', [TracerStudyController::class, 'showDataDiri'])->name('data-diri');
             Route::post('/data-diri', [TracerStudyController::class, 'storeDataDiri'])->name('store-data-diri');
             Route::get('/data-atasan', [TracerStudyController::class, 'showDataAtasan'])->name('data-atasan');

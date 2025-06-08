@@ -27,7 +27,7 @@ class UserController extends Controller
                 ->addColumn('action', function ($row) {
                     return '
                         <div class="d-flex justify-content-center gap-2 mr-2">
-                            <button type="button" class="btn btn-warning py-2 btn-edit" data-id="' . $row->user_id . '">
+                            <button type="button" class="btn btn-warning py-2 btn-edit mr-2" data-id="' . $row->user_id . '">
                                 <i class="mdi mdi-pencil"></i> Edit
                             </button>
                             <button type="button" class="btn btn-danger btn-hapus" data-id="' . $row->user_id . '">
@@ -112,13 +112,12 @@ class UserController extends Controller
             ], 404);
         }
     }
+
     public function update_ajax(Request $request, $id)
     {
         // Validasi input
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:100|unique:users,username',
-            'password' => 'required|string|max:100',
-            'role'     => 'required|in:admin,alumni'
+            'username' => 'required|string|max:100|unique:users,username,' . $id . ',user_id',
         ]);
 
         if ($validator->fails()) {
@@ -133,8 +132,7 @@ class UserController extends Controller
             $users = UsersModel::findOrFail($id);
             $users->update([
                 'username' => $request->username,
-                'password' => $request->password,
-                'role' => $request->role
+
             ]);
 
             return response()->json([
@@ -148,6 +146,7 @@ class UserController extends Controller
             ], 500);
         }
     }
+
 
     public function destroy_ajax($id)
     {

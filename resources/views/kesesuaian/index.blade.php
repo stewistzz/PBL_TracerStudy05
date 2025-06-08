@@ -14,7 +14,7 @@
         </div>
 
         <!-- Card Detail -->
-        <div class="col-lg-8">
+        <div class="col-lg-8 mb-4">
             <div class="card rounded-4 shadow-sm h-100 p-4">
                 <h2 class="fw-bold mb-3 text-dark">
                     <b>Detail Kesesuaian Alumni</b><br>
@@ -39,15 +39,23 @@
 
     <!-- Tabel Data -->
     <div class="col-lg-12 grid-margin stretch-card mt-4">
-        <div class="card">
+        <div class="card shadow-sm rounded-4">
             <div class="card-body">
-                <h4 class="card-title">Sebaran Lingkup Tempat Kerja dan Kesesuaian Profesi Dengan Infokom</h4>
+                {{-- <h4 class="card-title text-dark">
+                    <i class="mdi mdi-city-multiple text-primary me-2"></i>
+                    Sebaran Lingkup Tempat Kerja dan Kesesuaian Profesi Dengan Infokom
+                </h4> --}}
+                <h5 class="card-title" style="color: #2A3143;"><i class="mdi mdi-city me-1"></i> Data Pertanyaan untuk
+                Alumni</h5>
+            <hr>
+                <hr>
                 <p class="card-description">
-                    <code>Data tracer alumni berdasarkan tahun lulus dan profesi</code>
+                    Data tracer alumni berdasarkan tahun lulus dan profesi
                 </p>
+
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered text-center">
-                        <thead class="bg-primary text-white">
+                    <table class="table table-hover table-bordered text-center">
+                        <thead class="thead-dark bg-primary text-white">
                             <tr>
                                 <th rowspan="2" class="align-middle">Tahun Lulus</th>
                                 <th rowspan="2" class="align-middle">Jumlah Lulusan</th>
@@ -56,21 +64,20 @@
                                 <th rowspan="2" class="align-middle">Profesi Non-Infokom</th>
                                 <th colspan="3">Lingkup Tempat Kerja</th>
                             </tr>
-                            <tr class="bg-primary text-light">
-                                <th>Internasional</th>
-                                <th>Nasional</th>
-                                <th>Wirausaha</th>
+                            <tr class="bg-info text-white">
+                                <th><i class="mdi mdi-earth me-2"></i>Internasional</th>
+                                <th><i class="mdi mdi-city me-2"></i>Nasional</th>
+                                <th><i class="mdi mdi-briefcase me-2"></i>Wirausaha</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             @forelse ($data as $row)
                                 <tr>
-                                    <td><label class="badge badge-info">{{ $row->tahun_lulus }}</label></td>
+                                    <td><span class="badge bg-info">{{ $row->tahun_lulus }}</span></td>
                                     <td>{{ $row->total_alumni }}</td>
                                     <td>{{ $row->alumni_isi_tracer }}</td>
-                                    <td><label class="badge badge-success">{{ $row->infokom }}</label></td>
-                                    <td><label class="badge badge-secondary">{{ $row->non_infokom }}</label></td>
+                                    <td><span class="badge bg-success">{{ $row->infokom }}</span></td>
+                                    <td><span class="badge bg-secondary">{{ $row->non_infokom }}</span></td>
                                     <td>{{ $row->internasional }}</td>
                                     <td>{{ $row->nasional }}</td>
                                     <td>{{ $row->wirausaha }}</td>
@@ -82,7 +89,7 @@
                             @endforelse
 
                             @if ($data->count() > 0)
-                                <tr class="table-primary font-weight-bold">
+                                <tr class="table-primary fw-bold">
                                     <td>Jumlah</td>
                                     <td>{{ $data->sum('total_alumni') }}</td>
                                     <td>{{ $data->sum('alumni_isi_tracer') }}</td>
@@ -98,7 +105,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 

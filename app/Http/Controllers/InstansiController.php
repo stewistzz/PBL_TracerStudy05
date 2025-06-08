@@ -141,7 +141,7 @@ class InstansiController extends Controller
         ]);
     }
 
-    public function destroy_ajax($id)
+    /*public function destroy_ajax($id)
     {
         $instansi = InstansiModel::findOrFail($id);
         $instansi->delete();
@@ -150,5 +150,33 @@ class InstansiController extends Controller
             'status' => true,
             'message' => 'Data instansi berhasil dihapus'
         ]);
+    } */
+
+    public function confirm_ajax($id)
+{
+    $instansi = InstansiModel::findOrFail($id);
+    return view('instansi.delete_ajax', compact('instansi'));
+}
+
+public function delete_ajax($id)
+{
+    $instansi = InstansiModel::findOrFail($id);
+
+    try {
+        $instansi->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data instansi berhasil dihapus.'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Gagal menghapus data instansi.',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
+
 }

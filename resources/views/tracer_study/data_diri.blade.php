@@ -119,6 +119,7 @@
                                     <option value="Pendidikan Tinggi" {{ old('jenis_instansi') == 'Pendidikan Tinggi' ? 'selected' : '' }}>Pendidikan Tinggi</option>
                                     <option value="Pemerintah" {{ old('jenis_instansi') == 'Pemerintah' ? 'selected' : '' }}>Pemerintah</option>
                                     <option value="Swasta" {{ old('jenis_instansi') == 'Swasta' ? 'selected' : '' }}>Swasta</option>
+                                    <option value="BUMN" {{ old('jenis_instansi') == 'BUMN' ? 'selected' : '' }}>BUMN</option>
                                 </select>
                                 @error('jenis_instansi')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -214,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const jenisInstansiSelect = document.getElementById('jenis_instansi');
     const skalaSelect = document.getElementById('skala');
     const lokasiInput = document.getElementById('lokasi');
+    const form = document.getElementById('dataDiriForm');
 
     function toggleInstansiForm() {
         if (pilihExisting.checked) {
@@ -250,6 +252,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     pilihExisting.addEventListener('change', toggleInstansiForm);
     pilihBaru.addEventListener('change', toggleInstansiForm);
+
+    // Validasi sebelum submit
+    form.addEventListener('submit', function(event) {
+        if (pilihExisting.checked && !instansiSelect.value) {
+            event.preventDefault();
+            alert('Harap pilih instansi dari daftar yang tersedia.');
+            instansiSelect.focus();
+            return false;
+        }
+        if (pilihBaru.checked && !instansiBaruInput.value) {
+            event.preventDefault();
+            alert('Harap masukkan nama instansi baru.');
+            instansiBaruInput.focus();
+            return false;
+        }
+    });
 
     // Inisialisasi tampilan berdasarkan pilihan saat ini
     toggleInstansiForm();
