@@ -16,13 +16,20 @@ use App\Http\Controllers\DataPenggunaController;
 use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\KepuasanController;
 use App\Http\Controllers\AdminController;
+// landing controller
+use App\Http\Controllers\LandingController;
+
 use App\Http\Controllers\JawabanPenggunaController;
 use App\Http\Controllers\JawabanAlumniController;
 
 // route landingpage
-Route::get('/', function () {
-    return view('landing_page');
-});
+// Route::get('/', function () {
+//     return view('landing_page');
+// });
+
+// route landingpage
+Route::get('/', [LandingController::class, 'landing_page'])->name('landing_page');
+
 
 // Auth Routes 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -248,7 +255,7 @@ Route::middleware(['auth'])->group(function () {
         //     Route::post('/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('kirim_token');
 
         // });
-
+        Route::get('/alumni-dashboard', [ProfesiController::class, 'index'])->middleware(['auth', 'role:alumni']);
         Route::get('/alumni-tracer', [AlumniTracerController::class, 'index'])->name('alumni_tracer.index');
         Route::get('/alumni-tracer/list', [AlumniTracerController::class, 'list'])->name('alumni_tracer.list');
         Route::post('/alumni-tracer/kirim-token/{id}', [AlumniTracerController::class, 'kirimToken'])->name('alumni_tracer.kirim_token');

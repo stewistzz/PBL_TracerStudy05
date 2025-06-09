@@ -28,7 +28,7 @@
             <div class="navigation">
                 <a href="#home">Home</a>
                 <a href="#about">About Tracer Study</a>
-                <a href="#survey">Survey Content</a>
+                <a href="#purpose">Purpose Tracer</a>
                 <a href="#statistics">Statistics</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -143,6 +143,9 @@
 
 
     {{-- chart --}}
+    <!-- Card Chart -->
+
+        {{--  --}}
     <div class="statis" id="statistics">
         <div class="chart-section">
             <div class="chart-title">Multi Axis Line Chart</div>
@@ -152,14 +155,18 @@
         </div>
 
         <div class="charts-wrapper">
-            <div class="chart-box">
-                <h3>Pie Chart</h3>
-                <canvas id="pieChart"></canvas>
+            <div class="card rounded-4">
+                <div class="card-body text-center">
+                    <h4 class="card-title fw-bold mb-3">Sebaran Profesi Alumni</h4>
+                    <canvas id="profesiChart" width="240" height="240"></canvas></center>
+                </div>
             </div>
 
-            <div class="chart-box">
-                <h3 class="chart-title">Doughnut Chart</h3>
-                <canvas id="doughnutChart"></canvas>
+            <div class="card rounded-4">
+                <div class="card-body text-center">
+                    <h4 class="card-title fw-bold mb-4">Sebaran Jenis Instansi</h4>
+                    <canvas id="instansiChart" width="240" height="240"></canvas>
+                </div>
             </div>
         </div>
 
@@ -174,7 +181,7 @@
     {{-- end hart --}}
 
     <div class="purpose-section">
-        <div class="purpose-container">
+        <div class="purpose-container" id="purpose">
             <div class="purpose-left">
                 <img src="/skydash/template/images/jumping.png" alt="Happy Graduates Jumping">
             </div>
@@ -262,6 +269,93 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const profesiCtx = document.getElementById('profesiChart').getContext('2d');
+
+        const profesiChart = new Chart(profesiCtx, {
+            type: 'pie',
+            data: {
+                labels: {!! json_encode($data->pluck('nama_profesi')) !!},
+                datasets: [{
+                    label: 'Sebaran Profesi Alumni',
+                    data: {!! json_encode($data->pluck('total')) !!},
+                    backgroundColor: [
+                        '#004E7C', // Navy Blue
+                        '#0077B6', // Blue Ocean
+                        '#0096C7', // Sky Blue
+                        '#00B4D8', // Light Blue
+                        '#48CAE4', // Soft Cyan
+                        '#90E0EF', // Pale Blue
+                        '#CAF0F8', // Very Pale Blue
+                        '#023E8A', // Dark Blue
+                        '#007F5F', // Deep Sea Green
+                        '#00B894', // Aqua Green
+                        '#55EFC4', // Mint Green
+                        '#1B262C', // Dark Slate
+                        '#0F4C75', // Strong Blue
+                        '#3282B8', // Medium Blue
+                        '#66BFBF', // Light Sea Green
+                    ],
+
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                return `${label}: ${value} orang`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        const instansiCtx = document.getElementById('instansiChart').getContext('2d');
+
+        const instansiChart = new Chart(instansiCtx, {
+            type: 'pie',
+            data: {
+                labels: {!! json_encode($instansiData->pluck('jenis_instansi')) !!},
+                datasets: [{
+                    label: 'Sebaran Jenis Instansi Alumni',
+                    data: {!! json_encode($instansiData->pluck('total')) !!},
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                        '#9966FF', '#FF9F40', '#66BB6A', '#EF5350'
+                    ],
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                return `${label}: ${value} orang`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
     <script>
         // --- Multi Axis Line Chart ---
         const multiAxisCtx = document.getElementById('multiAxisChart').getContext('2d');
