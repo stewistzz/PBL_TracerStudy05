@@ -3,17 +3,26 @@
 // app/Http/Controllers/KesesuaianPekerjaanController.php
 namespace App\Http\Controllers;
 
+use App\Models\AlumniModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class KesesuaianPekerjaanController extends Controller
 {
-    public function index()
+
+    /**
+     * Menampilkan halaman kesesuaian pekerjaan dengan data yang dapat difilter.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
+     */
+
+    public function index(Request $request)
     {
         $currentYear = Carbon::now()->year;
 
-        $data = DB::table('alumni')
+        $query = DB::table('alumni')
             ->selectRaw('YEAR(tahun_lulus) as tahun_lulus')
             ->addSelect([
                 DB::raw('COUNT(alumni.alumni_id) as total_alumni'),
@@ -27,12 +36,30 @@ class KesesuaianPekerjaanController extends Controller
             ->leftJoin('tracer_study', 'alumni.alumni_id', '=', 'tracer_study.alumni_id')
             ->leftJoin('kategori_profesi', 'tracer_study.kategori_profesi_id', '=', 'kategori_profesi.kategori_id')
             ->leftJoin('instansi', 'tracer_study.instansi_id', '=', 'instansi.instansi_id')
-            ->whereYear('tahun_lulus', '>=', $currentYear - 3)
-            ->groupBy(DB::raw('YEAR(tahun_lulus)'))
-            ->orderBy(DB::raw('YEAR(tahun_lulus)'), 'asc')
+            ->whereYear('tahun_lulus', '>=', $currentYear - 3);
+
+        // Tambahkan filter dinamis
+        $query->when($request->filled('program_studi'), function ($q) use ($request) {
+            return $q->where('alumni.program_studi', $request->program_studi);
+        });
+
+        $query->when($request->filled('tahun_lulus_start'), function ($q) use ($request) {
+            return $q->whereYear('alumni.tahun_lulus', '>=', $request->tahun_lulus_start);
+        });
+
+        $query->when($request->filled('tahun_lulus_end'), function ($q) use ($request) {
+            return $q->whereYear('alumni.tahun_lulus', '<=', $request->tahun_lulus_end);
+        });
+
+        $data = $query->groupBy(DB::raw('YEAR(alumni.tahun_lulus)'))
+            ->orderBy(DB::raw('YEAR(alumni.tahun_lulus)'), 'asc')
             ->get();
 
-        return view('kesesuaian.index', compact('data'));
+        $programStudiOptions = AlumniModel::distinct()
+            ->whereNotNull('program_studi')
+            ->orderBy('program_studi')
+            ->pluck('program_studi');
+
+        return view('kesesuaian.index', compact('data', 'programStudiOptions', 'request'));
     }
 }
-
