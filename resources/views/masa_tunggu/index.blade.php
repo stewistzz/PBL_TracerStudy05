@@ -32,12 +32,14 @@
                 </div>
                 <div class="col-6">
                     <div class="d-flex justify-content-end mb-3">
-                        <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-1 ms-2 text-white" data-bs-toggle="modal"
+                        <button type="button" style="background-color: #5BAEB7;"
+                            class="btn btn-sm d-flex align-items-center gap-1 ms-2 text-white" data-bs-toggle="modal"
                             data-bs-target="#filterModal">
                             <i class="mdi mdi-filter fs-5 mr-2"></i>
                             Filter
                         </button>
-                        <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-1 ms-2 text-white" id="btn-export">
+                        <button type="button" style="background-color: #5BAEB7;"
+                            class="btn btn-sm d-flex align-items-center gap-1 ms-2 text-white" id="btn-export">
                             <i class="mdi mdi-file-excel fs-5 mr-2"></i>
                             Export Excel
                         </button>
@@ -60,7 +62,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($data as $index => $alumni)
+                        {{-- @forelse ($data as $index => $alumni)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $alumni['nama'] }}</td>
@@ -74,7 +76,7 @@
                             <tr>
                                 <td colspan="7" class="text-center">Tidak ada data alumni yang tersedia.</td>
                             </tr>
-                        @endforelse
+                        @endforelse --}}
                     </tbody>
                 </table>
             </div>
@@ -99,52 +101,97 @@
 @endsection
 
 @push('js')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    $(document).ready(function () {
-        // Inisialisasi DataTable
-        $('#masa-tunggu-table').DataTable();
-
-        // Load form filter saat modal dibuka
-        $('#filterModal').on('show.bs.modal', function () {
-            console.log('Modal filter opened');
-            $.ajax({
-                url: "{{ route('masa_tunggu.filter') }}",
-                type: 'GET',
-                success: function (res) {
-                    console.log('Filter form loaded:', res);
-                    $('#filterFormContent').html(res);
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi DataTable
+            var table = $('#masa-tunggu-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('masa_tunggu.data') }}', // Ganti ke route baru untuk JSON
+                    data: function(d) {
+                        d.program_studi = $('#filter_program_studi').val();
+                        d.tahun_lulus_start = $('#filter_tahun_lulus_start').val();
+                        d.tahun_lulus_end = $('#filter_tahun_lulus_end').val();
+                    }
                 },
-                error: function (xhr) {
-                    console.error('AJAX Error:', xhr);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Gagal memuat form filter! Status: ' + xhr.status
-                    });
-                }
+                columns: [{
+                        data: null,
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'nim',
+                        name: 'nim'
+                    },
+                    {
+                        data: 'program_studi',
+                        name: 'program_studi'
+                    },
+                    {
+                        data: 'tahun_lulus',
+                        name: 'tahun_lulus'
+                    },
+                    {
+                        data: 'tanggal_pertama_kerja',
+                        name: 'tanggal_pertama_kerja'
+                    },
+                    {
+                        data: 'masa_tunggu',
+                        name: 'masa_tunggu'
+                    },
+                ]
+            });
+
+
+            // Load form filter saat modal dibuka
+            $('#filterModal').on('show.bs.modal', function() {
+                console.log('Modal filter opened');
+                $.ajax({
+                    url: "{{ route('masa_tunggu.filter') }}",
+                    type: 'GET',
+                    success: function(res) {
+                        console.log('Filter form loaded:', res);
+                        $('#filterFormContent').html(res);
+                    },
+                    error: function(xhr) {
+                        console.error('AJAX Error:', xhr);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Gagal memuat form filter! Status: ' + xhr.status
+                        });
+                    }
+                });
+            });
+
+            // Tombol Export Excel
+            $('#btn-export').on('click', function() {
+                let program_studi = $('#filter_program_studi').val() || '';
+                let tahun_lulus_start = $('#filter_tahun_lulus_start').val() || '';
+                let tahun_lulus_end = $('#filter_tahun_lulus_end').val() || '';
+
+                let url = '{{ route('masa_tunggu.export') }}?' + $.param({
+                    program_studi: program_studi,
+                    tahun_lulus_start: tahun_lulus_start,
+                    tahun_lulus_end: tahun_lulus_end
+                });
+
+                window.location.href = url;
             });
         });
-
-        // Tombol Export Excel
-        $('#btn-export').on('click', function () {
-            let program_studi = $('#filter_program_studi').val() || '';
-            let tahun_lulus_start = $('#filter_tahun_lulus_start').val() || '';
-            let tahun_lulus_end = $('#filter_tahun_lulus_end').val() || '';
-
-            let url = '{{ route("masa_tunggu.export") }}?' + $.param({
-                program_studi: program_studi,
-                tahun_lulus_start: tahun_lulus_start,
-                tahun_lulus_end: tahun_lulus_end
-            });
-
-            window.location.href = url;
-        });
-    });
-</script>
+    </script>
 @endpush
