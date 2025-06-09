@@ -21,7 +21,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h3 class="font-weight-bold">Data Alumni</h3>
+            <h3 class="font-weight-bold" style="color: #2A3143;">Data Alumni</h3>
             <hr>
             {{-- <p class="card-description">
                 Kelola data alumni dengan mudah untuk mendukung pencatatan lulusan, pelacakan karier, dan evaluasi hasil
