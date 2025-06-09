@@ -90,9 +90,9 @@ class AlumniController extends Controller
             'user_id' => 'required|exists:users,user_id|unique:alumni,user_id',
             'nama' => 'nullable|string|max:50',
             'nim' => 'nullable|string|max:50',
-            'email' => 'required|email|max:20|unique:alumni,email',
+            'email' => 'required|email|max:100|unique:alumni,email',
             'no_hp' => 'required|string|max:20',
-            'program_studi' => 'nullable|string|max:20',
+            'program_studi' => 'nullable|string|max:100',
             'tahun_lulus' => 'nullable|date',
         ]);
 
