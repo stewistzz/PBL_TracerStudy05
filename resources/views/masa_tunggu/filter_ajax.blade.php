@@ -25,10 +25,8 @@
 </form>
 
 <script>
-    // Submit form filter
-    $(document).on('submit', '#filterForm', function(e) {
+    $('#filterForm').on('submit', function(e) {
         e.preventDefault();
-        console.log('Filter form submitted'); // Debugging
         let start = $('#filter_tahun_lulus_start').val();
         let end = $('#filter_tahun_lulus_end').val();
         if (start && end && parseInt(start) > parseInt(end)) {
@@ -39,17 +37,15 @@
             });
             return;
         }
-        $('#alumni-table').DataTable().ajax.reload();
         $('#filterModal').modal('hide');
+        $('#masa-tunggu-table').DataTable().ajax.reload();
     });
 
-    // Reset filter
-    $(document).on('click', '#resetFilter', function() {
-        console.log('Reset filter clicked'); // Debugging
+    $('#resetFilter').on('click', function() {
         $('#filter_program_studi').val('');
         $('#filter_tahun_lulus_start').val('');
         $('#filter_tahun_lulus_end').val('');
-        $('#masa-tunggu-table').DataTable().ajax.reload();
         $('#filterModal').modal('hide');
+        $('#masa-tunggu-table').DataTable().ajax.reload();
     });
 </script>
