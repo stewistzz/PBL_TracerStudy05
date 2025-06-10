@@ -7,7 +7,6 @@
             </a>
         </div>
 
-
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                 <span class="mdi mdi-menu"></span>
@@ -77,34 +76,212 @@
                     </div>
                 </li>
 
+                <!-- Admin Profile Section -->
                 <li class="nav-item nav-profile dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                        <img src="{{ asset('skydash/template/images/profile.png') }}" alt="profile" />
-
+                    <!-- Modified: Added direct link to profile when clicking the avatar/name -->
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-toggle="dropdown"
+                        id="profileDropdown">
+                        <div class="admin-profile-avatar mr-2">
+                            @if (Auth::check() && Auth::user()->admin)
+                                {{ strtoupper(substr(Auth::user()->admin->nama, 0, 2)) }}
+                            @else
+                                {{ strtoupper(substr(Auth::user()->username ?? 'AD', 0, 2)) }}
+                            @endif
+                        </div>
+                        <div class="admin-profile-info d-none d-md-block">
+                            <span class="admin-name">
+                                @if (Auth::check() && Auth::user()->admin)
+                                    {{ Auth::user()->admin->nama }}
+                                @else
+                                    {{ Auth::user()->username ?? 'Admin' }}
+                                @endif
+                            </span>
+                        </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                        <!-- Fixed: Corrected route name to match your routes -->
+                        <a class="dropdown-item" href="{{ route('admin.profile') }}">
+                            <i class="ti-user text-primary"></i>
+                            Profile
+                        </a>
                         <a class="dropdown-item" href="#">
                             <i class="ti-settings text-primary"></i>
                             Settings
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="ti-power-off text-primary"></i>
                             Logout
                         </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </li>
 
-                <li class="nav-item nav-settings d-none d-lg-flex">
-                    <a class="nav-link" href="#">
-                        <i class="mdi mdi-dots-horizontal"></i>
-                    </a>
-                </li>
-            </ul>
-
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-                data-toggle="offcanvas">
-                <span class="icon-menu"></span>
-            </button>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
         </div>
     </nav>
 </div>
+
+<style>
+    .admin-profile-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1e80c1, #3a9bd1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 600;
+        flex-shrink: 0;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .admin-profile-avatar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(30, 128, 193, 0.3);
+    }
+
+    .admin-name {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #24272e;
+        margin-bottom: 2px;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+
+    .admin-name:hover {
+        color: #1e80c1;
+    }
+
+    .nav-link.dropdown-toggle {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .nav-link.dropdown-toggle:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .dropdown-divider {
+        margin: 0.5rem 0;
+    }
+
+    .dropdown-item {
+        padding: 0.75rem 1rem;
+        transition: all 0.2s ease;
+        border-radius: 6px;
+        margin: 0.25rem 0.5rem;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(5px);
+    }
+
+    .dropdown-item i {
+        margin-right: 0.5rem;
+        width: 16px;
+        text-align: center;
+    }
+
+    /* Enhanced dropdown styling */
+    .dropdown-menu {
+        border: none;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+        padding: 0.5rem;
+        min-width: 200px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .admin-profile-avatar {
+            width: 35px;
+            height: 35px;
+            font-size: 0.75rem;
+        }
+
+        .admin-profile-info {
+            display: none !important;
+        }
+
+        .dropdown-menu {
+            min-width: 180px;
+        }
+    }
+
+    /* Add smooth animation for dropdown */
+    .dropdown-menu {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+    }
+
+    .dropdown-menu.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+</style>
+
+<!-- Enhanced JavaScript for better interaction -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add click handler for avatar/name to go directly to profile
+        const profileLink = document.querySelector('#profileDropdown');
+        const profileAvatar = document.querySelector('.admin-profile-avatar');
+        const profileName = document.querySelector('.admin-name');
+
+        // Add direct click to profile when clicking avatar or name (without dropdown)
+        if (profileAvatar) {
+            profileAvatar.addEventListener('click', function(e) {
+                // If user holds Ctrl/Cmd, allow dropdown to show
+                if (!e.ctrlKey && !e.metaKey) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    window.location.href = "{{ route('admin.profile') }}";
+                }
+            });
+        }
+
+        if (profileName) {
+            profileName.addEventListener('click', function(e) {
+                // If user holds Ctrl/Cmd, allow dropdown to show
+                if (!e.ctrlKey && !e.metaKey) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    window.location.href = "{{ route('admin.profile') }}";
+                }
+            });
+        }
+
+        // Enhanced dropdown animation
+        const dropdownToggle = document.querySelector('#profileDropdown');
+        const dropdownMenu = document.querySelector('#profileDropdown + .dropdown-menu');
+
+        if (dropdownToggle && dropdownMenu) {
+            dropdownToggle.addEventListener('click', function(e) {
+                setTimeout(() => {
+                    if (dropdownMenu.classList.contains('show')) {
+                        dropdownMenu.style.opacity = '1';
+                        dropdownMenu.style.visibility = 'visible';
+                        dropdownMenu.style.transform = 'translateY(0)';
+                    }
+                }, 10);
+            });
+        }
+    });
+</script>
