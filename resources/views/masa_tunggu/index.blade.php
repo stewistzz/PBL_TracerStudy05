@@ -22,8 +22,6 @@
                 <i class="mdi mdi-account-multiple-outline me-1"></i> Data Masa Tunggu
             </h3>
             <hr>
-
-
             <div class="row">
                 <div class="col-6">
                     <p class="card-description">
@@ -33,7 +31,7 @@
                 <div class="col-6">
                     <div class="d-flex justify-content-end mb-3">
                         <button type="button" style="background-color: #5BAEB7;"
-                            class="btn btn-sm d-flex align-items-center gap-1 ms-2 text-white" data-bs-toggle="modal"
+                            class="btn btn-sm d-flex align-items-center gap-1 ms-2 text-white mr-2" data-bs-toggle="modal"
                             data-bs-target="#filterModal">
                             <i class="mdi mdi-filter fs-5 mr-2"></i>
                             Filter

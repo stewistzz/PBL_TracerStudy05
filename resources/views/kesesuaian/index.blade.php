@@ -44,13 +44,29 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="resetFilterBtn">Reset</button>
-                    <button type="button" class="btn btn-primary" id="applyFilterBtn">Terapkan Filter</button>
+                    <button type="button" class="btn btn-secondary" id="resetFilterBtn"><i class="mdi mdi-close-circle-outline"></i>Reset</button>
+                    <button type="button" class="btn btn-primary" id="applyFilterBtn"><i class="mdi mdi-content-save-outline"></i>Terapkan Filter</button>
                 </div>
             </div>
         </div>
     </div>
+    {{-- header --}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-briefcase-outline"></i> Keseuaian Profesi Alumni
+                </h4>
+            </div>
+            <hr>
+            <p class="card-description text-muted">
+                Tabel ini menampilkan data Kesesuaian profesi alumni dari waktu kelulusan hingga tanggal pertama bekerja.
+            </p>
+        </div>
+    </div>
+    
     <div class="row">
+        
         <!-- Card Pie Chart -->
         <div class="col-lg-4 mb-4">
             <div class="card rounded-4">
@@ -88,25 +104,29 @@
 
 
     <!-- Tabel Data -->
-    <div class="col-lg-12 grid-margin stretch-card mt-4">
+    <div class="col-lg-12 grid-margin stretch-card">
         <div class="card shadow-sm rounded-4">
             <div class="card-body">
-
+                <h5 class="card-title" style="color: #2A3143;"><i class="mdi mdi-city me-1"></i> Data Kesesuaian
+                    Profesi Alumni
+                </h5>
+                <hr>
                 {{-- Header tabel dengan tombol filter --}}
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div>
-                        <h5 class="card-title" style="color: #2A3143;"><i class="mdi mdi-city me-1"></i> Data Kesesuaian
-                            Profesi Alumni</h5>
+                <div class="row">
+                    <div class="col-8">
                         <p class="card-description">
                             Data tracer alumni berdasarkan tahun lulus dan profesi.
                         </p>
                     </div>
                     {{-- Tombol untuk membuka modal filter --}}
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filterModal">
-                        <i class="mdi mdi-filter-variant me-1"></i> Filter
-                    </button>
+                    <div class="col-4">
+                        <div class="d-flex justify-content-end mb-3">
+                            <button type="button" class="btn btn-sm text-white" data-toggle="modal" data-target="#filterModal" style="background-color: #5BAEB7;">
+                                <i class="mdi mdi-filter-variant me-1"></i> Filter
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <hr>
                 {{-- <h4 class="card-title text-dark">
                     <i class="mdi mdi-city-multiple text-primary me-2"></i>
                     Sebaran Lingkup Tempat Kerja dan Kesesuaian Profesi Dengan Infokom

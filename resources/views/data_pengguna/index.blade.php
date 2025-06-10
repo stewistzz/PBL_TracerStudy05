@@ -2,24 +2,43 @@
 <link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
 
 @section('content')
+    {{-- header --}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-briefcase-outline me-1"></i> Data Pengguna Lulusan
+                </h4>
+            </div>
+            <hr>
+            <p class="card-description text-muted">
+                Tabel ini menampilkan data dari pengguna alumni dari data yang diinputkan oleh alumni.
+            </p>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body">
             <h3 class="font-weight-bold">Data Pengguna Lulusan</h3>
             <hr>
-            <p class="card-description">
-                Kelola data pengguna lulusan dengan mudah dan efisien. Fitur ini memungkinkan Anda untuk menambahkan,
-                mengedit,
-                serta menghapus data pengguna lulusan sesuai kebutuhan, sehingga mempermudah pengelolaan data alumni dan
-                pelaporan.
-            </p>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <button class="btn btn-success" onclick="modalAction('{{ route('data_pengguna.import') }}')">
-                    <i class="fa fa-upload mr-2"></i> Import User
-                </button>
-
-                <button class="btn btn-info d-flex align-items-center gap-2" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
-                </button>
+            <div class="row">
+                <div class="col-7">
+                    <p class="card-description">
+                        Kelola data pengguna lulusan dengan mudah dan efisien. Fitur ini memungkinkan Anda untuk menambahkan,
+                        mengedit,serta menghapus data pengguna lulusan sesuai kebutuhan.
+                    </p>
+                </div>
+                <div class="col-5">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button class="btn d-flex align-items-center gap-1 btn-sm text-white mr-2" onclick="modalAction('{{ route('data_pengguna.import') }}')" style="background-color: #5BAEB7;">
+                            <i class="fa fa-upload fs-5 mr-2"></i> Import User
+                        </button>
+        
+                        <button class="btn d-flex align-items-center gap-1 btn-sm text-white" id="btn-tambah" style="background-color: #5BAEB7;">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div class="table-responsive">

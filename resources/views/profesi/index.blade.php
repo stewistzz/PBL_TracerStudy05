@@ -1,6 +1,20 @@
 @extends('layouts.template')
 
 @section('content')
+{{-- header --}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-account-tie-outline"></i> Profesi Alumni
+                </h4>
+            </div>
+            <hr>
+            <p class="card-description text-muted">
+                Data berikut ini menampilkan sebaran grafik dan daftar profesi alumni.
+            </p>
+        </div>
+    </div>
     <!-- Card Pie Chart Profesi -->
     <div class="row">
         <!-- Card Chart -->
@@ -41,21 +55,24 @@
 
     <div class="card border-0 shadow-sm" style="background-color: #FFFFFF;">
         <div class="card-body">
-            <h5 class="card-title" style="color: #2A3143;">Tabel Data Kategori Profesi</h5>
+            <h5 class="card-title" style="color: #2A3143;">Tabel Data Profesi</h5>
             <hr>
-            <p class="card-description">
-                Tabel ini menampilkan isi data dari berbagai macam profesi terkait dalam kebutuhan pengumpulan informasi mengenai Tracer Study.
-            </p>
-            {{-- <button class="btn btn-primary mb-3" id="btn-tambah">Tambah Profesi</button> --}}
-
-
-            <div class="d-flex justify-content-end mb-3">
-                <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')" style="background-color: #5BAEB7;"
-                    class="btn btn-sm d-flex align-items-center gap-2 text-white" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
-                </button>
+            <div class="row">
+                <div class="col-9">
+                    <p class="card-description">
+                        Tabel ini menampilkan isi data dari berbagai macam profesi terkait dalam kebutuhan pengumpulan informasi mengenai Tracer Study.
+                    </p>
+                    {{-- <button class="btn btn-primary mb-3" id="btn-tambah">Tambah Profesi</button> --}}
+                </div>
+                <div class="col-3">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')" style="background-color: #5BAEB7;"
+                            class="btn btn-sm d-flex align-items-center gap-2 text-white" id="btn-tambah">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
+                        </button>
+                    </div>
+                </div>
             </div>
-
 
             <div class="table-responsive">
                 <table class="table table-hover table-bordered" id="profesi-table">
