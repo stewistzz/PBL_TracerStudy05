@@ -220,7 +220,7 @@ class AlumniController extends Controller
         }
     }
 
-     public function export_excel(Request $request)
+    public function export_excel(Request $request)
     {
         $data = AlumniModel::select([
             'alumni_id',

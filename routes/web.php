@@ -18,6 +18,7 @@ use App\Http\Controllers\KepuasanController;
 use App\Http\Controllers\AdminController;
 // landing controller
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\JawabanPenggunaController;
 use App\Http\Controllers\JawabanAlumniController;
@@ -56,7 +57,9 @@ Route::prefix('survey')->name('survey.')->group(function () {
 Route::middleware(['auth'])->group(function () {
     // Admin Routes
     Route::middleware(['check.role:admin'])->group(function () {
-        Route::get('/admin/dashboard', [AuthController::class, 'adminDashboard'])->name('admin.dashboard');
+        // Route::get('/admin/dashboard', [AuthController::class, 'adminDashboard'])->name('admin.dashboard');
+
+        Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         // Profesi Routes
         Route::prefix('profesi')->name('profesi.')->group(function () {

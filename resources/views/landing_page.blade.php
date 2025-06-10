@@ -10,6 +10,29 @@
     <link rel="stylesheet" href="{{ asset('skydash/template/css/style_landing.css') }}">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .charts-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .card {
+            width: 360px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 480px !important;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -155,8 +178,8 @@
 
             <div class="card rounded-4">
                 <div class="card-body text-center">
-                    <h4 class="card-title fw-bold mb-4">Sebaran Jenis Instansi</h4>
-                    <canvas id="instansiChart" width="240" height="240"></canvas>
+                    <h4 class="card-title fw-bold">Sebaran Jenis Instansi</h4>
+                    <canvas id="instansiChart" width="240" height="100"></canvas>
                 </div>
             </div>
         </div>
@@ -255,9 +278,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const profesiCtx = document.getElementById('profesiChart').getContext('2d');
-
         const profesiChart = new Chart(profesiCtx, {
             type: 'pie',
             data: {
@@ -266,28 +289,16 @@
                     label: 'Sebaran Profesi Alumni',
                     data: {!! json_encode($data->pluck('total')) !!},
                     backgroundColor: [
-                        '#004E7C', // Navy Blue
-                        '#0077B6', // Blue Ocean
-                        '#0096C7', // Sky Blue
-                        '#00B4D8', // Light Blue
-                        '#48CAE4', // Soft Cyan
-                        '#90E0EF', // Pale Blue
-                        '#CAF0F8', // Very Pale Blue
-                        '#023E8A', // Dark Blue
-                        '#007F5F', // Deep Sea Green
-                        '#00B894', // Aqua Green
-                        '#55EFC4', // Mint Green
-                        '#1B262C', // Dark Slate
-                        '#0F4C75', // Strong Blue
-                        '#3282B8', // Medium Blue
-                        '#66BFBF', // Light Sea Green
+                        '#004E7C', '#0077B6', '#0096C7', '#00B4D8', '#48CAE4',
+                        '#90E0EF', '#CAF0F8', '#023E8A', '#007F5F', '#00B894',
+                        '#55EFC4', '#1B262C', '#0F4C75', '#3282B8', '#66BFBF',
                     ],
-
                     hoverOffset: 10
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'bottom'
@@ -304,10 +315,8 @@
                 }
             }
         });
-    </script>
-    <script>
-        const instansiCtx = document.getElementById('instansiChart').getContext('2d');
 
+        const instansiCtx = document.getElementById('instansiChart').getContext('2d');
         const instansiChart = new Chart(instansiCtx, {
             type: 'pie',
             data: {
@@ -316,20 +325,15 @@
                     label: 'Sebaran Jenis Instansi Alumni',
                     data: {!! json_encode($instansiData->pluck('total')) !!},
                     backgroundColor: [
-                        '#66BFBF', // Light Sea Green
-                        '#023E8A', // Dark Blue
-                        '#0077B6', // Blue Ocean
-                        '#00B894', // Aqua Green
-                        '#55EFC4', // Mint Green
-                        '#004E7C', // Navy Blue
-                        '#007F5F', // Deep Sea Green
-                        '#3282B8', // Medium Blue
+                        '#66BFBF', '#023E8A', '#0077B6', '#00B894',
+                        '#55EFC4', '#004E7C', '#007F5F', '#3282B8',
                     ],
                     hoverOffset: 10
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'bottom'
@@ -347,6 +351,7 @@
             }
         });
     </script>
+
 
 </body>
 

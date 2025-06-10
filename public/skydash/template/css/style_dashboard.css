@@ -1,0 +1,129 @@
+body {
+    background-color: #f8fafc;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1e293b;
+}
+
+.navbar {
+    background: rgb(58, 110, 255);
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand,
+.nav-link {
+    color: #fff !important;
+    font-weight: 500;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card {
+    background: rgb(58, 110, 255);
+    color: #fff;
+    border-radius: 10px;
+}
+
+
+.chart-container {
+    position: relative;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    position: relative;
+    height: 300px;
+
+
+}
+
+.mini-chart {
+    height: 280px;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+}
+
+.header-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #64748b;
+    max-width: 700px;
+}
+
+.badge {
+    font-size: 0.95rem;
+    padding: 0.6em 1.2em;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.table thead {
+    background-color: #1e3a8a;
+    color: #fff;
+}
+
+.btn-filter {
+    background-color: #3b82f6;
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-filter:hover {
+    background-color: #2563eb;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate__animated {
+    animation-duration: 0.8s;
+}
+
+@media (max-width: 768px) {
+    .header-title {
+        font-size: 1.6rem;
+    }
+
+    .chart-container {
+        height: 350px;
+    }
+
+    .mini-chart {
+        height: 220px;
+    }
+
+    .navbar {
+        padding: 0.75rem;
+    }
+}
