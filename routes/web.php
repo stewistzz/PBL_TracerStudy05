@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\MasaTungguController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfesiController;
@@ -16,11 +15,7 @@ use App\Http\Controllers\DataPenggunaController;
 use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\KepuasanController;
 use App\Http\Controllers\AdminController;
-// landing controller
 use App\Http\Controllers\LandingController;
-
-use App\Http\Controllers\JawabanPenggunaController;
-use App\Http\Controllers\JawabanAlumniController;
 
 // route landingpage
 // Route::get('/', function () {
@@ -118,11 +113,11 @@ Route::middleware(['auth'])->group(function () {
         });
         // route untuk admin
         Route::prefix('admin')->name('admin.')->group(function () {
-            Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
             Route::get('/', [AdminController::class, 'index'])->name('index');
             Route::get('/list', [AdminController::class, 'list'])->name('list');
             Route::get('/create', [AdminController::class, 'create'])->name('create');
             Route::post('/store', [AdminController::class, 'store'])->name('store');
+            Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
             Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [AdminController::class, 'update'])->name('update');
             Route::delete('/destroy/{id}', [AdminController::class, 'destroy_ajax'])->name('destroy');
@@ -153,31 +148,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/import', [DataPenggunaController::class, 'import'])->name('import');
             Route::post('/import_ajax', [DataPenggunaController::class, 'import_ajax'])->name('import_ajax');
         });
-
-
-
-        // Jawaban Pengguna Routes
-        Route::prefix('jawaban_pengguna')->name('jawaban_pengguna.')->group(function () {
-            Route::get('/', [JawabanPenggunaController::class, 'index'])->name('index');
-            Route::get('/list', [JawabanPenggunaController::class, 'list'])->name('list');
-            Route::get('/export_excel', [JawabanPenggunaController::class, 'export_excel'])->name('export_excel');
-            Route::get('/{id}/delete_ajax', [JawabanPenggunaController::class, 'confirm_ajax'])->name('confirm_ajax');
-            Route::delete('/{id}/delete_ajax', [JawabanPenggunaController::class, 'delete_ajax'])->name('delete_ajax');
-            Route::get('/filter', [JawabanPenggunaController::class, 'filter'])->name('filter');
-            Route::get('/get-pertanyaan', [JawabanPenggunaController::class, 'getPertanyaan'])->name('getPertanyaan');
-        });
-
-        // Jawaban Alumni Routes
-        Route::prefix('jawaban_alumni')->name('jawaban_alumni.')->group(function () {
-            Route::get('/', [JawabanAlumniController::class, 'index'])->name('index');
-            Route::get('/list', [JawabanAlumniController::class, 'list'])->name('list');
-            Route::get('/export_excel', [JawabanAlumniController::class, 'export_excel'])->name('export_excel');
-            Route::get('/{id}/delete_ajax', [JawabanAlumniController::class, 'confirm_ajax'])->name('confirm_ajax');
-            Route::delete('/{id}/delete_ajax', [JawabanAlumniController::class, 'delete_ajax'])->name('delete_ajax');
-            Route::get('/filter', [JawabanAlumniController::class, 'filter'])->name('filter');
-            Route::get('/get-pertanyaan', [JawabanAlumniController::class, 'getPertanyaan'])->name('getPertanyaan');
-        });
-
 
         // Kepuasan Routes (Admin)
         Route::prefix('kepuasan')->name('kepuasan.')->group(function () {
@@ -265,12 +235,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/alumni-tracer/export-belum-isi', [AlumniTracerController::class, 'exportBelumIsi'])->name('alumni_tracer.export_belum_isi');
         // rekap tracer
         Route::get('/alumni-tracer/export-rekap-tracer', [AlumniTracerController::class, 'exportRekapTracer'])->name('alumni_tracer.export_rekap_tracer');
-
-        // masa tunggu alumni
-        Route::get('/masa-tunggu', [MasaTungguController::class, 'index'])->name('masa_tunggu.index');
-        Route::get('masa-tunggu/filter', [MasaTungguController::class, 'filter_ajax'])->name('masa_tunggu.filter');
-        Route::get('masa-tunggu/export_excel', [MasaTungguController::class, 'export_excel'])->name('masa_tunggu.export');
-        Route::get('/masa-tunggu/data', [MasaTungguController::class, 'getData'])->name('masa_tunggu.data');
     });
 
 

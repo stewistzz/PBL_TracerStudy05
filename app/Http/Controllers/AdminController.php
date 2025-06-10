@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\AdminModel;
@@ -20,17 +21,17 @@ class AdminController extends Controller
     {
         // Ambil user yang sedang login
         $user = Auth::user();
-        
+
         // Ambil data admin berdasarkan user_id yang login
         $admin = AdminModel::with('user')
-                          ->where('user_id', $user->user_id)
-                          ->first();
-        
+            ->where('user_id', $user->user_id)
+            ->first();
+
         // Jika data admin tidak ditemukan
         if (!$admin) {
             return redirect()->back()->with('error', 'Data admin tidak ditemukan');
         }
-        
+
         return view('admin.profile', compact('admin'));
     }
 
@@ -38,7 +39,7 @@ class AdminController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
-        
+
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:50',
             'email' => 'required|email|max:50',
@@ -46,8 +47,8 @@ class AdminController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-                           ->withErrors($validator)
-                           ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         // Update data admin
@@ -65,8 +66,8 @@ class AdminController extends Controller
     public function list()
     {
         $data = AdminModel::select('admin_id', 'user_id', 'nama', 'email')
-                ->with('user:user_id,username,role');
-        
+            ->with('user:user_id,username,role');
+
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('username', function ($row) {
@@ -74,14 +75,14 @@ class AdminController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return '
-                    <button class="btn btn-warning btn-sm btn-edit" data-id="'.$row->admin_id.'">Edit</button>
-                    <button class="btn btn-danger btn-sm btn-hapus" data-id="'.$row->admin_id.'">Hapus</button>
+                    <button class="btn btn-warning btn-sm btn-edit" data-id="' . $row->admin_id . '">Edit</button>
+                    <button class="btn btn-danger btn-sm btn-hapus" data-id="' . $row->admin_id . '">Hapus</button>
                 ';
             })
             ->rawColumns(['action'])
             ->make(true);
     }
-    
+
     public function create()
     {
         $users = UsersModel::select('user_id', 'username')->get();
