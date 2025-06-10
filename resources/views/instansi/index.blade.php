@@ -64,7 +64,8 @@
                 </div>
                 <div class="col-4">
                     <div class="d-flex justify-content-end mb-3">
-                        <button type="button" class="btn d-flex btn-sm align-items-center gap-1 text-white" id="btn-tambah" style="background-color: #5BAEB7;">
+                        <button type="button" class="btn d-flex btn-sm align-items-center gap-1 text-white" id="btn-tambah"
+                            style="background-color: #5BAEB7;">
                             <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
                             Tambah Instansi
                         </button>
@@ -195,8 +196,8 @@
                     label: 'Sebaran Jenis Instansi Alumni',
                     data: {!! json_encode($instansiData->pluck('total')) !!},
                     backgroundColor: [
-                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                        '#9966FF', '#FF9F40', '#66BB6A', '#EF5350'
+                        '#004E7C', '#5BAEB7', '#9B9B9B', '#1E80C1',
+                        '#6DA9C1', '#007599'
                     ],
                     hoverOffset: 10
                 }]

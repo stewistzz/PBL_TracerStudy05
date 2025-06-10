@@ -143,17 +143,8 @@
 
 
     {{-- chart --}}
-    <!-- Card Chart -->
-
-        {{--  --}}
     <div class="statis" id="statistics">
-        <div class="chart-section">
-            <div class="chart-title">Multi Axis Line Chart</div>
-            <center>
-                <canvas class="linechart" id="multiAxisChart"></canvas>
-            </center>
-        </div>
-
+        <h1 class="title-statistik text-center">Statistik Tracer Study</h1>
         <div class="charts-wrapper">
             <div class="card rounded-4">
                 <div class="card-body text-center">
@@ -170,12 +161,6 @@
             </div>
         </div>
 
-        <div class="chart-section">
-            <div class="chart-title">
-                <h3>Stacked Bar + Line Chart</h3>
-                <center><canvas id="stackedChart"></canvas></center>
-            </div>
-        </div>
     </div>
 
     {{-- end hart --}}
@@ -331,8 +316,14 @@
                     label: 'Sebaran Jenis Instansi Alumni',
                     data: {!! json_encode($instansiData->pluck('total')) !!},
                     backgroundColor: [
-                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                        '#9966FF', '#FF9F40', '#66BB6A', '#EF5350'
+                        '#66BFBF', // Light Sea Green
+                        '#023E8A', // Dark Blue
+                        '#0077B6', // Blue Ocean
+                        '#00B894', // Aqua Green
+                        '#55EFC4', // Mint Green
+                        '#004E7C', // Navy Blue
+                        '#007F5F', // Deep Sea Green
+                        '#3282B8', // Medium Blue
                     ],
                     hoverOffset: 10
                 }]
@@ -355,205 +346,6 @@
                 }
             }
         });
-    </script>
-    <script>
-        // --- Multi Axis Line Chart ---
-        const multiAxisCtx = document.getElementById('multiAxisChart').getContext('2d');
-
-        const multiAxisData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-            datasets: [{
-                    label: 'Dataset 1 (Left Axis)',
-                    data: [65, 59, 80, 81, 56, 55],
-                    borderColor: 'rgba(1, 22, 87, 0.9)',
-                    backgroundColor: 'rgba(1, 22, 87, 0.2)',
-                    yAxisID: 'y',
-                    tension: 0.4
-                },
-                {
-                    label: 'Dataset 2 (Right Axis)',
-                    data: [28, 48, 40, 19, 86, 27],
-                    borderColor: 'rgba(21, 143, 187, 0.9)',
-                    backgroundColor: 'rgba(21, 143, 187, 0.2)',
-                    yAxisID: 'y1',
-                    tension: 0.4
-                }
-            ]
-        };
-
-        const multiAxisConfig = {
-            type: 'line',
-            data: multiAxisData,
-            options: {
-                responsive: true,
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                stacked: false,
-                plugins: {
-                    title: {
-                        display: false,
-                    },
-                },
-                scales: {
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        title: {
-                            display: true,
-                            text: 'Left Axis',
-                        },
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        grid: {
-                            drawOnChartArea: false,
-                        },
-                        title: {
-                            display: true,
-                            text: 'Right Axis',
-                        },
-                    },
-                },
-            }
-        };
-
-        new Chart(multiAxisCtx, multiAxisConfig);
-
-        // --- Pie Chart and Doughnut Chart ---
-        const pieCtx = document.getElementById('pieChart').getContext('2d');
-        const doughnutCtx = document.getElementById('doughnutChart').getContext('2d');
-
-        // Warna untuk dataset
-        const colors = [
-            'rgba(1, 22, 87, 0.9)', // Dataset 1
-            'rgba(21, 143, 187, 0.9)' // Dataset 2
-        ];
-
-        const bgColors = [
-            'rgba(1, 22, 87, 0.2)',
-            'rgba(21, 143, 187, 0.2)'
-        ];
-
-        const pieConfig = {
-            type: 'pie',
-            data: {
-                labels: ['Dataset 1', 'Dataset 2'],
-                datasets: [{
-                    label: 'Pie Chart',
-                    data: [65, 35],
-                    backgroundColor: colors,
-                    borderColor: bgColors,
-                    borderWidth: 1,
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        position: 'bottom', // Legend di bawah
-                    }
-                }
-            }
-        };
-
-        const doughnutConfig = {
-            type: 'doughnut',
-            data: {
-                labels: ['Dataset 1', 'Dataset 2'],
-                datasets: [{
-                    label: 'Doughnut Chart',
-                    data: [70, 30],
-                    backgroundColor: colors,
-                    borderColor: bgColors,
-                    borderWidth: 1,
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        position: 'bottom', // Legend di bawah
-                    }
-                }
-            }
-        };
-
-        new Chart(pieCtx, pieConfig);
-        new Chart(doughnutCtx, doughnutConfig);
-
-        // --- Stacked Bar Chart with Line ---
-        const stackedCtx = document.getElementById('stackedChart').getContext('2d');
-
-        const stackedData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                    type: 'bar',
-                    label: 'Dataset 1',
-                    data: [30, 50, 40, 60, 70, 55],
-                    backgroundColor: 'rgba(1, 22, 87, 0.9)',
-                    stack: 'stack1'
-                },
-                {
-                    type: 'bar',
-                    label: 'Dataset 2',
-                    data: [20, 30, 35, 25, 16, 20],
-                    backgroundColor: 'rgba(21, 143, 187, 0.9)',
-                    stack: 'stack1'
-                },
-                {
-                    type: 'line',
-                    label: 'Line Trend',
-                    data: [50, 80, 75, 85, 86, 75],
-                    borderColor: 'rgba(1, 22, 87, 0.9)',
-                    backgroundColor: 'rgba(1, 22, 87, 0.2)',
-                    fill: false,
-                    tension: 0.4,
-                    yAxisID: 'y'
-                }
-            ]
-        };
-
-        const stackedConfig = {
-            type: 'bar',
-            data: stackedData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
-                stacked: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 20
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true,
-                        beginAtZero: true
-                    }
-                },
-                layout: {
-                    padding: {
-                        top: 10,
-                        bottom: 10
-                    }
-                }
-            }
-        };
-
-        new Chart(stackedCtx, stackedConfig);
     </script>
 
 </body>

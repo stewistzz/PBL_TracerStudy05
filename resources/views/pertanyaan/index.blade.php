@@ -34,8 +34,8 @@
                 <div class="col-3">
                     <div class="d-flex justify-content-end mb-3">
                         <button onclick="modalAction('{{ route('pertanyaan.create_ajax') }}')"
-                            style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 text-white"
-                            id="btn-tambah">
+                            class="btn d-flex align-items-center gap-2 text-light" id="btn-tambah"
+                            style="background-color: #5BAEB7;">
                             <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
                         </button>
                     </div>
@@ -80,8 +80,8 @@
                 <div class="col-3">
                     <div class="d-flex justify-content-end mb-3">
                         <button onclick="modalAction('{{ route('pertanyaan.create_ajax') }}')"
-                            style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 text-white"
-                            id="btn-tambah">
+                            class="btn d-flex align-items-center gap-2 text-light" id="btn-tambah"
+                            style="background-color: #5BAEB7;">
                             <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
                         </button>
                     </div>

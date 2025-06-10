@@ -66,8 +66,8 @@
                 </div>
                 <div class="col-3">
                     <div class="d-flex justify-content-end mb-3">
-                        <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')" style="background-color: #5BAEB7;"
-                            class="btn btn-sm d-flex align-items-center gap-2 text-white" id="btn-tambah">
+                        <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')" class="btn d-flex align-items-center gap-2 text-light"
+                            style="background-color: #5BAEB7;" id="btn-tambah">
                             <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
                         </button>
                     </div>
@@ -132,48 +132,8 @@
                 $('#profesi-table').DataTable().ajax.reload();
             });
         });
+
     </script>
-
-    {{-- script untuk chart --}}
-    {{-- <script>
-        var profesiLabels = {!! json_encode($data->pluck('nama_profesi')) !!};
-        var profesiData = {!! json_encode($data->pluck('total')) !!};
-
-        var profesiChartData = {
-            labels: profesiLabels,
-            datasets: [{
-                data: profesiData,
-                backgroundColor: [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                    '#9966FF', '#FF9F40', '#C9CBCF', '#FF5E5E',
-                    '#5EF0D9', '#A5A5A5', '#8ED081', '#C17CCF',
-                    '#F5A623', '#34C759', '#C4C4C4'
-                ],
-                borderColor: '#fff',
-                borderWidth: 1
-            }]
-        };
-
-        var profesiChartOptions = {
-            responsive: true,
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        };
-
-        $(document).ready(function() {
-            if ($("#profesiChart").length) {
-                var profesiCanvas = $("#profesiChart").get(0).getContext("2d");
-                new Chart(profesiCanvas, {
-                    type: 'pie',
-                    data: profesiChartData,
-                    options: profesiChartOptions
-                });
-            }
-        });
-    </script> --}}
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const profesiCtx = document.getElementById('profesiChart').getContext('2d');

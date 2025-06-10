@@ -19,7 +19,7 @@
                     <i class="mdi mdi-account-tie me-1"></i> Data Jawaban Pengguna
                 </h5>
                 <div class="d-flex">
-                    <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 text-white" data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 text-white mr-2" data-bs-toggle="modal" data-bs-target="#filterModal">
                         <i class="mdi mdi-filter"></i> Filter
                     </button>
                     <a href="{{ route('jawaban_pengguna.export_excel') }}" id="exportExcel" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 ms-2 text-white">

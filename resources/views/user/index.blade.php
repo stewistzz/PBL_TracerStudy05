@@ -13,20 +13,20 @@
             </p>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <!-- Tombol Import -->
-                <button class="btn btn-success" onclick="modalAction('{{ url('/user/import') }}')">
+                <button class="btn btn-primary" onclick="modalAction('{{ url('/user/import') }}')">
                     <i class="fa fa-upload mr-2"></i> Import User
                 </button>
 
                 <!-- Tombol Tambah (rata kanan) -->
-                <button class="btn btn-info d-flex align-items-center gap-2" id="btn-tambah">
+                <button class="btn d-flex align-items-center gap-2 text-light" id="btn-tambah" style="background-color: #5BAEB7;">
                     <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
                 </button>
             </div>
 
 
             <div class="table-responsive">
-                <table class="table" id="users-table">
-                    <thead>
+                <table class="table" id="users-table" >
+                    <thead class="thead-dark">
                         <tr>
                             <th>No</th>
                             <th>Username</th>
