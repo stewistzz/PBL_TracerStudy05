@@ -49,8 +49,8 @@
             <div class="invalid-feedback" id="error_no_hp"></div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-success" id="btn-submit">Simpan</button>
-            <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="mdi mdi-close-circle-outline"></i>Batal</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit"><i class="mdi mdi-content-save-outline"></i>Simpan</button>
         </div>
     </form>
 </div>
