@@ -75,8 +75,14 @@ class AdminController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return '
-                    <button class="btn btn-warning btn-sm btn-edit" data-id="' . $row->admin_id . '">Edit</button>
-                    <button class="btn btn-danger btn-sm btn-hapus" data-id="' . $row->admin_id . '">Hapus</button>
+                    <div class="d-flex justify-content-center gap-2 mr-2">
+                            <button type="button" class="btn btn-warning py-2 btn-edit mr-2" data-id="' . $row->admin_id . '">
+                                <i class="mdi mdi-pencil"></i> Edit
+                            </button>
+                            <button type="button" class="btn btn-danger btn-hapus" data-id="' . $row->admin_id . '">
+                                <i class="mdi mdi-delete"></i> Hapus
+                            </button>
+                        </div>
                 ';
             })
             ->rawColumns(['action'])

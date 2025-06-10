@@ -24,26 +24,34 @@
             <div class="row">
                 <div class="col-7">
                     <p class="card-description">
-                        Kelola data pengguna lulusan dengan mudah dan efisien. Fitur ini memungkinkan Anda untuk menambahkan,
+                        Kelola data pengguna lulusan dengan mudah dan efisien. Fitur ini memungkinkan Anda untuk
+                        menambahkan,
                         mengedit,serta menghapus data pengguna lulusan sesuai kebutuhan.
                     </p>
                 </div>
-                <div class="col-5">
-                    <div class="d-flex justify-content-end mb-3">
-                        <button class="btn d-flex align-items-center gap-1 btn-sm text-white mr-2" onclick="modalAction('{{ route('data_pengguna.import') }}')" style="background-color: #5BAEB7;">
-                            <i class="fa fa-upload fs-5 mr-2"></i> Import User
-                        </button>
-        
-                        <button class="btn d-flex align-items-center gap-1 btn-sm text-white" id="btn-tambah" style="background-color: #5BAEB7;">
-                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
-                        </button>
-                    </div>
+            </div>
+
+            <div class="col-18 d-flex justify-content-between mb-3">
+                <!-- Tombol Import User (rata kiri) -->
+                <div>
+                    <button class="btn btn-warning d-flex align-items-center gap-1 btn-sm text-dark"
+                        onclick="modalAction('{{ route('data_pengguna.import') }}')">
+                        <i class="fa fa-upload fs-5 mr-2"></i> Import User
+                    </button>
+                </div>
+
+                <!-- Tombol Tambah Data User (rata kanan) -->
+                <div>
+                    <button class="btn d-flex align-items-center gap-1 btn-sm text-white" id="btn-tambah"
+                        style="background-color: #5BAEB7;">
+                        <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
+                    </button>
                 </div>
             </div>
 
             <div class="table-responsive">
                 <table class="table" id="data-pengguna-table">
-                    <thead>
+                    <thead class="thead-dark">
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
@@ -76,7 +84,7 @@
 
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered" id="survey-table-belum-isi">
-                        <thead class="thead-light">
+                        <thead class="thead-dark">
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>

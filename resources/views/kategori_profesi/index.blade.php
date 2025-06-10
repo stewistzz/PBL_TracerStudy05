@@ -31,12 +31,12 @@
                 </div>
                 <div class="col-3">
                     <div class="d-flex justify-content-end mb-3">
-                        <button type="button" class="btn btn-sm d-flex align-items-center text-white"
+                        <button class="btn d-flex align-items-center gap-2 text-light"
                             style="background-color: #5BAEB7;" id="btn-tambah">
-                            <i class="mdi mdi-plus-circle-outline me-1"></i>
-                            Tambah Kategori
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Kategori
                         </button>
                     </div>
+
                 </div>
             </div>
 
@@ -58,8 +58,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form id="form-data">
                 <div class="modal-content">
@@ -81,8 +80,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('kategori_profesi.list') }}",
-                columns: [
-                    {
+                columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,

@@ -52,7 +52,7 @@ class JawabanPenggunaController extends Controller
                 return $row->pertanyaan ? $row->pertanyaan->isi_pertanyaan : '-';
             })
             ->addColumn('action', function ($row) {
-                $action = '<button class="btn btn-sm btn-danger btn-hapus" data-id="' . $row->jawaban_id . '"><i class="mdi mdi-delete"></i> Delete</button>';
+                $action = '<button class="btn btn-sm btn-danger btn-hapus py-2" data-id="' . $row->jawaban_id . '"><i class="mdi mdi-delete"></i> Delete</button>';
                 return $action;
             })
             ->rawColumns(['action'])
