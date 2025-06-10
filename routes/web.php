@@ -16,6 +16,19 @@ use App\Http\Controllers\DataPenggunaController;
 use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\KepuasanController;
 use App\Http\Controllers\AdminController;
+<<<<<<< HEAD
+=======
+// landing controller
+use App\Http\Controllers\LandingController;
+
+use App\Http\Controllers\JawabanPenggunaController;
+use App\Http\Controllers\JawabanAlumniController;
+
+// route landingpage
+// Route::get('/', function () {
+//     return view('landing_page');
+// });
+>>>>>>> 3dfdaf451999cff0c75082983bf7751768ded59e
 
 // route landingpage
 Route::get('/', [LandingController::class, 'landing_page'])->name('landing_page');
@@ -144,18 +157,17 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [DataPenggunaController::class, 'import_ajax'])->name('import_ajax');
         });
 
-       
+
 
         // Jawaban Pengguna Routes
         Route::prefix('jawaban_pengguna')->name('jawaban_pengguna.')->group(function () {
-                Route::get('/', [JawabanPenggunaController::class, 'index'])->name('index');
-                Route::get('/list', [JawabanPenggunaController::class, 'list'])->name('list');
-                Route::get('/export_excel', [JawabanPenggunaController::class, 'export_excel'])->name('export_excel');
-                Route::get('/{id}/delete_ajax', [JawabanPenggunaController::class, 'confirm_ajax'])->name('confirm_ajax');
-                Route::delete('/{id}/delete_ajax', [JawabanPenggunaController::class, 'delete_ajax'])->name('delete_ajax');
-                Route::get('/filter', [JawabanPenggunaController::class, 'filter'])->name('filter');
-                Route::get('/get-pertanyaan', [JawabanPenggunaController::class, 'getPertanyaan'])->name('getPertanyaan');
-                
+            Route::get('/', [JawabanPenggunaController::class, 'index'])->name('index');
+            Route::get('/list', [JawabanPenggunaController::class, 'list'])->name('list');
+            Route::get('/export_excel', [JawabanPenggunaController::class, 'export_excel'])->name('export_excel');
+            Route::get('/{id}/delete_ajax', [JawabanPenggunaController::class, 'confirm_ajax'])->name('confirm_ajax');
+            Route::delete('/{id}/delete_ajax', [JawabanPenggunaController::class, 'delete_ajax'])->name('delete_ajax');
+            Route::get('/filter', [JawabanPenggunaController::class, 'filter'])->name('filter');
+            Route::get('/get-pertanyaan', [JawabanPenggunaController::class, 'getPertanyaan'])->name('getPertanyaan');
         });
 
         // Jawaban Alumni Routes
@@ -200,6 +212,7 @@ Route::middleware(['auth'])->group(function () {
 
         // route untuk data kesesuaian
         Route::get('/admin/kesesuaian', [KesesuaianPekerjaanController::class, 'index'])->name('admin.kesesuaian');
+        Route::get('/filter', [KesesuaianPekerjaanController::class, 'filter_ajax'])->name('kesesuaian.filter_ajax');
 
         // route untuk pertanyaan
         Route::prefix('pertanyaan')->name('pertanyaan.')->group(function () {
@@ -261,8 +274,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('masa-tunggu/filter', [MasaTungguController::class, 'filter_ajax'])->name('masa_tunggu.filter');
         Route::get('masa-tunggu/export_excel', [MasaTungguController::class, 'export_excel'])->name('masa_tunggu.export');
         Route::get('/masa-tunggu/data', [MasaTungguController::class, 'getData'])->name('masa_tunggu.data');
-
-
     });
 
 

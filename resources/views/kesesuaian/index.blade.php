@@ -1,6 +1,72 @@
 @extends('layouts.template')
 @section('content')
+    {{-- Modal untuk Filter --}}
+    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filterModalLabel">Filter Data Alumni</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- Form menggunakan method GET untuk reload halaman dengan parameter filter --}}
+                    <form id="filterForm" method="GET" action="{{ url()->current() }}">
+                        <div class="form-group">
+                            <label for="filter_program_studi">Program Studi</label>
+                            <select class="form-control" id="filter_program_studi" name="program_studi">
+                                <option value="">Semua Program Studi</option>
+                                {{-- Diasumsikan $programStudiOptions dikirim dari controller --}}
+                                @foreach ($programStudiOptions as $prodi)
+                                    {{-- Menambahkan 'selected' jika filter untuk prodi ini sedang aktif --}}
+                                    <option value="{{ $prodi }}"
+                                        {{ request('program_studi') == $prodi ? 'selected' : '' }}>
+                                        {{ $prodi }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filter_tahun_lulus_start">Tahun Lulus (Dari)</label>
+                            {{-- Menambahkan 'value' dari request untuk menampilkan filter yang sedang aktif --}}
+                            <input type="number" class="form-control" id="filter_tahun_lulus_start"
+                                name="tahun_lulus_start" placeholder="Contoh: 2018" min="1900" max="2100"
+                                value="{{ request('tahun_lulus_start') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="filter_tahun_lulus_end">Tahun Lulus (Sampai)</label>
+                            {{-- Menambahkan 'value' dari request untuk menampilkan filter yang sedang aktif --}}
+                            <input type="number" class="form-control" id="filter_tahun_lulus_end" name="tahun_lulus_end"
+                                placeholder="Contoh: 2025" min="1900" max="2100"
+                                value="{{ request('tahun_lulus_end') }}">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="resetFilterBtn"><i class="mdi mdi-close-circle-outline"></i>Reset</button>
+                    <button type="button" class="btn btn-primary" id="applyFilterBtn"><i class="mdi mdi-content-save-outline"></i>Terapkan Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- header --}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-briefcase-outline"></i> Keseuaian Profesi Alumni
+                </h4>
+            </div>
+            <hr>
+            <p class="card-description text-muted">
+                Tabel ini menampilkan data Kesesuaian profesi alumni dari waktu kelulusan hingga tanggal pertama bekerja.
+            </p>
+        </div>
+    </div>
+    
     <div class="row">
+        
         <!-- Card Pie Chart -->
         <div class="col-lg-4 mb-4">
             <div class="card rounded-4">
@@ -23,7 +89,7 @@
 
                 <div class="my-4">
                     <h1 class="display-3 fw-black text-dark">{{ $data->sum('total_alumni') }}</h1>
-                    <h5>Total Alumni</h5>
+                    <h5>Total Alumni (berdasarkan filter)</h5>
                 </div>
 
                 <p class="text-muted fs-6" style="text-align: justify;">
@@ -38,20 +104,33 @@
 
 
     <!-- Tabel Data -->
-    <div class="col-lg-12 grid-margin stretch-card mt-4">
+    <div class="col-lg-12 grid-margin stretch-card">
         <div class="card shadow-sm rounded-4">
             <div class="card-body">
+                <h5 class="card-title" style="color: #2A3143;"><i class="mdi mdi-city me-1"></i> Data Kesesuaian
+                    Profesi Alumni
+                </h5>
+                <hr>
+                {{-- Header tabel dengan tombol filter --}}
+                <div class="row">
+                    <div class="col-8">
+                        <p class="card-description">
+                            Data tracer alumni berdasarkan tahun lulus dan profesi.
+                        </p>
+                    </div>
+                    {{-- Tombol untuk membuka modal filter --}}
+                    <div class="col-4">
+                        <div class="d-flex justify-content-end mb-3">
+                            <button type="button" class="btn btn-sm text-white" data-toggle="modal" data-target="#filterModal" style="background-color: #5BAEB7;">
+                                <i class="mdi mdi-filter-variant me-1"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 {{-- <h4 class="card-title text-dark">
                     <i class="mdi mdi-city-multiple text-primary me-2"></i>
                     Sebaran Lingkup Tempat Kerja dan Kesesuaian Profesi Dengan Infokom
                 </h4> --}}
-                <h5 class="card-title" style="color: #2A3143;"><i class="mdi mdi-city me-1"></i> Data Pertanyaan untuk
-                Alumni</h5>
-            <hr>
-                <hr>
-                <p class="card-description">
-                    Data tracer alumni berdasarkan tahun lulus dan profesi
-                </p>
 
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered text-center">
@@ -84,7 +163,9 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center text-muted">Data tidak ditemukan</td>
+                                    <td colspan="8" class="text-center text-muted py-4">
+                                        Data tidak ditemukan. Silakan ubah kriteria filter Anda atau reset filter.
+                                    </td>
                                 </tr>
                             @endforelse
 
@@ -112,6 +193,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../../../public/skydash/template/pages/charts/chartjs.html"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
     <script>
         var doughnutPieData = {
             labels: ['Sesuai Infokom', 'Tidak Sesuai Infokom'],
@@ -154,6 +237,27 @@
                     options: doughnutPieOptions
                 });
             }
+            // Event handler untuk tombol "Terapkan Filter"
+            $('#applyFilterBtn').on('click', function() {
+                $('#filterForm').submit(); // Submit form untuk me-reload halaman dengan parameter
+            });
+
+            // Event handler untuk tombol "Reset"
+            $('#resetFilterBtn').on('click', function() {
+                // Redirect ke URL halaman tanpa parameter filter
+                window.location.href = "{{ url()->current() }}";
+            });
+
+            // Validasi sederhana untuk form filter saat akan disubmit
+            $('#filterForm').on('submit', function(e) {
+                const startYear = $('#filter_tahun_lulus_start').val();
+                const endYear = $('#filter_tahun_lulus_end').val();
+
+                if (startYear && endYear && parseInt(startYear) > parseInt(endYear)) {
+                    e.preventDefault(); // Mencegah form disubmit jika validasi gagal
+                    alert('Tahun lulus "Dari" tidak boleh lebih besar dari tahun "Sampai".');
+                }
+            });
         });
     </script>
 @endpush

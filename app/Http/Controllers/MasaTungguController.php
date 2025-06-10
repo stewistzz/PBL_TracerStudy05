@@ -7,85 +7,106 @@ use App\Models\AlumniModel;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Yajra\DataTables\DataTables;
 
 class MasaTungguController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil data alumni dengan tracer studies
-        $alumniList = AlumniModel::with(['tracerStudies'])->get();
-
-        $data = $alumniList->map(function ($alumni) {
-            $tracer = $alumni->tracerStudies->first();
-            $masaTunggu = null;
-
-            if ($tracer && $tracer->tanggal_pertama_kerja && $alumni->tahun_lulus) {
-                $tanggalKerja = Carbon::parse($tracer->tanggal_pertama_kerja);
-                // Ambil awal tahun kelulusan
-                $tahunLulus = Carbon::createFromDate($alumni->tahun_lulus, 1, 1);
-                $masaTunggu = $tahunLulus->diffInMonths($tanggalKerja);
-            }
-
-            return [
-                'nama' => $alumni->nama,
-                'nim' => $alumni->nim,
-                'program_studi' => $alumni->program_studi,
-                'tahun_lulus' => $alumni->tahun_lulus ?? '-',
-                'tanggal_pertama_kerja' => $tracer && $tracer->tanggal_pertama_kerja
-                    ? Carbon::parse($tracer->tanggal_pertama_kerja)->format('Y-m-d')
-                    : '-',
-                'masa_tunggu' => $masaTunggu !== null ? $masaTunggu . ' bulan' : 'Belum tersedia'
-            ];
-        });
-
-        return view('masa_tunggu.index', compact('data'));
+        return view('masa_tunggu.index');
     }
+
+    public function getData(Request $request)
+    {
+        $programStudi = $request->input('program_studi');
+        $tahunLulusStart = $request->input('tahun_lulus_start');
+        $tahunLulusEnd = $request->input('tahun_lulus_end');
+
+        $query = AlumniModel::with(['tracerStudies']);
+
+        if ($programStudi) {
+            $query->where('program_studi', $programStudi);
+        }
+
+        if ($tahunLulusStart && $tahunLulusEnd) {
+            $query->whereBetween('tahun_lulus', [$tahunLulusStart, $tahunLulusEnd]);
+        } elseif ($tahunLulusStart) {
+            $query->where('tahun_lulus', '>=', $tahunLulusStart);
+        } elseif ($tahunLulusEnd) {
+            $query->where('tahun_lulus', '<=', $tahunLulusEnd);
+        }
+
+        return DataTables::of($query)
+            ->addColumn('tanggal_pertama_kerja', function ($alumni) {
+                return optional($alumni->tracerStudies->first())->tanggal_pertama_kerja ?? '-';
+            })
+            ->addColumn('masa_tunggu', function ($alumni) {
+                $tracer = $alumni->tracerStudies->first();
+                if ($tracer && $tracer->tanggal_pertama_kerja && $alumni->tahun_lulus) {
+                    $tanggalKerja = Carbon::parse($tracer->tanggal_pertama_kerja);
+                    $tahunLulus = Carbon::createFromDate($alumni->tahun_lulus, 1, 1);
+                    return $tahunLulus->diffInMonths($tanggalKerja);
+                }
+                return '-';
+            })
+            ->make(true);
+    }
+
 
     public function filter_ajax()
     {
-        return view('alumni.filter_ajax');
+        return view('masa_tunggu.filter_ajax');
     }
 
     public function export_excel(Request $request)
     {
-        $data = AlumniModel::with('tracerStudies')
-            ->when($request->program_studi, fn($q) => $q->where('program_studi', $request->program_studi))
-            ->when($request->tahun_lulus_start, fn($q) => $q->whereYear('tahun_lulus', '>=', $request->tahun_lulus_start))
-            ->when($request->tahun_lulus_end, fn($q) => $q->whereYear('tahun_lulus', '<=', $request->tahun_lulus_end))
-            ->get();
+        $data = AlumniModel::with('tracerStudies')->get();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Data Alumni');
 
         // Header kolom
-        $sheet->fromArray([
-            ['No', 'Nama', 'NIM', 'Program Studi', 'Tahun Lulus', 'Tanggal Pertama Kerja', 'Masa Tunggu (bulan)']
-        ], NULL, 'A1');
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Nama');
+        $sheet->setCellValue('C1', 'NIM');
+        $sheet->setCellValue('D1', 'Program Studi');
+        $sheet->setCellValue('E1', 'Tahun Lulus');
+        $sheet->setCellValue('F1', 'Tanggal Pertama Kerja');
+        $sheet->setCellValue('G1', 'Masa Tunggu (bulan)');
 
-        // Isi data
-        foreach ($data as $index => $item) {
-            // Hitung masa tunggu jika memungkinkan
-            $masaTunggu = '-';
-            if ($item->tahun_lulus && $item->tanggal_pertama_kerja) {
-                try {
-                    $tahunLulus = \Carbon\Carbon::parse($item->tahun_lulus);
-                    $tanggalKerja = \Carbon\Carbon::parse($item->tanggal_pertama_kerja);
-                    $masaTunggu = $tahunLulus->diffInMonths($tanggalKerja) . ' bulan';
-                } catch (\Exception $e) {
-                    $masaTunggu = '-';
-                }
+        $sheet->getStyle("A1:G1")->getFont()->setBold(true);
+
+        $no = 1;
+        $baris = 2;
+
+        foreach ($data as $value) {
+            $tanggalKerja = null;
+
+            // Ambil tracer study pertama (jika ada)
+            $tracer = $value->tracerStudies->first();
+            if ($tracer) {
+                $tanggalKerja = $tracer->tanggal_pertama_kerja;
             }
 
-            $sheet->fromArray([
-                $index + 1,
-                $item->nama ?? '-',
-                $item->nim ?? '-',
-                $item->program_studi ?? '-',
-                $item->tahun_lulus ?? '-',
-                $item->tanggal_pertama_kerja ?? '-',
-                $masaTunggu
-            ], NULL, 'A' . ($index + 2));
+            // Hitung masa tunggu (bulan)
+            $masaTunggu = '-';
+            if ($value->tahun_lulus && $tanggalKerja) {
+                $tahunLulus = Carbon::parse($value->tahun_lulus);
+                $tanggalKerja = Carbon::parse($tanggalKerja);
+                $diffInMonths = $tahunLulus->diffInMonths($tanggalKerja);
+                $masaTunggu = $diffInMonths . ' bulan';
+            }
+
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $value->nama);
+            $sheet->setCellValue('C' . $baris, $value->nim);
+            $sheet->setCellValue('D' . $baris, $value->program_studi);
+            $sheet->setCellValue('E' . $baris, $value->tahun_lulus ? Carbon::parse($value->tahun_lulus)->format('Y') : '-');
+            $sheet->setCellValue('F' . $baris, $tanggalKerja ? Carbon::parse($tanggalKerja)->format('Y-m-d') : '-');
+            $sheet->setCellValue('G' . $baris, $masaTunggu);
+
+            $no++;
+            $baris++;
         }
 
         // Auto-size kolom
@@ -93,15 +114,22 @@ class MasaTungguController extends Controller
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
 
-        // Buat file Excel dan kirim sebagai download
-        $filename = 'Data_Masa_Tunggu_' . now()->format('Ymd_His') . '.xlsx';
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header("Content-Disposition: attachment; filename=\"$filename\"");
-        header('Cache-Control: max-age=0');
+        // Nama Sheet
+        $sheet->setTitle('Data Kuisioner Tracer Alumni');
 
+        // Buat file Excel
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $filename = 'Data_Masa_Tunggu_Alumni_' . date("Y-m-d") . ".xlsx";
+
+        // Header untuk download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Expires: 0');
+        header('Pragma: public');
+
+        // Output file
         $writer->save('php://output');
         exit;
     }
-    
 }
