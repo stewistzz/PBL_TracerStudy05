@@ -13,11 +13,10 @@ body {
 
 /* Header */
 .header {
-    background: linear-gradient(135deg, #2563eb, #1e3a8a);
-    padding: 2.5rem 1.5rem;
+    background: #1d4ed8;
+    padding: 2.5rem;
     border-radius: 12px;
-    margin-bottom: 2rem;    
-    text-align: center;
+    margin-bottom: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     animation: fadeIn 0.8s ease-out;
 }
@@ -37,13 +36,30 @@ body {
     font-weight: 400;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.btn-export {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-export:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
 /* Responden Card */
 .responden-card {
-    background: rgb(245, 171, 10); 
+    background: rgb(245, 171, 10);
     color: #fff;
     border-radius: 12px;
     padding: 1.5rem;
-    margin-bottom: 2rem;
     display: flex;
     align-items: center;
     gap: 1.5rem;
@@ -71,24 +87,11 @@ body {
     flex: 1;
 }
 
-@media (max-width: 576px) {
-    .responden-card {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-
-    .responden-icon {
-        margin-bottom: 0.5rem;
-    }
-}
-
 /* Stats Cards */
 .stats-card {
     background: #ffffff;
     border-radius: 12px;
     padding: 1.5rem;
-    margin-bottom: 1.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: fadeInUp 0.6s ease-out;
@@ -129,7 +132,6 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: relative;
     animation: fadeIn 0.8s ease-out;
-    width: 100%;
 }
 
 .data-table table {
@@ -172,29 +174,45 @@ body {
     color: #1e3a8a;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .data-table table {
-        table-layout: auto;
-    }
+/* Loading Overlay */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
 
-    .data-table th, .data-table td {
-        padding: 0.75rem;
-        font-size: 0.85rem;
-    }
+.spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #1d4ed8;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
 
-    .data-table tbody td.jenis-kemampuan {
-        white-space: normal;
-    }
-
-    /* Additional CSS for text responses */
+/* Card Styling for Text Responses */
 .card {
     border: none;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .card-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 1rem;
 }
 
 #k08-responses, #k09-responses {
@@ -203,10 +221,9 @@ body {
 
 #k08-responses .border-bottom:last-child,
 #k09-responses .border-bottom:last-child {
-    border-bottom: none !important;
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 /* Animations */
@@ -234,6 +251,9 @@ body {
 @media (max-width: 768px) {
     .header {
         padding: 1.5rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
     }
 
     .header h2 {
@@ -244,16 +264,40 @@ body {
         font-size: 0.9rem;
     }
 
+    .header-actions {
+        justify-content: center;
+    }
+
+    .btn-export {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+
+    .responden-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .responden-icon {
+        margin-bottom: 0.5rem;
+    }
+
     .stats-card {
         padding: 1rem;
     }
 
-    .data-table {
-        font-size: 0.8rem;
+    .data-table table {
+        table-layout: auto;
     }
 
     .data-table th, .data-table td {
         padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .data-table tbody td.jenis-kemampuan {
+        white-space: normal;
     }
 }
 
@@ -265,5 +309,10 @@ body {
 
     .responden-icon {
         margin-bottom: 1rem;
+    }
+
+    .btn-export {
+        width: 100%;
+        text-align: center;
     }
 }
