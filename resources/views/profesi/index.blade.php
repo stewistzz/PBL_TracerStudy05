@@ -1,6 +1,20 @@
 @extends('layouts.template')
 
 @section('content')
+{{-- header --}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-account-tie-outline"></i> Profesi Alumni
+                </h4>
+            </div>
+            <hr>
+            <p class="card-description text-muted">
+                Data berikut ini menampilkan sebaran grafik dan daftar profesi alumni.
+            </p>
+        </div>
+    </div>
     <!-- Card Pie Chart Profesi -->
     <div class="row">
         <!-- Card Chart -->
@@ -41,21 +55,24 @@
 
     <div class="card border-0 shadow-sm" style="background-color: #FFFFFF;">
         <div class="card-body">
-            <h5 class="card-title" style="color: #2A3143;">Tabel Data Kategori Profesi</h5>
+            <h5 class="card-title" style="color: #2A3143;">Tabel Data Profesi</h5>
             <hr>
-            <p class="card-description">
-                Tabel ini menampilkan isi data dari berbagai macam profesi terkait dalam kebutuhan pengumpulan informasi mengenai Tracer Study.
-            </p>
-            {{-- <button class="btn btn-primary mb-3" id="btn-tambah">Tambah Profesi</button> --}}
-
-
-            <div class="d-flex justify-content-end mb-3">
-                <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')" style="background-color: #5BAEB7;"
-                    class="btn btn-sm d-flex align-items-center gap-2 text-white" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
-                </button>
+            <div class="row">
+                <div class="col-9">
+                    <p class="card-description">
+                        Tabel ini menampilkan isi data dari berbagai macam profesi terkait dalam kebutuhan pengumpulan informasi mengenai Tracer Study.
+                    </p>
+                    {{-- <button class="btn btn-primary mb-3" id="btn-tambah">Tambah Profesi</button> --}}
+                </div>
+                <div class="col-3">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button onclick="modalAction('{{ url('/profesi/create_ajax') }}')" class="btn d-flex align-items-center gap-2 text-light"
+                            style="background-color: #5BAEB7;" id="btn-tambah">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
+                        </button>
+                    </div>
+                </div>
             </div>
-
 
             <div class="table-responsive">
                 <table class="table table-hover table-bordered" id="profesi-table">
@@ -115,48 +132,8 @@
                 $('#profesi-table').DataTable().ajax.reload();
             });
         });
+
     </script>
-
-    {{-- script untuk chart --}}
-    {{-- <script>
-        var profesiLabels = {!! json_encode($data->pluck('nama_profesi')) !!};
-        var profesiData = {!! json_encode($data->pluck('total')) !!};
-
-        var profesiChartData = {
-            labels: profesiLabels,
-            datasets: [{
-                data: profesiData,
-                backgroundColor: [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                    '#9966FF', '#FF9F40', '#C9CBCF', '#FF5E5E',
-                    '#5EF0D9', '#A5A5A5', '#8ED081', '#C17CCF',
-                    '#F5A623', '#34C759', '#C4C4C4'
-                ],
-                borderColor: '#fff',
-                borderWidth: 1
-            }]
-        };
-
-        var profesiChartOptions = {
-            responsive: true,
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        };
-
-        $(document).ready(function() {
-            if ($("#profesiChart").length) {
-                var profesiCanvas = $("#profesiChart").get(0).getContext("2d");
-                new Chart(profesiCanvas, {
-                    type: 'pie',
-                    data: profesiChartData,
-                    options: profesiChartOptions
-                });
-            }
-        });
-    </script> --}}
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const profesiCtx = document.getElementById('profesiChart').getContext('2d');

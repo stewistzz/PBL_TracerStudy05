@@ -3,8 +3,22 @@
 <link rel="stylesheet" href="{{ asset('skydash/template/css/styletambah.css') }}">
 
 
-
 @section('content')
+    {{-- header --}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-city-variant-outline mr-1"></i>Sebaran Instansi Alumni
+                </h4>
+            </div>
+            <hr>
+            <p class="card-description text-muted">
+                Tabel ini menampilkan sebaran instansi alumni dari waktu kelulusan hingga tanggal pertama bekerja.
+            </p>
+        </div>
+    </div>
+
     <!-- Row: Pie Chart dan Detail Instansi -->
     <div class="row">
         <!-- Card: Pie Chart Jenis Instansi -->
@@ -18,9 +32,9 @@
         </div>
 
         <!-- Card: Detail Instansi -->
-        <div class="col-lg-8">
+        <div class="col-lg-8 mb-4">
             <div class="card rounded-4 shadow-sm h-100 p-4">
-                <h2 class="fw-bold mb-3 text-dark">Detail Sebaran Instansi Alumni</h2>
+                <h2 class="fw-bold mb-3 text-dark"><b>Detail Sebaran Instansi Alumni</b></h2>
                 <h2><b style="color: rgb(30, 161, 201);">Politeknik Negeri Malang</b></h2>
 
                 <div class="my-4">
@@ -40,17 +54,25 @@
     </div>
 
     <!-- Card: Tabel Data Instansi -->
-    <div class="card mt-4">
+    <div class="card">
         <div class="card-body">
             <h4 class="card-title">Data Instansi</h4>
-            <p class="card-description">Kelola data instansi dengan mudah</p>
-
-            <div class="d-flex justify-content-end mb-3">
-                <button type="button" class="btn btn-info d-flex align-items-center gap-1" id="btn-tambah">
-                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
-                    Tambah Instansi
-                </button>
+            <hr>
+            <div class="row">
+                <div class="col-8">
+                    <p class="card-description">Kelola data instansi dengan mudah</p>
+                </div>
+                <div class="col-4">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button" class="btn d-flex btn-sm align-items-center gap-1 text-white" id="btn-tambah"
+                            style="background-color: #5BAEB7;">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i>
+                            Tambah Instansi
+                        </button>
+                    </div>
+                </div>
             </div>
+
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
@@ -95,8 +117,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('instansi.list') }}",
-                columns: [
-                    {
+                columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
@@ -175,8 +196,8 @@
                     label: 'Sebaran Jenis Instansi Alumni',
                     data: {!! json_encode($instansiData->pluck('total')) !!},
                     backgroundColor: [
-                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                        '#9966FF', '#FF9F40', '#66BB6A', '#EF5350'
+                        '#004E7C', '#5BAEB7', '#9B9B9B', '#1E80C1',
+                        '#6DA9C1', '#007599'
                     ],
                     hoverOffset: 10
                 }]
