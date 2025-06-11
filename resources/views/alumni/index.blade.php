@@ -255,6 +255,7 @@
                 }
                 table.ajax.reload();
                 $('#filterModal').modal('hide');
+                $('.modal-backdrop').remove();
             });
 
             // Reset filter
