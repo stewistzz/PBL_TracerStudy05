@@ -1,4 +1,6 @@
 <!-- partial:partials/_sidebar.html -->
+<link rel="stylesheet" href="{{ asset('skydash/template/css/vertical-layout-light/style.css') }}">
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         {{-- Dashboard --}}
@@ -30,7 +32,6 @@
         {{-- sidebar Instansi --}}
         <li class="nav-item">
             <a class="nav-link {{ Request::is('instansi*') ? 'active' : '' }}" href="{{ route('instansi.index') }}">
-
                 <i class="mdi mdi-domain menu-icon"></i>
                 <span class="menu-title">Instansi</span>
             </a>
@@ -136,28 +137,7 @@
     </ul>
 </nav>
 
-<style>
-    .sidebar {
-        position: fixed;
-    }
 
-    .main-panel {
-        margin-left: 250px;
-    }
-
-    .rotate-icon {
-        transition: transform 0.3s ease;
-    }
-
-    .rotate-icon.rotate {
-        transform: rotate(180deg);
-    }
-
-    .nav-link.active {
-        background-color: #0d6efd !important;
-        color: white !important;
-    }
-</style>
 
 <!-- Pastikan jQuery dan Bootstrap JS sudah ada sebelum ini -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

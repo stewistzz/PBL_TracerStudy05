@@ -1,9 +1,15 @@
+<link rel="stylesheet" href="{{ asset('skydash/template/css/vertical-layout-light/style.css') }}">
+
 <div class="container-scroller">
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo mr-15 d-flex align-items-center" href="index.html">
-                <img src="{{ asset('skydash/template/images/logotracer.png') }}" alt="logo" />
-                <span class="logo-text font-weight-bold">Tracer Study</span>
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start-center">
+            <a class="navbar-brand brand-logo me-5 mr-2" href="index.html">
+                <img src="{{ asset('skydash/template/images/logotracer.png') }}" class="me-2" alt="logo">
+                {{-- Span ini akan kita kontrol visibilitasnya dengan CSS --}}
+                <span class="logo-text font-weight-bold mr-2">Tracer Study</span>
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="index.html">
+                <img src="{{ asset('skydash/template/images/logotracer.png') }}" alt="logo">
             </a>
         </div>
 
@@ -234,6 +240,42 @@
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
+    }
+
+    /* Sembunyikan teks secara default untuk brand-logo-mini (jika tidak terlihat) */
+    .navbar-brand-wrapper .brand-logo-mini+.logo-text {
+        display: none;
+        /* Pastikan teks tidak muncul jika menggunakan mini logo */
+    }
+
+    /* Default: teks terlihat saat sidebar terbuka penuh */
+    .navbar-brand-wrapper .brand-logo .logo-text {
+        display: inline-block;
+        /* Pastikan teks terlihat */
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        /* Transisi halus */
+    }
+
+    /* Ketika sidebar hanya menampilkan ikon (diciutkan) */
+    .sidebar-icon-only .navbar-brand-wrapper .brand-logo .logo-text {
+        display: none;
+        /* Sembunyikan teks */
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Pastikan logo selalu terlihat */
+    .navbar-brand-wrapper .brand-logo img {
+        display: inline-block;
+        transition: none;
+    }
+
+    .navbar .navbar-brand-wrapper .brand-logo-mini img {
+        width: calc(70px - 30px);
+        max-width: 100%;
+        margin-left: 20px;
     }
 </style>
 
