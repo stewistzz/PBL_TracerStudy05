@@ -5,20 +5,20 @@
 
 <div class="container-fluid px-4 py-4">
     <!-- Header -->
-    <div class="header">
-        <h2><i class="fas fa-chart-line me-2"></i>Dashboard Kepuasan Pengguna</h2>
-        <p>Ringkasan tingkat kepuasan pengguna berdasarkan jenis kemampuan</p>
-    </div>
-
-    <div class="data-table position-relative mb-4">
-        <div class="mb-3">
-            <a href="{{ route('kepuasan.export-excel') }}" class="btn btn-success">
+    <div class="header d-flex justify-content-between align-items-center">
+        <div>
+            <h2><i class="fas fa-chart-line me-2"></i>Dashboard Kepuasan Pengguna</h2>
+            <p>Ringkasan tingkat kepuasan pengguna berdasarkan jenis kemampuan</p>
+        </div>
+        <div class="header-actions">
+            <a href="{{ route('kepuasan.export-excel') }}" class="btn btn-success btn-export">
                 <i class="fas fa-file-excel me-2"></i>Export ke Excel
             </a>
         </div>
+    </div>
 
     <!-- Responden Summary Card -->
-    <div class="responden-card">
+    <div class="responden-card mb-4">
         <div class="responden-icon">
             <i class="fas fa-users fa-2x"></i>
         </div>
@@ -29,7 +29,7 @@
     </div>
 
     <!-- Stats Cards -->
-    <div class="row mb-4">
+    <div class="row mb-4 g-4">
         <div class="col-lg-3 col-md-6">
             <div class="stats-card text-center">
                 <div class="stats-icon sangat-baik"><i class="fas fa-star"></i></div>
@@ -94,9 +94,9 @@
     </div>
 
     <!-- Jawaban Teks Section -->
-    <div class="row">
+    <div class="row g-4">
         <!-- K08 - Kompetensi yang Dibutuhkan tapi Belum Dipenuhi -->
-        <div class="col-lg-6 mb-4">
+        <div class="col-lg-6">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0"><i class="fas fa-list-ul me-2"></i>Kompetensi yang Dibutuhkan tapi Belum Dipenuhi</h5>
@@ -113,7 +113,7 @@
         </div>
 
         <!-- K09 - Saran untuk Kurikulum Program Studi -->
-        <div class="col-lg-6 mb-4">
+        <div class="col-lg-6">
             <div class="card shadow-sm">
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0"><i class="fas fa-comments me-2"></i>Saran untuk Kurikulum Program Studi</h5>
@@ -132,8 +132,6 @@
 </div>
 
 <!-- Scripts -->
-
-
 <script>
     $(document).ready(function() {
         $('#loading-overlay').show();
@@ -236,5 +234,4 @@
         }
     });
 </script>
-
 @endsection
