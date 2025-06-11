@@ -1,9 +1,7 @@
 <!-- resources/views/kategori_profesi/create_ajax.blade.php -->
-<div class="modal-header">
+<div class="modal-header bg-primary text-white">
     <h5 class="modal-title" id="modalLabel">Tambah Kategori</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span>×</span>
-    </button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
     <input type="hidden" name="id" id="kategori_id">
@@ -14,13 +12,13 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="submit" class="btn btn-success" id="btn-submit">Simpan</button>
-    <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+    <button type="submit" class="btn btn-primary" id="btn-submit">Simpan</button>
 </div>
 
 <script>
 $(document).ready(function () {
-    $('#form-data').submit(function (e) {
+    $('#form-data').off('submit').on('submit', function (e) {
         e.preventDefault();
         
         // Reset error states
@@ -41,7 +39,7 @@ $(document).ready(function () {
                 if (res.status) {
                     $('#modal-form').modal('hide');
                     // Reload tabel di index.blade.php
-                    loadTable();
+                    window.loadTable();
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',
