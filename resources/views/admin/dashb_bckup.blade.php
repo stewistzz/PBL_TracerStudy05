@@ -35,12 +35,12 @@
 
     {{-- illustrasi --}}
     <div class="row mb-3">
-        <!-- <div class="col-md-6 grid-margin stretch-card">
+        <div class="col-md-6 grid-margin stretch-card">
             <div class="card-people mt-auto text-center">
                 <img src="{{ asset('skydash/template/images/ilustrasi.png') }}" alt="ilustrasi"
                     style="width:65%;height:auto;">
             </div>
-        </div> -->
+        </div>
 
         {{-- card box --}}
         <!-- <div class="col-md-3 grid-margin transparent">
