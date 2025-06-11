@@ -125,163 +125,162 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('scripts')
-        {{-- Script Grafik Bar Kepuasan --}}
-        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
-        <script>
-            // Bar Chart untuk Rata-rata Kepuasan
-            const barCtx = document.getElementById('barChart').getContext('2d');
-            const barChart = new Chart(barCtx, {
-                type: 'bar',
-                data: {!! json_encode($chartData) !!},
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: {
-                        duration: 1200,
-                        easing: 'easeOutQuart',
-                        delay: 200
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Bar Chart untuk Rata-rata Kepuasan
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: {!! json_encode($chartData) !!},
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 1200,
+                    easing: 'easeOutQuart',
+                    delay: 200
+                },
+                plugins: {
+                    legend: {
+                        display: false
                     },
-                    plugins: {
-                        legend: {
-                            display: false
+                    tooltip: {
+                        backgroundColor: '#1e3a8a',
+                        titleFont: {
+                            size: 14,
+                            weight: '600'
                         },
-                        tooltip: {
-                            backgroundColor: '#1e3a8a',
-                            titleFont: {
+                        bodyFont: {
+                            size: 12
+                        },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw.toFixed(2)} ★`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 5,
+                        ticks: {
+                            stepSize: 1,
+                            callback: value => `${value} ★`,
+                            font: {
+                                size: 12
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Tingkat Kepuasan (Skala 1–5)',
+                            font: {
                                 size: 14,
                                 weight: '600'
                             },
-                            bodyFont: {
-                                size: 12
-                            },
-                            padding: 12,
-                            cornerRadius: 8,
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.label}: ${context.raw.toFixed(2)} ★`;
-                                }
-                            }
+                            color: '#1e293b'
+                        },
+                        grid: {
+                            color: '#e2e8f0'
                         }
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 5,
-                            ticks: {
-                                stepSize: 1,
-                                callback: value => `${value} ★`,
-                                font: {
-                                    size: 12
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Tingkat Kepuasan (Skala 1–5)',
-                                font: {
-                                    size: 14,
-                                    weight: '600'
-                                },
-                                color: '#1e293b'
-                            },
-                            grid: {
-                                color: '#e2e8f0'
+                    x: {
+                        ticks: {
+                            font: {
+                                size: 12
                             }
                         },
-                        x: {
-                            ticks: {
-                                font: {
-                                    size: 12
-                                }
+                        title: {
+                            display: true,
+                            text: 'Kategori Penilaian',
+                            font: {
+                                size: 14,
+                                weight: '600'
                             },
-                            title: {
-                                display: true,
-                                text: 'Kategori Penilaian',
-                                font: {
-                                    size: 14,
-                                    weight: '600'
-                                },
-                                color: '#1e293b'
+                            color: '#1e293b'
+                        }
+                    }
+                }
+            }
+        });
+
+        // {{-- Script Pie Chart --}}
+
+
+        const instansiCtx = document.getElementById('instansiChart').getContext('2d');
+
+        const instansiChart = new Chart(instansiCtx, {
+            type: 'pie',
+            data: {
+                labels: {!! json_encode($instansiData->pluck('jenis_instansi')->toArray()) !!},
+                datasets: [{
+                    label: 'Sebaran Jenis Instansi Alumni',
+                    data: {!! json_encode($instansiData->pluck('total')->toArray()) !!},
+                    backgroundColor: [
+                        '#004E7C', '#5BAEB7', '#9B9B9B', '#1E80C1',
+                        '#6DA9C1', '#007599'
+                    ],
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                return `${label}: ${value} orang`;
                             }
                         }
                     }
                 }
-            });
+            }
+        });
 
-            {{-- Script Pie Chart --}}
 
-                <
-                script >
-                const instansiCtx = document.getElementById('instansiChart').getContext('2d');
 
-            const instansiChart = new Chart(instansiCtx, {
-                type: 'pie',
-                data: {
-                    labels: {!! json_encode($instansiData->pluck('jenis_instansi')) !!},
-                    datasets: [{
-                        label: 'Sebaran Jenis Instansi Alumni',
-                        data: {!! json_encode($instansiData->pluck('total')) !!},
-                        backgroundColor: [
-                            '#004E7C', '#5BAEB7', '#9B9B9B', '#1E80C1',
-                            '#6DA9C1', '#007599'
-                        ],
-                        hoverOffset: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.parsed || 0;
-                                    return `${label}: ${value} orang`;
-                                }
+        // masatunggu
+        const masaTungguCtx = document.getElementById('masaTungguChart').getContext('2d');
+        const masaTungguChart = new Chart(masaTungguCtx, {
+            type: 'pie',
+            data: {
+                labels: {!! json_encode(array_keys($kategoriMasaTunggu)) !!},
+                datasets: [{
+                    label: 'Sebaran Masa Tunggu',
+                    data: {!! json_encode(array_values($kategoriMasaTunggu)) !!},
+                    backgroundColor: [
+                        '#0f766e', '#2dd4bf', '#38bdf8', '#6366f1', '#f87171'
+                    ],
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                return `${label}: ${value} alumni`;
                             }
                         }
                     }
                 }
-            });
-        </script>
-        <script>
-            const masaTungguCtx = document.getElementById('masaTungguChart').getContext('2d');
-            const masaTungguChart = new Chart(masaTungguCtx, {
-                type: 'pie',
-                data: {
-                    labels: {!! json_encode(array_keys($kategoriMasaTunggu)) !!},
-                    datasets: [{
-                        label: 'Sebaran Masa Tunggu',
-                        data: {!! json_encode(array_values($kategoriMasaTunggu)) !!},
-                        backgroundColor: [
-                            '#0f766e', '#2dd4bf', '#38bdf8', '#6366f1', '#f87171'
-                        ],
-                        hoverOffset: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.parsed || 0;
-                                    return `${label}: ${value} alumni`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        </script>
+            }
+        });
+    </script>
 @endpush

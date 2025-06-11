@@ -1,17 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\AlumniModel;
 use App\Models\DataPenggunaModel;
 use App\Models\InstansiModel;
 use App\Models\TracerStudyModel;
 use App\Models\JawabanPenggunaModel;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Yajra\DataTables\Facades\DataTables;
 
 
 class DashboardController extends Controller
@@ -91,6 +87,11 @@ class DashboardController extends Controller
             'data' => array_column($rataRataKategori, 'rata_rata'),
         ];
 
+
+        // INSTANSI
+
+        // Ambil semua data instansi
+        $instansis = InstansiModel::all();
         // Ambil data jumlah alumni berdasarkan jenis instansi
         $instansiData = DB::table('instansi')
             ->leftJoin('tracer_study', 'instansi.instansi_id', '=', 'tracer_study.instansi_id')
