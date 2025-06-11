@@ -1,6 +1,22 @@
 @extends('layouts.template')
 
 @section('content')
+
+{{-- header --}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-account-key menu-icon mr-2"></i>Data Admin
+                </h4>
+            </div>
+            <hr>
+            <p class="card-description text-muted">
+                Tabel ini menampilkan data admin tracer study yang berhasil login.
+            </p>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Data Admin</h4>
