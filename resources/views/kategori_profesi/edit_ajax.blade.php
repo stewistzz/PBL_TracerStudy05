@@ -1,9 +1,7 @@
 <!-- resources/views/kategori_profesi/edit_ajax.blade.php -->
 <div class="modal-header bg-warning text-white">
     <h5 class="modal-title" id="modalLabel">Edit Kategori</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">×</span>
-    </button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
     <input type="hidden" name="id" id="kategori_id" value="{{ $kategori->kategori_id }}">
@@ -14,7 +12,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
     <button type="submit" class="btn btn-warning" id="btn-submit">Update</button>
 </div>
 
@@ -50,7 +48,7 @@ $(document).ready(function () {
                 console.log('Success response:', res); // Debug
                 if (res.status) {
                     $('#modal-form').modal('hide');
-                    loadTable();
+                    window.loadTable();
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',

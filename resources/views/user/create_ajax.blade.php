@@ -1,5 +1,5 @@
 <!-- resources/views/user_profesi/create_ajax.blade.php -->
-<div class="modal-header">
+<div class="modal-header bg-primary text-white">
     <h5 class="modal-title" id="modalLabel">Tambah User</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span>×</span>
@@ -32,8 +32,8 @@
 
 
 <div class="modal-footer">
-    <button type="submit" class="btn btn-success" id="btn-submit">Simpan</button>
     <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+    <button type="submit" class="btn btn-primary" id="btn-submit">Simpan</button>
 </div>
 
 <script>

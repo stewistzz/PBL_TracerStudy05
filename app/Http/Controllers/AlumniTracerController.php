@@ -76,8 +76,8 @@ class AlumniTracerController extends Controller
                 })
                 ->addColumn('status', fn($row) => ucfirst($row->status))
                 ->addColumn('action', function ($row) {
-                    $btnClass = $row->status === 'done' ? 'btn-success' : ($row->status === 'completed' ? 'btn-success' : 'btn-warning');
-                    $btnText  = $row->status === 'done' || $row->status === 'completed' ? 'Terkirim' : 'Kirim';
+                    $btnClass = $row->status === 'completed' ? 'btn-success' : ($row->status === 'completed' ? 'btn-success' : 'btn-warning');
+                    $btnText  = $row->status === 'completed' || $row->status === 'completed' ? 'Terkirim' : 'Kirim';
 
                     return '
                         <button class="btn btn-sm btn-edit ' . $btnClass . '"
@@ -97,9 +97,9 @@ class AlumniTracerController extends Controller
     public function kirimToken($id, Request $request)
     {
         $tracer = TracerStudyModel::with('alumni')->findOrFail($id);
-        if ($tracer->status === 'draft') {
-            return response()->json(['message' => 'Status masih draft. Tidak dapat mengirim token.'], 422);
-        }
+        // if ($tracer->status === 'draft') {
+        //     return response()->json(['message' => 'Status masih draft. Tidak dapat mengirim token.'], 422);
+        // }
         if (empty($tracer->email_atasan_langsung)) {
             return response()->json(['message' => 'Email atasan tidak tersedia.'], 422);
         }
