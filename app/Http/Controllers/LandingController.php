@@ -6,7 +6,7 @@ use App\Models\ProfesiModel;
 use App\Models\InstansiModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\KategoriProfesiModel; // jika kategori disimpan di tabel lain
+use App\Models\KategoriProfesiModel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 

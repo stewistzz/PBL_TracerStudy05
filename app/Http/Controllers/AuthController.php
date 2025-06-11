@@ -39,11 +39,11 @@ class AuthController extends Controller
         ]);
     }
 
-    // Go To Dashboard
-    public function adminDashboard()
-    {
-        return view('admin.dashboard');
-    }
+    // // Go To Dashboard
+    // public function adminDashboard()
+    // {
+    //     return view('admin.dashboard');
+    // }
 
     public function alumniDashboard()
     {
