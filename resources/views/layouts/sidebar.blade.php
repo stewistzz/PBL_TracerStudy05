@@ -13,8 +13,8 @@
 
         {{-- sidebar Sebaran untuk admin --}}
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#ui-basic" role="button" aria-expanded="false"
-                aria-controls="ui-basic">
+            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#ui-basic" role="button"
+                aria-expanded="false" aria-controls="ui-basic">
                 <i class="mdi mdi-arrow-expand-all menu-icon"></i>
                 <span class="menu-title">Sebaran</span>
                 <i class="mdi mdi-menu-down ml-auto rotate-icon"></i>
@@ -57,7 +57,8 @@
             </a>
             <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('data_pengguna.index') }}">Data Pengguna</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('data_pengguna.index') }}">Data
+                            Pengguna</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('kepuasan.index') }}">Tabel Kepuasan</a>
                     </li>
@@ -136,8 +137,6 @@
         </form>
     </ul>
 </nav>
-
-
 
 <!-- Pastikan jQuery dan Bootstrap JS sudah ada sebelum ini -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
