@@ -1,15 +1,31 @@
 @extends('layouts.template')
 
 @section('content')
+
+{{-- header --}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-account menu-icon mr-2"></i>Data User
+                </h4>
+            </div>
+            <hr>
+            <p class="card-description text-muted">
+                Halaman Data User memungkinkan admin untuk mengelola informasi pengguna dalam sistem Tracer Study,
+                seperti menambahkan, memperbarui, atau menghapus akun.
+                Setiap pengguna dapat diberi peran tertentu sesuai kebutuhan,
+                sehingga pengelolaan akses dan data menjadi lebih tertata dan efisien.
+            </p>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body">
             <h3 class="font-weight-bold">Data User</h3>
             <hr>
             <p class="card-description">
-                Halaman Data User memungkinkan admin untuk mengelola informasi pengguna dalam sistem Tracer Study,
-                seperti menambahkan, memperbarui, atau menghapus akun.
-                Setiap pengguna dapat diberi peran tertentu sesuai kebutuhan,
-                sehingga pengelolaan akses dan data menjadi lebih tertata dan efisien.
+                Tabel ini menampilkan data user atau pengguna tracer study yang berhasil login.
             </p>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <!-- Tombol Import -->
