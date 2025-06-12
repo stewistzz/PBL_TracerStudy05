@@ -1,21 +1,43 @@
 @extends('layouts.template')
 
 @section('content')
-    <div class="card">
+{{-- header --}}
+    <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
-            <h4 class="card-title">Data Admin</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0" style="color: #2A3143;">
+                    <i class="mdi mdi-account-tie-outline"></i> Data Admin
+                </h4>
+            </div>
             <hr>
-            <p class="card-description">
+            <p class="card-description text-muted">
                 Halaman ini menampilkan informasi lengkap mengenai akun administrator sistem, termasuk nama, email, peran,
                 serta status aktif. Data ini digunakan untuk mengelola akses dan memastikan hanya pengguna yang berwenang
                 dapat melakukan tindakan administratif pada sistem.
             </p>
-            <div class="d-flex justify-content-end mb-3">
-                {{-- <button class="btn btn-sm btn-success" id="btn-tambah">+ Tambah admin</button> --}}
-                <button class="btn d-flex align-items-center gap-2 text-light" id="btn-tambah"
-                    style="background-color: #5BAEB7;">
-                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data Admin
-                </button>
+        </div>
+    </div>
+    {{-- end header --}}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title"><i class="mdi mdi-format-list-bulleted-square me-1"></i>Data Admin</h4>
+            <hr>
+            <div class="row">
+                <div class="col-8">
+                    <p class="card-description">
+                        Halaman ini menampilkan informasi mengenai data administrator untuk admin yang melakukan pengelolaan data tracer study.
+                    </p>
+                </div>
+                <div class="col-4">
+
+                    <div class="d-flex justify-content-end mb-3">
+                        {{-- <button class="btn btn-sm btn-success" id="btn-tambah">+ Tambah admin</button> --}}
+                        <button class="btn btn-sm d-flex align-items-center gap-1 text-light" id="btn-tambah"
+                            style="background-color: #5BAEB7;">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data Admin
+                        </button>
+                    </div>
+                </div>
             </div>
 
             @if (session('success'))

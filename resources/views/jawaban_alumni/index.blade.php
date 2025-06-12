@@ -8,6 +8,7 @@
                     <i class="mdi mdi-database-plus me-1"></i> Manajemen Data Jawaban Alumni
                 </h4>
             </div>
+            <hr>
             <p class="card-description text-muted">Tabel ini menampilkan daftar jawaban alumni terkait Tracer Study.</p>
         </div>
     </div>
@@ -18,16 +19,21 @@
                 <h5 class="card-title mb-0" style="color: #2A3143;">
                     <i class="mdi mdi-account-tie me-1"></i> Data Jawaban Alumni
                 </h5>
-                <div class="d-flex">
-                    <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 text-white mr-2" data-bs-toggle="modal" data-bs-target="#filterModal">
-                        <i class="mdi mdi-filter"></i> Filter
-                    </button>
-                    <a href="{{ route('jawaban_alumni.export_excel') }}" id="exportExcel" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 ms-2 text-white">
-                        <i class="mdi mdi-file-excel"></i> Export Excel
-                    </a>
-                </div>
             </div>
             <hr>
+            <div class="row mb-3">
+                <div class="col-8">Tabel dari data jawaban alumni</div>
+                <div class="col-4">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 text-white mr-2" data-bs-toggle="modal" data-bs-target="#filterModal">
+                            <i class="mdi mdi-filter"></i> Filter
+                        </button>
+                        <a href="{{ route('jawaban_alumni.export_excel') }}" id="exportExcel" style="background-color: #5BAEB7;" class="btn btn-sm d-flex align-items-center gap-2 ms-2 text-white">
+                            <i class="mdi mdi-file-excel"></i> Export Excel
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-hover table-bordered" id="jawaban-alumni-table">
                     <thead class="thead-dark" style="background-color: #1E80C1; color: #FFFFFF;">

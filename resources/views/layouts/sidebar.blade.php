@@ -39,13 +39,13 @@
 
 
         {{-- Masa tunggu --}}
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link {{ Request::is('masa_tunggu') ? 'active' : '' }}"
                 href="{{ route('masa_tunggu.index') }}">
                 <i class="mdi mdi-timer-sand menu-icon"></i>
                 <span class="menu-title">Masa tunggu</span>
             </a>
-        </li>
+        </li> --}}
 
         {{-- sidebar Penilaian --}}
         <li class="nav-item">
@@ -64,8 +64,8 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('kepuasan.grafik') }}">Grafik Kepuasan</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('jawaban_pengguna.index') }}">Jawaban
-                            Pengguna</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('jawaban_pengguna.index') }}">Jawaban</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -81,10 +81,9 @@
             <div class="collapse" id="tables">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="{{ route('alumni.index') }}">Data Alumni</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('alumni_tracer.index') }}">Data Tracer</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('jawaban_alumni.index') }}">Jawaban
-                            Alumni</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('alumni_tracer.index') }}">Data Tracer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('masa_tunggu.index') }}">Masa tunggu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('jawaban_alumni.index') }}">Jawaban</a></li>
                 </ul>
             </div>
         </li>

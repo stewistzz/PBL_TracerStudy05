@@ -11,6 +11,7 @@
                     <i class="mdi mdi-plus-circle-outline"></i> Tambah Pertanyaan
                 </button> --}}
             </div>
+            <hr>
             <p class="card-description text-muted">Tabel ini menampilkan daftar pertanyaan sesuai dengan target role terkait
                 dalam kebutuhan pengumpulan
                 informasi mengenai Tracer Study.</p>
@@ -34,7 +35,7 @@
                 <div class="col-3">
                     <div class="d-flex justify-content-end mb-3">
                         <button onclick="modalAction('{{ route('pertanyaan.create_ajax') }}')"
-                            class="btn d-flex align-items-center gap-2 text-light" id="btn-tambah"
+                            class="btn btn-sm d-flex align-items-center gap-2 text-light" id="btn-tambah"
                             style="background-color: #5BAEB7;">
                             <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
                         </button>
@@ -80,7 +81,7 @@
                 <div class="col-3">
                     <div class="d-flex justify-content-end mb-3">
                         <button onclick="modalAction('{{ route('pertanyaan.create_ajax') }}')"
-                            class="btn d-flex align-items-center gap-2 text-light" id="btn-tambah"
+                            class="btn btn-sm d-flex align-items-center gap-2 text-light" id="btn-tambah"
                             style="background-color: #5BAEB7;">
                             <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
                         </button>
