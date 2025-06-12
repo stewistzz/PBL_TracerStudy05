@@ -140,6 +140,8 @@
                 currentFilter.alumni = $('#filterModal #alumni').val();
                 table.ajax.reload();
                 $('#filterModal').modal('hide');
+                $('.modal-backdrop').remove();
+                
             });
 
             // Reset Filter

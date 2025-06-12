@@ -1,4 +1,5 @@
-<form action="{{ url('/profesi/ajax') }}" method="POST" id="form-tambah" enctype="multipart/form-data">
+<!-- resources/views/kategori_profesi/create_ajax.blade.php -->
+<form action="{{ url('/profesi/ajax') }}" method="POST" id="form-tambah">
     @csrf
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -6,13 +7,9 @@
                 <h5 class="modal-title">
                     <i class="mdi mdi-account-tie-outline"></i> Tambah Data Profesi
                 </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
             <div class="modal-body">
-                <!-- Nama Profesi -->
                 <div class="form-group">
                     <label><i class="mdi mdi-briefcase-outline"></i> Nama Profesi</label>
                     <div class="input-group">
@@ -25,8 +22,6 @@
                     </div>
                     <small id="error-nama_profesi" class="text-danger error-text"></small>
                 </div>
-
-                <!-- Kategori Profesi -->
                 <div class="form-group">
                     <label><i class="mdi mdi-tag-outline"></i> Kategori Profesi</label>
                     <select name="kategori_id" id="kategori_id" class="form-control" required>
@@ -38,9 +33,8 @@
                     <small id="error-kategori_id" class="text-danger error-text"></small>
                 </div>
             </div>
-
             <div class="modal-footer bg-light">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="mdi mdi-close-circle-outline"></i> Batal
                 </button>
                 <button type="submit" class="btn btn-primary">
@@ -51,23 +45,19 @@
     </div>
 </form>
 
-
 <script>
-   $(document).ready(function () {
-    $('#form-tambah').on('submit', function (e) {
-        e.preventDefault(); // Mencegah form submit secara normal
-
-        let form = this;
-        let formData = new FormData(form);
-
-        $('.error-text').text(''); // Bersihkan pesan error
+$(document).ready(function () {
+    $('#form-tambah').off('submit').on('submit', function (e) {
+        e.preventDefault();
+        let form = $(this);
+        let data = form.serialize();
+        $('.error-text').text('');
 
         $.ajax({
-            url: "{{ url('/profesi/ajax') }}", // langsung hardcoded URL tujuan AJAX
+            url: "{{ url('/profesi/ajax') }}",
             type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
+            data: data,
+            dataType: 'json',
             success: function (response) {
                 if (response.status) {
                     $('#myModal').modal('hide');
@@ -75,13 +65,13 @@
                         icon: 'success',
                         title: 'Berhasil',
                         text: response.message
+                    }).then(() => {
+                        $('#profesi-table').DataTable().ajax.reload(null, false);
                     });
-                    $('#profesi-table').DataTable().ajax.reload();
                 } else {
                     $.each(response.msgField, function (key, value) {
                         $('#error-' + key).text(value[0]);
                     });
-
                     Swal.fire({
                         icon: 'error',
                         title: 'Validasi Gagal',
@@ -90,6 +80,7 @@
                 }
             },
             error: function (xhr) {
+                console.error('AJAX Error:', xhr);
                 Swal.fire({
                     icon: 'error',
                     title: 'Server Error',
@@ -99,5 +90,4 @@
         });
     });
 });
-
 </script>

@@ -1,6 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
+
 {{-- header --}}
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">

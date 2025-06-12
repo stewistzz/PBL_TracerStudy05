@@ -5,7 +5,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="card-title mb-0" style="color: #2A3143;">
-                    <i class="mdi mdi-database-plus me-1"></i> Manajemen Data Users
+                    <i class="mdi mdi-account menu-icon mr-2"></i>Data User
                 </h4>
             </div>
             <hr>
