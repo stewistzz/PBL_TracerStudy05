@@ -4,49 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <title>Tracer Study - Combined</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('skydash/template/css/style_landing.css') }}">
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Inter:wght@500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        .charts-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-        }
-
-        .card {
-            width: 360px;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        canvas {
-            width: 100% !important;
-            height: 480px !important;
-        }
-    </style>
-
 </head>
 
 <body>
-    <!-- Section: Landing / Home -->
     <div class="landing-section" id="home">
 
-        <!-- Background Elements -->
         <div class="hero-background"></div>
         <div class="hero-image"></div>
 
-        <!-- Divider -->
         <div class="blue-divider"></div>
 
-        <!-- Header/Navbar -->
         <div class="header-bar">
             <div class="navigation">
                 <a href="#home">Home</a>
@@ -56,7 +35,6 @@
                 <a href="#contact">Contact</a>
             </div>
 
-            <!-- Logo Section -->
             <div class="logo-container">
                 <div class="logo-image"></div>
                 <div class="logo-text">
@@ -66,22 +44,18 @@
             </div>
         </div>
 
-        <!-- Welcome Text -->
         <span class="welcome-text">Welcome to</span>
         <span class="tracer-study-text">Tracer Study</span>
         <span class="institution-text">Politeknik Negeri Malang</span>
 
-        <!-- Description -->
         <span class="description-text">
             Tracer Study aims to track alumni to improve the quality of education and curriculum relevance.
         </span>
 
-        <!-- Login Button -->
         <div class="start-button">
             <a href="{{ route('login') }}" class="start-button-text">Login</a>
         </div>
 
-        <!-- Info Cards -->
         <div class="info-cards-container"></div>
         <div class="info-cards-grid">
             <div class="info-card">
@@ -165,7 +139,6 @@
     </div>
 
 
-    {{-- chart --}}
     <div class="statis" id="statistics">
         <h1 class="title-statistik text-center">Statistik Tracer Study</h1>
         <div class="charts-wrapper">
@@ -178,15 +151,13 @@
 
             <div class="card rounded-4">
                 <div class="card-body text-center">
-                    <h4 class="card-title fw-bold">Sebaran Jenis Instansi</h4>
-                    <canvas id="instansiChart" width="240" height="100"></canvas>
+                    <h4 class="card-title fw-bold mb-4">Sebaran Jenis Instansi</h4>
+                    <canvas id="instansiChart" width="240" height="240"></canvas>
                 </div>
             </div>
         </div>
 
     </div>
-
-    {{-- end hart --}}
 
     <div class="purpose-section">
         <div class="purpose-container" id="purpose">
@@ -260,27 +231,76 @@
         </div>
     </div>
 
+    <section class="contact-banner-section">
+        <div class="contact-container">
+            <div class="content-left">
+                <h2 class="main-title">
+                    Let's succeed the implementation of the <span class="highlight">Tracer Study</span>
+                    of Malang State Polytechnic
+                </h2>
+            </div>
+            <a href="{{ route('login') }}" class="survey-button">Isi Survey</a>
+        </div>
+    </section>
 
-    <div class="contact-section" id="contact">
-        <div class="footer-container">
-            <h3>Contact Us</h3>
-            <p>Politeknik Negeri Malang</p>
-            <p>Email: info@polinema.ac.id</p>
-            <p>Phone: +62 341 123456</p>
-            <p>Address: Jl. Soekarno Hatta No.9, Malang, Indonesia</p>
-            <div class="social-media">
-                <a href="https://facebook.com/polinema" target="_blank">Facebook</a> |
-                <a href="https://twitter.com/polinema" target="_blank">Twitter</a> |
-                <a href="https://instagram.com/polinema" target="_blank">Instagram</a>
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo-section">
+                    <div class="footer-logo-container">
+                        {{-- <div class="footer-logo"><i class="fas fa-graduation-cap"></i></div> --}}
+                        <div class="footer-logo-text">
+                            <h3>TRACER STUDY</h3>
+                            <p>POLITEKNIK NEGERI MALANG</p>
+                        </div>
+                    </div>
+                    <div class="social-icons">
+                        <a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.facebook.com/polinema/%3Flocale%3Did_ID&ved=2ahUKEwjNlOikn-mNAxXKR2wGHcygB4oQFnoECAkQAQ&usg=AOvVaw3R3RxLuwtjb2l4GlKgwgvq" class="social-icon"
+                            aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/polinema_campus?utm_source=ig_web_button_share_sheet&igsh=M2tscGYyZ2Z6eWdt" class="social-icon"
+                            aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/polinema_campus" class="social-icon" aria-label="Twitter"
+                            target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://youtube.com/@politekniknegerimalangofficial?si=7kFHB2qnziQAZESu" class="social-icon" aria-label="YouTube"
+                            target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">    
+                    <h3>Our Contact</h3>
+                    <address class="contact-address"> Jl. Soekarno Hatta No.9<br>
+                        Malang 65141<br>
+                        Jatimulyo, Kec. Lowokwaru,<br>
+                        Jawa Timur - Indonesia
+                    </address>
+                    <div class="contact-details">
+                        <p>admin@polinema.ac.id</p>
+                        <p>(0341) 12272124</p>
+                        <p>(+62) 821 1227 2406</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Related Links</h3>
+                    <div class="related-links">
+                        <a href="#">Polinema Website</a>
+                        <a href="#">Siakad</a>
+                        <a href="#">Scholarships</a>
+                        <a href="#">Alumni</a>
+                        <a href="#">Polinema Library</a>
+                    </div>
+                </div>
+                <div class="footer-section news-section">
+                    <h3>Latest News</h3>
+                    <p>You can access the latest news about POLINEMA <a href="#"
+                            class="highlight-link">here</a>.</p>
+                </div>
             </div>
         </div>
+    </footer>
 
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const profesiCtx = document.getElementById('profesiChart').getContext('2d');
+
         const profesiChart = new Chart(profesiCtx, {
             type: 'pie',
             data: {
@@ -289,51 +309,28 @@
                     label: 'Sebaran Profesi Alumni',
                     data: {!! json_encode($data->pluck('total')) !!},
                     backgroundColor: [
-                        '#004E7C', '#0077B6', '#0096C7', '#00B4D8', '#48CAE4',
-                        '#90E0EF', '#CAF0F8', '#023E8A', '#007F5F', '#00B894',
-                        '#55EFC4', '#1B262C', '#0F4C75', '#3282B8', '#66BFBF',
+                        '#004E7C', // Navy Blue
+                        '#0077B6', // Blue Ocean
+                        '#0096C7', // Sky Blue
+                        '#00B4D8', // Light Blue
+                        '#48CAE4', // Soft Cyan
+                        '#90E0EF', // Pale Blue
+                        '#CAF0F8', // Very Pale Blue
+                        '#023E8A', // Dark Blue
+                        '#007F5F', // Deep Sea Green
+                        '#00B894', // Aqua Green
+                        '#55EFC4', // Mint Green
+                        '#1B262C', // Dark Slate
+                        '#0F4C75', // Strong Blue
+                        '#3282B8', // Medium Blue
+                        '#66BFBF', // Light Sea Green
                     ],
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                const label = context.label || '';
-                                const value = context.parsed || 0;
-                                return `${label}: ${value} orang`;
-                            }
-                        }
-                    }
-                }
-            }
-        });
 
-        const instansiCtx = document.getElementById('instansiChart').getContext('2d');
-        const instansiChart = new Chart(instansiCtx, {
-            type: 'pie',
-            data: {
-                labels: {!! json_encode($instansiData->pluck('jenis_instansi')) !!},
-                datasets: [{
-                    label: 'Sebaran Jenis Instansi Alumni',
-                    data: {!! json_encode($instansiData->pluck('total')) !!},
-                    backgroundColor: [
-                        '#66BFBF', '#023E8A', '#0077B6', '#00B894',
-                        '#55EFC4', '#004E7C', '#007F5F', '#3282B8',
-                    ],
                     hoverOffset: 10
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'bottom'
@@ -351,7 +348,48 @@
             }
         });
     </script>
+    <script>
+        const instansiCtx = document.getElementById('instansiChart').getContext('2d');
 
+        const instansiChart = new Chart(instansiCtx, {
+            type: 'pie',
+            data: {
+                labels: {!! json_encode($instansiData->pluck('jenis_instansi')) !!},
+                datasets: [{
+                    label: 'Sebaran Jenis Instansi Alumni',
+                    data: {!! json_encode($instansiData->pluck('total')) !!},
+                    backgroundColor: [
+                        '#66BFBF', // Light Sea Green
+                        '#023E8A', // Dark Blue
+                        '#0077B6', // Blue Ocean
+                        '#00B894', // Aqua Green
+                        '#55EFC4', // Mint Green
+                        '#004E7C', // Navy Blue
+                        '#007F5F', // Deep Sea Green
+                        '#3282B8', // Medium Blue
+                    ],
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                return `${label}: ${value} orang`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
 </body>
 
