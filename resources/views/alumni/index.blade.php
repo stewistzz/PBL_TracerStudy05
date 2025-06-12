@@ -11,6 +11,7 @@
                     <i class="mdi mdi-school me-1"></i> Manajemen Data Alumni
                 </h4>
             </div>
+            <hr>
             <p class="card-description text-muted">
                 Kelola data alumni dengan mudah untuk mendukung pencatatan lulusan, pelacakan karier, dan evaluasi hasil
                 pendidikan. Fitur ini memungkinkan Anda menambahkan, mengedit, dan menghapus data alumni sesuai kebutuhan,

@@ -9,10 +9,10 @@
                     <i class="mdi mdi-database-plus me-1"></i> Manajemen Data Pertanyaan
                 </h4>
             </div>
-
-            <p class="card-description text-muted">
-                Tabel ini menampilkan daftar pertanyaan sesuai dengan target role dalam Tracer Study.
-            </p>
+            <hr>
+            <p class="card-description text-muted">Tabel ini menampilkan daftar pertanyaan sesuai dengan target role terkait
+                dalam kebutuhan pengumpulan
+                informasi mengenai Tracer Study.</p>
         </div>
     </div>
 
@@ -30,12 +30,10 @@
                 </div>
                 <div class="col-md-3">
                     <div class="d-flex justify-content-end mb-3">
-                        <button
-                            id="btn-add-alumni"
-                            class="btn text-light d-flex align-items-center gap-2"
-                            style="background-color:#5BAEB7"
-                            onclick="modalAction('{{ route('pertanyaan.create_ajax') }}')">
-                            <i class="mdi mdi-plus-circle-outline fs-5"></i> Tambah Data
+                        <button onclick="modalAction('{{ route('pertanyaan.create_ajax') }}')"
+                            class="btn btn-sm d-flex align-items-center gap-2 text-light" id="btn-tambah"
+                            style="background-color: #5BAEB7;">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
                         </button>
                     </div>
                 </div>
@@ -75,12 +73,10 @@
                 </div>
                 <div class="col-md-3">
                     <div class="d-flex justify-content-end mb-3">
-                        <button
-                            id="btn-add-pengguna"
-                            class="btn text-light d-flex align-items-center gap-2"
-                            style="background-color:#5BAEB7"
-                            onclick="modalAction('{{ route('pertanyaan.create_ajax') }}')">
-                            <i class="mdi mdi-plus-circle-outline fs-5"></i> Tambah Data
+                        <button onclick="modalAction('{{ route('pertanyaan.create_ajax') }}')"
+                            class="btn btn-sm d-flex align-items-center gap-2 text-light" id="btn-tambah"
+                            style="background-color: #5BAEB7;">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data
                         </button>
                     </div>
                 </div>

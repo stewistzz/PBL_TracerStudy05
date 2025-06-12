@@ -13,6 +13,7 @@
                     <i class="mdi mdi-plus-circle-outline"></i> Tambah Pertanyaan
                 </button> --}}
             </div>
+            <hr>
             <p class="card-description text-muted">Kelola kategori pertanyaan untuk <strong>Alumni</strong> dan
                 <strong>Pengguna</strong>.</p>
         </div>
@@ -28,15 +29,14 @@
             <hr>
             {{-- modifikasi untuk penambahan masing-masing tombol tambah --}}
             <div class="row">
-                <div class="col-9">
+                <div class="col-8">
                     <p class="card-description">
                         Kelola pertanyaan untuk role target dari alumni
                     </p>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <div class="d-flex justify-content-end mb-3">
-                        
-                        <button onclick="modalAction('{{ route('kategori_pertanyaan.create_ajax') }}')" class="btn d-flex align-items-center gap-2 text-light" id="btn-tambah" style="background-color: #5BAEB7;">
+                        <button onclick="modalAction('{{ route('kategori_pertanyaan.create_ajax') }}')" class="btn btn-sm d-flex align-items-center gap-2 text-light" id="btn-tambah" style="background-color: #5BAEB7;">
                     <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
                 </button>
                     </div>

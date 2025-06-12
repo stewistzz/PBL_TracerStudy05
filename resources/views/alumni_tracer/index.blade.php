@@ -9,6 +9,7 @@
                     <i class="mdi mdi-school me-1"></i> Data Tracer Study POLINEMA
                 </h4>
             </div>
+            <hr>
             <p class="card-description text-muted">
                 Lihat data tracer study POLINEMA untuk menampilkan detail dari tracer study dan data alumni. Anda memiliki
                 peran untuk mengirim <strong>Token Link</strong> untuk pengisian E-mail Atasan
