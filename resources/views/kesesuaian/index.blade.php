@@ -44,8 +44,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="resetFilterBtn"><i class="mdi mdi-close-circle-outline"></i>Reset</button>
-                    <button type="button" class="btn btn-primary" id="applyFilterBtn"><i class="mdi mdi-content-save-outline"></i>Terapkan Filter</button>
+                    <button type="button" class="btn btn-secondary" id="resetFilterBtn">Reset</button>
+                    <button type="button" class="btn btn-primary" id="applyFilterBtn">Terapkan</button>
                 </div>
             </div>
         </div>
@@ -64,9 +64,9 @@
             </p>
         </div>
     </div>
-    
+
     <div class="row">
-        
+
         <!-- Card Pie Chart -->
         <div class="col-lg-4 mb-4">
             <div class="card rounded-4">
@@ -121,8 +121,11 @@
                     {{-- Tombol untuk membuka modal filter --}}
                     <div class="col-4">
                         <div class="d-flex justify-content-end mb-3">
-                            <button type="button" class="btn btn-sm text-white" data-toggle="modal" data-target="#filterModal" style="background-color: #5BAEB7;">
-                                <i class="mdi mdi-filter-variant me-1"></i> Filter
+                            <button type="button" style="background-color: #5BAEB7;"
+                                class="btn btn-sm d-flex align-items-center gap-1 ms-2 text-white" data-toggle="modal"
+                                data-target="#filterModal">
+                                <i class="mdi mdi-filter fs-5 mr-2"></i>
+                                Filter
                             </button>
                         </div>
                     </div>

@@ -1,9 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
-
-{{-- header --}}
-    <div class="card shadow-sm border-0 mb-4">
+<div class="card shadow-sm border-0 mb-4" style="position: relative; z-index: 0;">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="card-title mb-0" style="color: #2A3143;">
@@ -15,28 +13,32 @@
                 Halaman Data User memungkinkan admin untuk mengelola informasi pengguna dalam sistem Tracer Study,
                 seperti menambahkan, memperbarui, atau menghapus akun.
                 Setiap pengguna dapat diberi peran tertentu sesuai kebutuhan,
-                sehingga pengelolaan akses dan data menjadi lebih tertata dan efisien.
-            </p>
+                sehingga pengelolaan akses dan data menjadi lebih tertata dan efisien.</p>
         </div>
     </div>
-
     <div class="card">
         <div class="card-body">
             <h3 class="font-weight-bold">Data User</h3>
             <hr>
-            <p class="card-description">
-                Tabel ini menampilkan data user atau pengguna tracer study yang berhasil login.
-            </p>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <!-- Tombol Import -->
-                <button class="btn btn-primary" onclick="modalAction('{{ url('/user/import') }}')">
-                    <i class="fa fa-upload mr-2"></i> Import User
-                </button>
-
-                <!-- Tombol Tambah (rata kanan) -->
-                <button class="btn d-flex align-items-center gap-2 text-light" id="btn-tambah" style="background-color: #5BAEB7;">
-                    <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
-                </button>
+            <div class="row">
+                <div class="col-8">
+                    <p class="card-description">
+                        Tabel ini menampilkan daftar Users terkait Tracer Study.
+                    </p>
+                </div>
+                <div class="col-4">
+                    <div class="d-flex justify-content-end align-items-center mb-3">
+                        <!-- Tombol Import -->
+                        <button class="btn btn-primary btn-sm mr-2 gap-2" onclick="modalAction('{{ url('/user/import') }}')">
+                            <i class="fa fa-upload mr-2"></i> Import User
+                        </button>
+        
+                        <!-- Tombol Tambah (rata kanan) -->
+                        <button class="btn btn-sm d-flex align-items-center gap-2 text-light" id="btn-tambah" style="background-color: #5BAEB7;">
+                            <i class="mdi mdi-plus-circle-outline fs-5 mr-2"></i> Tambah Data User
+                        </button>
+                    </div>
+                </div>
             </div>
 
 

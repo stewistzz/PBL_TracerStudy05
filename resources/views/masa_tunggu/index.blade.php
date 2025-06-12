@@ -9,6 +9,7 @@
                     <i class="mdi mdi-clock-outline me-1"></i> Masa Tunggu Alumni
                 </h4>
             </div>
+            <hr>
             <p class="card-description text-muted">
                 Tabel ini menampilkan lama masa tunggu alumni dari waktu kelulusan hingga tanggal pertama bekerja.
             </p>
